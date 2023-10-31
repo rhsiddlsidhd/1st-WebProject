@@ -8,7 +8,7 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "front-dev": "webpack-dev-server --open && npm run watch",
-    "back-dev": "webpack && node src/app"
+    "back-dev": "webpack && node --watch src/app"
   },
   "author": "",
   "license": "ISC",
