@@ -2,8 +2,11 @@
 */node_modules
 /.pnp
 
+/src/front/dist
+
 # misc
 .DS_Store
 .env.local
 
 npm-debug.log*
+node_modules
