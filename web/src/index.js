@@ -1,0 +1,10 @@
+import hello from "./variable";
+import "./main.scss";
+import testImage from "./assets/test_image.png";
+document.getElementsByClassName("main").innerText = hello + "11";
+console.log("hello world");
+let testImageTag = document.createElement("img");
+testImageTag.src = testImage;
+let body = document.querySelector("body");
+body.appendChild(testImageTag);
+console.log(document.body);
