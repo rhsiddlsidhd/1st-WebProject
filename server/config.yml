@@ -1,0 +1,17 @@
+dev:
+  mongodb:
+    primary:
+      url:
+      port:
+  express:
+    primary:
+      location: http://localhost
+      port: 8080
+prod:
+  mongodb:
+    primary:
+      url:
+      port:
+  express:
+    primary:
+      port:

@@ -1,0 +1,33 @@
+const express = require("express");
+const { productRouter, categoryRouter } = require("./routes/index");
+const path = require("path");
+const config = require("./config/config");
+
+const logger = require("./config/logger");
+
+const app = express();
+
+const EXPRESS_PORT = config.express.primary.port;
+const LOCATION = config.express.primary.location;
+
+// app.use(express.static(__dirname + "/front/dist"));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+// 라우터 설정
+
+app.use("/", (req, res, next) => {
+  logger.info(`${req.method} ${req.path}`);
+  next();
+});
+
+app.use("/product", productRouter);
+app.use("/category", categoryRouter);
+
+app.get("/", (req, res) => {
+  res.json({ message: "Hello! Elice~" });
+});
+
+app.listen(EXPRESS_PORT, () => {
+  logger.info(`서버 구동 중 ${LOCATION}:${EXPRESS_PORT}`);
+});
