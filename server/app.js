@@ -31,3 +31,5 @@ app.get("/", (req, res) => {
 app.listen(EXPRESS_PORT, () => {
   logger.info(`서버 구동 중 ${LOCATION}:${EXPRESS_PORT}`);
 });
+
+module.exports = app;

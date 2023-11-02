@@ -1,8 +1,10 @@
 dev:
   mongodb:
     primary:
-      url:
-      port:
+      url: ac-zg9mhx7-shard-00-02.p0s7gq5.mongodb.net
+      port: 27017
+      username: sinba_d
+      password: 1BOwsXly9gByCVUF
   express:
     primary:
       location: http://localhost
