@@ -1,9 +1,10 @@
 const express = require("express");
-const { productRouter, categoryRouter } = require("./routes/index");
+
+const { apiRouter } = require("./routes/index");
 const path = require("path");
 const config = require("./config/config");
-
 const logger = require("./config/logger");
+const morgan = require("./config/morgan");
 
 const app = express();
 
@@ -16,20 +17,22 @@ app.set("views", path.join(__dirname, "views"));
 
 // 라우터 설정
 
-app.use("/", (req, res, next) => {
-  logger.info(`${req.method} ${req.path}`);
-  next();
-});
+app.use(morgan.successHandler);
+app.use(morgan.errorHandler);
 
-app.use("/product", productRouter);
-app.use("/category", categoryRouter);
+// app.use("/", (req, res, next) => {
+//   logger.info(`${req.method} ${req.path}`);
+//   next();
+// });
+
+app.use("/api", apiRouter);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello! Elice~" });
 });
 
-app.listen(EXPRESS_PORT, () => {
-  logger.info(`서버 구동 중 ${LOCATION}:${EXPRESS_PORT}`);
-});
+// app.listen(EXPRESS_PORT, () => {
+//   logger.info(`서버 구동 중 ${LOCATION}:${EXPRESS_PORT}`);
+// });
 
 module.exports = app;

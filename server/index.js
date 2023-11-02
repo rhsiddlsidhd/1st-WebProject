@@ -4,11 +4,14 @@ const config = require("./config/config");
 const logger = require("./config/logger");
 
 let server;
+const mongodb_url = `mongodb+srv://${config.mongodb.primary.username}:${config.mongodb.primary.password}@${config.mongodb.primary.url}/?retryWrites=true&w=majority`;
+const express_url = `${config.express.primary.location}:${config.express.primary.port}`;
 
-mongoose.connect(config.mongodb.url, config.mongoose.options).then(() => {
+console.log(mongodb_url);
+mongoose.connect(mongodb_url).then(() => {
   logger.info("Connected to MongoDB");
-  server = app.listen(config.express.port, () => {
-    logger.info(`Listening to port ${config.express.port}`);
+  server = app.listen(config.express.primary.port, () => {
+    logger.info(`Listening to port ${config.express.primary.port}`);
   });
 });
 
