@@ -4,8 +4,8 @@ const app = express();
 const port = 3001;
 
 // API 기능들을 불러올거야
-const testAPI = require('./testAPI');
-const categoryAPI = require('./category');
+const testAPI = require('./api/testAPI');
+const categoryAPI = require('./api/category');
 
 app.use(express.json());
 app.use(cors());
