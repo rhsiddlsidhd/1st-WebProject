@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./css/app.css";
+import "./css/App.css";
 import Detail from "./pages/Detail";
 import Cart from "./pages/Cart";
 
@@ -9,7 +9,6 @@ import Cart from "./pages/Cart";
 // import DeliveryAddress from "./pages/DeliveryAddress";
 // import Main from "./pages/Main";
 // import Userinfo from "./pages/Userinfo";
-import "./css/style.css";
 
 function App() {
   return (

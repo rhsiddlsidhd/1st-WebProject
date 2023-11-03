@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import CartList from "./Cartlist";
+import CartList from "../components/CartList";
 
 const Cart = () => {
   return (
