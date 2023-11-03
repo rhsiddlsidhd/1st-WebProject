@@ -1,24 +1,27 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Product from './pages/Product';
-import Basket from './pages/Basket';
-import './css/app.css';
-// import styles from './app.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./css/app.css";
+import Detail from "./pages/Detail";
+import Cart from "./pages/Cart";
+
+// import Login from "./pages/Login";
+// import List from "./pages/List";
+// import Signup from "./pages/Signup";
+// import DeliveryAddress from "./pages/DeliveryAddress";
+// import Main from "./pages/Main";
+// import Userinfo from "./pages/Userinfo";
+import "./css/style.css";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Basket />}></Route>
-        <Route path='/product' element={<Product />}></Route>
-      </Routes>
-    </Router>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/detail" element={<Detail />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
 export default App;
-
-/**
- * 링크 넘기는거
- * useEffect
- * 포스트맨 도큐먼트를 보고 어떻게 코드를 작성하나?
- */
