@@ -1,5 +1,17 @@
-const { Schema } = require("mongoose");
-// var deepPopulate = require('mongoose-deep-populate');
-// Doc.plugin(deepPopulate, options);
+const { ObjectId } = require('mongodb');
+const { Schema } = require('mongoose');
 
-const CategorySchema = new Schema({});
+const CategorySchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  parentCategory: {
+    type: ObjectId,
+  },
+  categoryType: {
+    type: String,
+  },
+});
+
+module.exports = CategorySchema;

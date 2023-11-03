@@ -1,19 +1,20 @@
-const express = require("express");
+const express = require('express');
 
-const { apiRouter } = require("./routes/index");
-const path = require("path");
-const config = require("./config/config");
-const logger = require("./config/logger");
-const morgan = require("./config/morgan");
+const { apiRouter } = require('./routes/index');
+const path = require('path');
+const config = require('./config/config');
+const logger = require('./config/logger');
+const morgan = require('./config/morgan');
 
 const app = express();
+const cors = require('cors');
 
 const EXPRESS_PORT = config.express.primary.port;
 const LOCATION = config.express.primary.location;
 
 // app.use(express.static(__dirname + "/front/dist"));
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // 라우터 설정
 
@@ -25,10 +26,12 @@ app.use(morgan.errorHandler);
 //   next();
 // });
 
-app.use("/api", apiRouter);
+app.use(express.json());
+app.use(cors());
+app.use('/api', apiRouter);
 
-app.get("/", (req, res) => {
-  res.json({ message: "Hello! Elice~" });
+app.get('/', (req, res) => {
+  res.json({ message: 'Hello! Elice~' });
 });
 
 // app.listen(EXPRESS_PORT, () => {
