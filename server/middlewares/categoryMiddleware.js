@@ -16,6 +16,7 @@ const verifyData = async (req, res, next) => {
 //새로 추가하는 카테고리 데이터 검증
 /**
  * body :
+ *
  */
 const verifyNewData = async (req, res, next) => {
   console.log('this is newcategory check middleware');

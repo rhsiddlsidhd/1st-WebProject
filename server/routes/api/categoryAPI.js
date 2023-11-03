@@ -1,27 +1,42 @@
 const categoryController = require('../../controllers/categoryController');
-const {
-  verifyData,
-  verifyNewData,
-} = require('../../middlewares/categoryMiddleware');
 const { Router } = require('express');
 const router = Router();
+
 /**
  * 각 라우터별 데이터 검증하는 미들웨어 체크하기
  */
+const validate = require('../../middlewares/vaildate');
+const categoryValidation = require('../../validation/categoryValidation');
 
 //카테고리 리스트 가져오기
-router.get('/', verifyData, categoryController.getCategoryList);
+router.get('/', categoryController.getCategoryList);
 
 //특정 카테고리 정보 불러오기
-router.get('/:id', verifyData, categoryController.getCategory);
+router.get(
+  '/:id',
+  validate(categoryValidation.getCategory),
+  categoryController.getCategory
+);
 
 //관리자가 카테고리 새로 추가
-router.post('/', verifyNewData, categoryController.createCategory);
+router.post(
+  '/',
+  validate(categoryValidation.createCategory),
+  categoryController.createCategory
+);
 
 //카테고리 수정
-router.patch('/:id', categoryController.updateCategory);
+router.patch(
+  '/',
+  validate(categoryValidation.updateCategory),
+  categoryController.updateCategory
+);
 
 // 카테고리 삭제
-router.delete('/', categoryController.deleteCategory);
+router.delete(
+  '/:id',
+  validate(categoryValidation.deleteCategory),
+  categoryController.deleteCategory
+);
 
 module.exports = router;

@@ -11,25 +11,25 @@ exports.getCategoryList = async (req, res, next) => {
 // 특정 카테고리 정보 불러오기
 exports.getCategory = async (req, res) => {
   //   TODO: req.query 부분 수정 필요
-  const data = { type: '진짜 하나임 category' };
+  const data = await categoryService.getCategory(req.params);
 
   res.json(data);
 };
 
 //카테고리 생성
-exports.createCategory = async (req, res) => {
-  const data = { type: 'create category!!!!!' };
+exports.createCategory = async (req, res, next) => {
+  const data = await categoryService.createCategory(req.body);
   res.json(data);
 };
 
 //카테고리 수정
-exports.updateCategory = async (req, res) => {
-  const data = { type: 'update category' };
+exports.updateCategory = async (req, res, next) => {
+  const data = await categoryService.updateCategory(req.body);
   res.json(data);
 };
 
 //카테고리 삭제
 exports.deleteCategory = async (req, res, next) => {
-  const data = { type: 'delete category' };
+  const data = await categoryService.deleteCategory(req.params);
   res.json(data);
 };
