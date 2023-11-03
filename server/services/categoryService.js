@@ -1,5 +1,3 @@
-// const Category = req '../models';
-
 //카테고리 전체 가져오기
 const categoryList = async () => {
   const data = [
