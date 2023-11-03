@@ -36,16 +36,19 @@
                     <div className="div__div--category-list-data-box">
                     {/* 카테고리 데이터를 넣을 부분 */}
                         <div className="div__div--category-list-data">
-                            <p>브랜드</p>
+                            <div className="div__div--blank"></div>
+                            <p className="div__p--category-big-name-data">브랜드</p>
                             <button className="div__button--delete-button">삭제</button>
                         </div>
                         <div className="div__div--category-list-data">
-                            <p>나이키</p>
-                            <button>삭제</button>
+                            <div className="div__div--small-category">ㄴ</div>
+                            <p className="div__p--category-name-data">나이키</p>
+                            <button className="div__button--delete-button">삭제</button>
                         </div>
                         <div className="div__div--category-list-data">
-                            <p>아디다스</p>
-                            <button>삭제</button>
+                            <div className="div__div--small-category">ㄴ</div>
+                            <p className="div__p--category-name-data">아디다스</p>
+                            <button className="div__button--delete-button">삭제</button>
                         </div>
                         <button className="div__button--category-add-button">추가</button>
                     </div>
@@ -55,7 +58,7 @@
                     <form className="div__form--category-form">
                         <div className="form__div--category-info-gap">
                             <label className="form_label--category-label">카테고리 명</label>
-                            <input type='text' value={categoryName} onChange={setCategoryName}  className="form__div--category-name" />
+                            <input type='text' className="form__div--category-name" />
                         </div>
                         <div className="form__div--category-info-gap">
                             <label className="form_label--category-label">카테고리 분류</label>

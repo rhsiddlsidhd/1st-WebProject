@@ -761,7 +761,6 @@ button {
 
 .div__div--category-list-data {
   display: flex;
-  justify-content: space-around;
   border-bottom: 1px solid;
   line-height: 16px;
   padding: 10px 0;
@@ -834,4 +833,26 @@ button {
 
 .form__button--category-button:hover {
   opacity: 0.7;
+}
+
+.div__button--delete-button {
+  width: 40%;
+}
+
+.div__div--blank {
+  width: 20%;
+}
+
+.div__p--category-big-name-data {
+ width: 40%;
+}
+
+.div__p--category-name-data {
+  width: 40%
+}
+
+.div__div--small-category {
+  color: #9d9d9d;
+  width: 20%;
+  text-align: end;
 }
