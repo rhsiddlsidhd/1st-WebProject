@@ -19,7 +19,8 @@ exports.getCategory = async (req, res) => {
 //카테고리 생성
 exports.createCategory = async (req, res, next) => {
   const data = await categoryService.createCategory(req.body);
-  res.json(data);
+
+  res.status(201).json(data);
 };
 
 //카테고리 수정
