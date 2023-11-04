@@ -6,6 +6,7 @@ const config = require("./config/config");
 const logger = require("./config/logger");
 const morgan = require("./config/morgan");
 
+const httpStatus = require("http-status");
 const { errorConverter, errorHandler } = require("./middlewares/error");
 const ApiError = require("./utils/ApiError");
 
@@ -35,6 +36,10 @@ app.use("/api", apiRouter);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello! Elice~" });
+});
+
+app.use((req, res, next) => {
+  next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
 });
 
 app.use(errorConverter);
