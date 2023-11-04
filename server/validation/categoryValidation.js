@@ -31,7 +31,7 @@ const updateCategory = {
 // 카테고리 삭제 시 검증할 데이터
 // TODO : db에 아이디가 있는지 확인햐는 것 추가해야함
 const deleteCategory = {
-  body: Joi.object().keys({
+  params: Joi.object().keys({
     id: Joi.string().min(1).required(),
   }),
 };

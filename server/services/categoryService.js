@@ -1,41 +1,22 @@
+const { Category } = require('../models');
 //카테고리 전체 가져오기
 const categoryList = async () => {
-  const data = [
-    {
-      name: '브랜드',
-      parentCategory: '',
-      categoryType: '대분류',
-    },
-    {
-      name: '나이키',
-      parentCategory: '브랜드카테고리id',
-      categoryType: '소분류',
-    },
-  ];
-
-  return data;
+  return await Category.find({});
 };
 
 // 특정 카테고리 가져오기
 const getCategory = async (categoryParams) => {
-  const categoryId = categoryParams;
-  //DB에서 카테고리 아이디 가져올거임
+  const data = categoryParams;
+  const category = await Category.findById({ _id: data.id }).exec();
 
-  // 가져온 정보 예시
-  const data = {
-    name: '브랜드',
-    parentCategory: '',
-    categoryType: '대분류',
-  };
-
-  return data;
+  return category;
 };
 
 //카테고리 추가하기
 const createCategory = async (categoryBody) => {
-  const data = categoryBody;
+  const newCategory = await Category.create(categoryBody);
 
-  return { message: 'create category Success', data };
+  return newCategory;
 };
 
 //카테고리 수정하기
@@ -49,14 +30,15 @@ const updateCategory = async (categoryBody) => {
 //카테고리 삭제하기
 const deleteCategory = async (categoryParams) => {
   // TODO DB에서 데이터 가져온 후 삭제하기
-  const data = {
-    id: categoryParams.id,
-    name: '스니커즈',
-    parentCategory: '',
-    categoryType: '소분류',
-  };
+  const data = categoryParams;
+  const deleteItem = await Category.findById({ _id: data.id }).exec();
 
-  return { message: 'Delete category Success', data };
+  if (deleteItem !== null) {
+    const result = await Category.deleteOne({ _id: data.id });
+    return { message: 'Delete category Success', deleteItem, result };
+  }
+
+  return { message: 'Delete category Failed', deleteItem };
 };
 
 module.exports = {
