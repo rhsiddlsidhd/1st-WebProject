@@ -1,12 +1,12 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
 
-const productRouter = require('./api/product');
-const categoryRouter = require('./api/categoryAPI');
+const productsRouter = require("./api/products");
+const categoryRouter = require("./api/categoryAPI");
 
 const apiRouter = router
-  .use('/product', productRouter)
-  .use('/category', categoryRouter);
+  .use("/products", productsRouter)
+  .use("/category", categoryRouter);
 
 module.exports = {
   apiRouter,
