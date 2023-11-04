@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 const Joi = require("joi");
 const httpStatus = require("http-status");
 const pick = require("../utils/pick");
 const ApiError = require("../utils/ApiError");
+=======
+const Joi = require('joi');
+const httpStatus = require('http-status');
+const pick = require('../utils/pick');
+const ApiError = require('../utils/ApiError');
+>>>>>>> a568963ce662f17cf43c11964cbf0d595e3bfb84
 
 const validate = (schema) => (req, res, next) => {
   const validSchema = pick(schema, ["params", "query", "body"]);
@@ -18,7 +25,10 @@ const validate = (schema) => (req, res, next) => {
     return next(new ApiError(httpStatus.BAD_REQUEST, errorMessage));
   }
 
+<<<<<<< HEAD
   console.log("hererererere validate");
+=======
+>>>>>>> a568963ce662f17cf43c11964cbf0d595e3bfb84
   Object.assign(req, value);
 
   return next();

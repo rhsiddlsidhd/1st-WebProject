@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongodb');
 const { Schema } = require('mongoose');
 
 const CategorySchema = new Schema({
@@ -7,7 +6,7 @@ const CategorySchema = new Schema({
     required: true,
   },
   parentCategory: {
-    type: ObjectId,
+    type: String,
   },
   categoryType: {
     type: String,
