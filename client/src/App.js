@@ -1,24 +1,26 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Product from './pages/Product';
-import Basket from './pages/Basket';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// import Product from './pages/Product';
+// import Basket from './pages/Basket';
+import RouteTest from './components/RouteTest';
+import ManageProducts from './pages/ManageProducts';
+import ManageProductNew from './pages/ManageProductNew';
+import ManageProduct from './pages/ManageProduct';
+import ManageProductEdit from './pages/MangeProductEdit';
 import './css/app.css';
-// import styles from './app.css';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Basket />}></Route>
-        <Route path='/product' element={<Product />}></Route>
-      </Routes>
-    </Router>
+    <BrowserRouter>
+      <div className='App'>
+        {/* <img src={process.env.PUBLIC_URL + `/assets/미소.jpg`}></img> */}
+        <Routes>
+          <Route path='/products' element={<ManageProducts />}></Route>
+          <Route path='/edit/:id' element={<ManageProductEdit />}></Route>
+          <Route path='/new' element={<ManageProductNew />}></Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
-/**
- * 링크 넘기는거
- * useEffect
- * 포스트맨 도큐먼트를 보고 어떻게 코드를 작성하나?
- */
