@@ -4,6 +4,7 @@ const APIError = require('../utils/ApiError');
 
 //카테고리 전체 가져오기
 const categoryList = async () => {
+  return await Category.find({});
   if (!(await Category.find({}))) {
     throw new APIError(httpStatus.NOT_FOUND, 'GET Category list is not exist');
   }
