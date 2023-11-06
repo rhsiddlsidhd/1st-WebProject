@@ -1,24 +1,36 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Product from './pages/Product';
-import Basket from './pages/Basket';
-import './css/app.css';
-// import styles from './app.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Detail from "./pages/Detail";
+import Cart from "./pages/Cart";
+import "./css/app.css";
+import DeliveryAddress from "./pages/DeliveryAddress";
+import PurchaseCompleted from "./pages/PurchaseCompleted";
+import Product from "./components/Products";
+
+// import Product from './pages/Product';
+// import Basket from './pages/Basket';
+// import RouteTest from "./components/RouteTest";
+// import ManageProducts from "./pages/ManageProducts";
+import ManageProductNew from "./pages/ManageProductNew";
+import ManageProductEdit from "./pages/MangeProductEdit";
+import "./css/app.css";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Basket />}></Route>
-        <Route path='/product' element={<Product />}></Route>
-      </Routes>
-    </Router>
+    <div className="App">
+      {/* <img src={process.env.PUBLIC_URL + `/assets/미소.jpg`}></img> */}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/detail" element={<Detail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/deliveryaddress" element={<DeliveryAddress />} />
+          <Route path="/PurchaseCompleted" element={<PurchaseCompleted />} />
+          {/* <Route path="/products" element={<Products />}></Route> */}
+          <Route path="/edit/:id" element={<ManageProductEdit />}></Route>
+          <Route path="/new" element={<ManageProductNew />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
 export default App;
-
-/**
- * 링크 넘기는거
- * useEffect
- * 포스트맨 도큐먼트를 보고 어떻게 코드를 작성하나?
- */
