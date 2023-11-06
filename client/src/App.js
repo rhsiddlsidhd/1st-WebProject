@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Detail from "./pages/Detail";
 import Cart from "./pages/Cart";
-import "./css/App.css";
+import "./css/app.css";
 import DeliveryAddress from "./pages/DeliveryAddress";
 import PurchaseCompleted from "./pages/PurchaseCompleted";
 

@@ -1,5 +1,5 @@
 import imageSrc from "../../images/shinba_d.png";
-import "../../css/App.css";
+import "../../css/app.css";
 import React, { useState } from "react";
 
 const Header = () => {
