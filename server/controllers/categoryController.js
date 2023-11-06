@@ -2,22 +2,24 @@ const categoryService = require('../services/categoryService');
 const catchAsync = require('../utils/catchAsync');
 
 //카테고리 리스트
-exports.getCategoryList = catchAsync(async (req, res) => {
+exports.getCategoryList = catchAsync(async (req, res, next) => {
   try {
     const data = await categoryService.categoryList();
     res.json(data);
   } catch (e) {
+    next(e);
     res.status(404).json('[ERROR] Category list is not exist');
   }
 });
 
 // 특정 카테고리 정보 불러오기
-exports.getCategory = async (req, res) => {
+exports.getCategory = async (req, res, next) => {
   try {
     const data = await categoryService.getCategory(req.params);
 
     res.json(data);
   } catch (e) {
+    next(e);
     res.status(404).json('[ERROR] Get Category is Failed');
   }
 };
@@ -28,6 +30,7 @@ exports.createCategory = async (req, res, next) => {
     const data = await categoryService.createCategory(req.body);
     res.status(201).json(data);
   } catch (e) {
+    next(e);
     res.status(500).json('[ERROR] Category create is FAILED');
   }
 };
@@ -38,6 +41,7 @@ exports.updateCategory = async (req, res, next) => {
     const data = await categoryService.updateCategory(req.body);
     res.json(data);
   } catch (e) {
+    next(e);
     res.status(500).json('[ERROR] Category updated is FAILED');
   }
 };
@@ -48,6 +52,7 @@ exports.deleteCategory = async (req, res, next) => {
     const data = await categoryService.deleteCategory(req.params);
     res.json(data);
   } catch (e) {
+    next(e);
     res.status(500).json('[ERROR] Category delete is FAILED');
   }
 };
