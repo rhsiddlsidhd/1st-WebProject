@@ -57,11 +57,10 @@ const errorConverter = (err, req, res, next) => {
  */
 const errorHandler = (err, req, res, next) => {
   let { statusCode, message } = err;
-  if (config.env === "production" && !err.isOperational) {
+  if (config.env === "PROD" && !err.isOperational) {
     statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR];
   }
-
   res.locals.errorMessage = err.message;
   // 이 부분이 왜 필요한지 모르겠음
   // res.locals가 어떤 역할인지는 알겠는데
@@ -71,10 +70,10 @@ const errorHandler = (err, req, res, next) => {
   const response = {
     code: statusCode,
     message,
-    ...(config.env === "development" && { stack: err.stack }),
+    ...(config.env === "DEV" && { stack: err.stack }),
   };
 
-  if (config.env === "development") {
+  if (config.env === "DEV") {
     logger.error(err);
   }
 

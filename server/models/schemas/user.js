@@ -1,20 +1,20 @@
 const { Schema } = require("mongoose");
 const { UserRoleType } = require("../enums/user_role");
-
+const shortId = require("../../utils/shortId");
 const UserSchema = new Schema({
-  user_name: {
+  username: {
     type: String,
     required: true,
   },
-  user_password: {
+  password: {
     type: password,
     required: true,
   },
-  user_email: {
+  email: {
     type: String,
     required: true,
   },
-  user_role_type: {
+  role_type: {
     type: String,
     enum: ["ADMIN", "USER"],
     default: "USER",

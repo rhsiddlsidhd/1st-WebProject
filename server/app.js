@@ -34,10 +34,6 @@ app.use(express.json());
 app.use(cors());
 app.use("/api", apiRouter);
 
-app.get("/", (req, res) => {
-  res.json({ message: "Hello! Elice~" });
-});
-
 app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
 });
