@@ -1,7 +1,7 @@
-import React, { memo, useEffect } from 'react';
-import { useNavigate, state } from 'react-router-dom';
-import { deleteProduct } from '../api/productsAPI';
-const Product = ({ item, categories, getProductList }) => {
+// import React, { memo, useEffect } from "react";
+import { useNavigate, state } from "react-router-dom";
+// import { deleteProduct } from "../api/productsAPI";
+const Products = ({ item, categories, getProductList }) => {
   const handleRemove = () => {
     if (
       window.confirm(
@@ -19,15 +19,15 @@ const Product = ({ item, categories, getProductList }) => {
   };
 
   return (
-    <div className='Product'>
+    <div className="Product">
       <img
-        className='image'
+        className="image"
         src={process.env.PUBLIC_URL + `/assets/미소.jpg`}
-        width='100px'
+        width="100px"
       ></img>
-      <span className='title'>{item.title}</span>
-      <span className='price'>{item.price}</span>
-      <span className='brand'>{item.brand}</span>
+      <span className="title">{item.title}</span>
+      <span className="price">{item.price}</span>
+      <span className="brand">{item.brand}</span>
       <span>
         <button onClick={handleRemove}>삭제하기</button>
         <button onClick={handleEdit}>수정하기</button>
@@ -36,4 +36,4 @@ const Product = ({ item, categories, getProductList }) => {
   );
 };
 
-export default memo(Product);
+export default Products;

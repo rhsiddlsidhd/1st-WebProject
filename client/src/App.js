@@ -4,13 +4,13 @@ import Cart from "./pages/Cart";
 import "./css/app.css";
 import DeliveryAddress from "./pages/DeliveryAddress";
 import PurchaseCompleted from "./pages/PurchaseCompleted";
+import Product from "./components/Products";
 
 // import Product from './pages/Product';
 // import Basket from './pages/Basket';
-import RouteTest from "./components/RouteTest";
-import ManageProducts from "./pages/ManageProducts";
+// import RouteTest from "./components/RouteTest";
+// import ManageProducts from "./pages/ManageProducts";
 import ManageProductNew from "./pages/ManageProductNew";
-import ManageProduct from "./pages/ManageProduct";
 import ManageProductEdit from "./pages/MangeProductEdit";
 import "./css/app.css";
 
@@ -24,7 +24,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/deliveryaddress" element={<DeliveryAddress />} />
           <Route path="/PurchaseCompleted" element={<PurchaseCompleted />} />
-          <Route path="/products" element={<ManageProducts />}></Route>
+          {/* <Route path="/products" element={<Products />}></Route> */}
           <Route path="/edit/:id" element={<ManageProductEdit />}></Route>
           <Route path="/new" element={<ManageProductNew />}></Route>
         </Routes>
