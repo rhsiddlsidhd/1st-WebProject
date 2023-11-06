@@ -2,7 +2,7 @@
 // FIXME api요청주소 BASE_URL/api로 변경
 import axios from 'axios';
 
-// get response:
+// // get response:
 
 // export const getProducts = async (queryString) => {
 //   try {

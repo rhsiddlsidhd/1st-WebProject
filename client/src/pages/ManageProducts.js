@@ -9,7 +9,6 @@ const ManageProducts = () => {
   const [products, setProducts] = useState([]);
   const [selected, setSelected] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
-  // const [productCount, setProductCount] = useState();
   const productCountRef = useRef(null);
   let queryString;
 
@@ -17,11 +16,6 @@ const ManageProducts = () => {
   useEffect(() => {
     if (state) setSelectedCategories(state);
   }, []);
-
-  // NOTE 대분류에서 타입가져오기
-  const selectList = ['스니커즈', '샌들', '로퍼'];
-  // NOTE 체크박스는 대분류에서 성별, 브랜드가져오기
-  // FIXME 이 두 부분을 컴포넌트로 빼기
 
   const handleSelect = (e) => {
     const value = e.target.value;
