@@ -47,8 +47,8 @@ button {
 /* header */
 header {
   width: 100%;
-  height: 150px;
-  background-color: bisque;
+  height: 80px;
+  /* background-color: bisque; */
 
   display: flex;
   justify-content: center;
@@ -387,7 +387,6 @@ header {
   color: var(--white-color);
   background: var(--greed-color);
 }
-
 /* cart */
 .body__div--cart-div-size {
   width: 100%;
@@ -415,7 +414,10 @@ header {
 .div__p--select-all-text {
   text-align: start;
 }
-
+.div__p--select-all-text {
+  display: flex;
+  align-items: center;
+}
 .div__input--checkbox-style {
   margin-right: 10px;
 }
@@ -430,18 +432,76 @@ header {
   height: 350px;
 }
 
+.div__div--cart-list-style {
+  width: 800px;
+  background-color: greenyellow;
+}
+
 .div__hr--hr-style {
   width: 800px;
+  color: #a5a5a5;
 }
 
 /* 여기추가 */
+/* checkbox custom */
+.checkbox-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.cart-checkbox {
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #c2c2c2;
+
+  cursor: pointer;
+}
+
+/* .checkmark i {
+  position: absolute;
+  font-size: 34px;
+  left: 5px;
+  top: 3px;
+  color: #d2d2d2;
+} */
+
+.cart-checkbox:checked {
+  background-color: #41b979;
+}
+/*  */
+
+.cart-area {
+  width: 100%;
+  height: 300px;
+  border-top: 1px solid #a5a5a5;
+  border-bottom: 1px solid #a5a5a5;
+
+  overflow: scroll;
+}
+
+.cart-area::-webkit-scrollbar {
+  display: none;
+}
+
+.div__div-cart-list-all-add {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  background-color: #41b979;
+}
 
 .div__div-cart-list-add > div:first-child {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   height: 100px;
   overflow: hidden;
+
+  background-color: #ef6253;
 }
 
 .number {
@@ -486,6 +546,8 @@ header {
 .div__button--purchase-button-style:hover {
   opacity: 0.7;
 }
+
+/*  */
 
 /* delivery address */
 .body__div--delivery-address-div-size {

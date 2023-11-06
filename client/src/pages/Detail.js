@@ -1,9 +1,12 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/common/Header";
+import Footer from "../components/common/Footer";
+import { useNavigate } from "react-router-dom";
 
 // import React, { useState } from "react";
 
 const Detail = () => {
+  const navigate = useNavigate();
+
   const randomId = () => {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
@@ -31,6 +34,8 @@ const Detail = () => {
       const updateStorage = [product];
       localStorage.setItem("cartProduct", JSON.stringify(updateStorage));
     }
+
+    alert("장바구니에 상품이 추가되었습니다.");
   };
 
   return (
@@ -52,6 +57,9 @@ const Detail = () => {
             </select>
             <form>
               <input
+                onClick={() => {
+                  navigate("/deliveryaddress");
+                }}
                 type="button"
                 value="구매하기"
                 className="form__input--purchase-button-style"
