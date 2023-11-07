@@ -2,7 +2,6 @@ const { User } = require('../models');
 const hash = require('../utils/hash-password');
 const httpStatus = require('http-status');
 const APIError = require('../utils/ApiError');
-const { setUserToken } = require('../utils/jwt');
 
 //로그인
 const login = async (userBody) => {

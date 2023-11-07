@@ -27,7 +27,7 @@ exports.login = async (req, res, next) => {
 
 // 로그아웃
 exports.logout = async (req, res) => {
-  if (!req.get('token')) {
+  if (!req.cookies.token) {
     throw new ApiError(httpStatus[400], 'User Token is not exist');
   }
 
@@ -51,7 +51,7 @@ exports.join = async (req, res, next) => {
     const user = await authService.join(req.body);
 
     if (user === 'EXIST') {
-      res.status(500).json('EXIST');
+      res.json('EXIST');
     }
 
     //UserToken 생성 후 response 헤더 cookie에 토큰 값 저장
