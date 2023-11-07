@@ -25,6 +25,21 @@ const getCategory = async (categoryParams) => {
   return category;
 };
 
+// 부모 카테고리 id로 리스트 가져오기
+const getCategoryByParentId = async (categoryParams) => {
+  const data = categoryParams;
+  const category = await Category.find({
+    parentCategory: data.parentCategory,
+  }).exec();
+  console.log(category);
+
+  if (!category) {
+    throw new APIError(httpStatus.NOT_FOUND, 'Category is not exist.');
+  }
+
+  return category;
+};
+
 //카테고리 추가하기
 const createCategory = async (categoryBody) => {
   if (
@@ -87,6 +102,7 @@ module.exports = {
   getCategory,
   updateCategory,
   deleteCategory,
+  getCategoryByParentId,
 };
 
 // multer : 이미지 저장하기

@@ -24,6 +24,18 @@ exports.getCategory = async (req, res, next) => {
   }
 };
 
+// 부모 카테고리 id로 카테고리 리스트 불러오기
+exports.getCategoryByParentId = async (req, res, next) => {
+  try {
+    const data = await categoryService.getCategoryByParentId(req.params);
+
+    res.json(data);
+  } catch (e) {
+    next(e);
+    res.status(404).json('[ERROR] Get Category List is Failed');
+  }
+};
+
 //카테고리 생성
 exports.createCategory = async (req, res, next) => {
   try {

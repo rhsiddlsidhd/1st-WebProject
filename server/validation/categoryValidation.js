@@ -41,9 +41,19 @@ const deleteCategory = {
     .unknown(false),
 };
 
+// 대분류 / 소분류 카테고리만 가져올 때 검증할 데이터
+const getCategoryByParentId = {
+  params: Joi.object()
+    .keys({
+      parentCategory: Joi.string().min(1).required(),
+    })
+    .unknown(false),
+};
+
 module.exports = {
   createCategory,
   getCategory,
   updateCategory,
   deleteCategory,
+  getCategoryByParentId,
 };
