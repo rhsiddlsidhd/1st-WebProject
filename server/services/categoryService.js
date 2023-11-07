@@ -31,12 +31,9 @@ const getCategoryByParentId = async (categoryParams) => {
   const category = await Category.find({
     parentCategory: data.parentCategory,
   }).exec();
-  console.log(category);
-
   if (!category) {
     throw new APIError(httpStatus.NOT_FOUND, 'Category is not exist.');
   }
-
   return category;
 };
 
@@ -102,7 +99,6 @@ module.exports = {
   getCategory,
   updateCategory,
   deleteCategory,
-  getCategoryByParentId,
 };
 
 // multer : 이미지 저장하기
