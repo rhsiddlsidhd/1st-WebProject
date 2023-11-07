@@ -1,5 +1,5 @@
 const userService = require('../services/userService');
-const logger = require('../config/logger');
+const APIError = require('../utils/ApiError');
 
 // 사용자 정보 가져오기
 exports.getUser = async (req, res, next) => {
@@ -7,7 +7,7 @@ exports.getUser = async (req, res, next) => {
     //cookie 의 Token으로 로그인 상태 확인
 
     if (!req.cookies.token) {
-      throw new ApiError(httpStatus[400], 'User Token is not exist.');
+      throw new APIError(httpStatus[400], 'User Token is not exist.');
     }
 
     const user = await userService.getUserInfo(req.params);
@@ -25,7 +25,7 @@ exports.userWithdraw = async (req, res, next) => {
     //cookie 의 Token으로 로그인 상태 확인
 
     if (!req.cookies.token) {
-      throw new ApiError(httpStatus[400], 'User Token is not exist.');
+      throw new APIError(httpStatus[400], 'User Token is not exist.');
     }
 
     const data = await userService.deleteUser(req.params);
@@ -42,7 +42,7 @@ exports.updateUserInfo = async (req, res, next) => {
   try {
     //cookie 의 Token으로 로그인 상태 확인
     if (!req.cookies.token) {
-      throw new ApiError(httpStatus[400], 'User Token is not exist.');
+      throw new APIError(httpStatus[400], 'User Token is not exist.');
     }
 
     const result = await userService.updateUser(req);
