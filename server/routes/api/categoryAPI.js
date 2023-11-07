@@ -11,6 +11,13 @@ const categoryValidation = require('../../validation/categoryValidation');
 //카테고리 리스트 가져오기
 router.get('/', categoryController.getCategoryList);
 
+// 대분류 /소분류 카테고리 리스트만 불러오기
+router.get(
+  '/:parentCategory',
+  validate(categoryValidation.getCategoryByParentId),
+  categoryController.getCategoryByParentId
+);
+
 //특정 카테고리 정보 불러오기
 router.get(
   '/:id',
