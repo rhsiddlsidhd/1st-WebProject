@@ -87,20 +87,9 @@ const arr = [
   },
 ];
 
-// export const getProducts = async () => {
-//   try {
-//     return arr;
-//   } catch (err) {
-//     throw new Error(err);
-//   }
-// };
-
 export const getProducts = async () => {
   try {
-    const response = await axios.get(
-      'https://jsonplaceholder.typicode.com/posts'
-    );
-    return response.data;
+    return arr;
   } catch (err) {
     throw new Error(err);
   }

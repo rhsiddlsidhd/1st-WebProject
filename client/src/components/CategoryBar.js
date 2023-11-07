@@ -1,6 +1,7 @@
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, memo, useCallback } from 'react';
 import { getParentCategory } from '../api/categoryAPI';
 import { getChildCategory } from '../api/categoryAPI';
+import Checkbox from './CheckBox';
 
 const CategoryBar = ({
   selectedCategories,
@@ -9,9 +10,7 @@ const CategoryBar = ({
 }) => {
   const [parentCategory, setParentCategory] = useState([]);
   const [typeSubCategory, setTypeSubCategort] = useState([]);
-  const [womanSubCategory, setWomanSubCategort] = useState([]);
-  const [manSubCategory, setManSubCategort] = useState([]);
-  const [brandSubCategory, setBrandSubCategort] = useState([]);
+  const [subCategory, setSubCategory] = useState([]);
 
   useEffect(() => {
     async function getParentCategories() {
@@ -25,60 +24,53 @@ const CategoryBar = ({
     getParentCategories();
   }, []);
 
+  const getChildCategories = useCallback(
+    async (parentCategory) => {
+      const subCategoryWithParent = await parentCategory.map(
+        (eachParentCategory) =>
+          getChildCategory(eachParentCategory.id).then(
+            (data) => ({ data: data, type: eachParentCategory.name })
+            // data.map((cate) => ({
+            //   type: eachParentCategory.name,
+            //   name: cate.name,
+            //   id: cate._id,
+            // }))
+          )
+      );
+      const res = await Promise.all(subCategoryWithParent);
+      console.log('res');
+      console.log(res);
+      setSubCategory(res);
+    },
+    [parentCategory]
+  );
+
   useEffect(() => {
-    for (let cate of parentCategory) {
-      async function getChildCategories() {
-        const responseArr = await getChildCategory(cate._id);
-        const childCategoryArr = responseArr.map((cate) => ({
-          id: cate._id,
-          name: cate.name,
-        }));
-        console.log(cate.name);
-        if (cate.name === '여성') {
-          setWomanSubCategort(childCategoryArr);
-        }
-        if (cate.name === '남성') {
-          setManSubCategort(childCategoryArr);
-        }
-        if (cate.name === '브랜드') {
-          setBrandSubCategort(childCategoryArr);
-        }
-        if (cate.name === '타입') {
-          setTypeSubCategort(childCategoryArr);
-        }
-      }
-      getChildCategories();
-    }
-  }, [parentCategory]);
+    getChildCategories(parentCategory);
+  }, [getChildCategories]);
+
+  console.log('subCategory');
+  console.log(subCategory);
 
   return (
     <div className='CategoryBar'>
       <select onChange={handleSelect}>
         <option value=''>타입을 선택하세요</option>
-        {typeSubCategory.map((item, idx) => (
+        {typeSubCategory.map((item) => (
           <option value={item.id} key={item.id}>
             {item.name}
           </option>
         ))}
       </select>
 
-      {[womanSubCategory, manSubCategory, brandSubCategory].map((cate) =>
-        cate.map((item) => (
-          <div key={item.id}>
-            <label>
-              <input
-                type='checkbox'
-                name='womanSubCategory'
-                value={item.id}
-                onChange={handleCheckboxChange}
-                checked={selectedCategories.includes(item.id)}
-              />
-              {item.name}
-            </label>
-            <br />
-          </div>
-        ))
-      )}
+      {subCategory.map((subArr) => (
+        <Checkbox
+          // key={idx}
+          category={subArr}
+          handleCheckboxChange={handleCheckboxChange}
+          selectedCategories={selectedCategories}
+        />
+      ))}
     </div>
   );
 };

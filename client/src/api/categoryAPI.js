@@ -11,7 +11,7 @@ const arr = [
   {
     _id: '6545317b3cdcd2c2c50af7bd',
     name: '타입',
-    parentCategory: '654530733cdcd2c2c50af7bb',
+    parentCategory: '-1',
     categoryType: '대분류',
     __v: 0,
   },
@@ -27,7 +27,7 @@ const arr = [
 const subArr = [
   {
     _id: '6545317b3cdcd2c2c50af7bd',
-    name: '닥터마틴',
+    name: '부츠',
     parentCategory: '654530733cdcd2c2c50af7bb',
     categoryType: '소분류',
     __v: 0,
@@ -64,7 +64,7 @@ export const getChildCategory = async (parentCategoryId) => {
 // export const getParentCategory = async () => {
 //   try {
 //     const response = await axios.get(
-//       'http://localhost:3000/api/category/-1'
+//       'http://localhost:3000/api/category?&parentCategory=-1'
 //     );
 //     return response.data;
 //   } catch (err) {
@@ -76,7 +76,7 @@ export const getChildCategory = async (parentCategoryId) => {
 // export const getChildCategory = async (parentCategoryId) => {
 //   try {
 //     const response = await axios.get(
-//       `http://localhost:3000/api/category?parentCategory=${parentCategoryId}`
+// `http://localhost:3000/api/category?parentCategory=1234`;
 //     );
 //     return response.data;
 //   } catch (err) {
