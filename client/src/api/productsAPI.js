@@ -2,13 +2,11 @@
 // FIXME api요청주소 BASE_URL/api로 변경
 import axios from 'axios';
 
-// // get response:
-
+// // // get response:
+// const API_BASE_URL = 'http://localhost:3000';
 // export const getProducts = async (queryString) => {
 //   try {
-//     const response = await axios.get(
-//       'http://localhost:3000/api/products${queryString}'
-//     );
+//     const response = await axios.get(`${API_BASE_URL}/api/products`);
 //     return response.data;
 //   } catch (err) {
 //     throw new Error(err);
@@ -89,24 +87,24 @@ const arr = [
   },
 ];
 
-export const getProducts = async () => {
-  try {
-    return arr;
-  } catch (err) {
-    throw new Error(err);
-  }
-};
-
 // export const getProducts = async () => {
 //   try {
-//     const response = await axios.get(
-//       'https://jsonplaceholder.typicode.com/posts'
-//     );
-//     return response.data;
+//     return arr;
 //   } catch (err) {
 //     throw new Error(err);
 //   }
 // };
+
+export const getProducts = async () => {
+  try {
+    const response = await axios.get(
+      'https://jsonplaceholder.typicode.com/posts'
+    );
+    return response.data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 
 export const getProduct = async () => {
   try {

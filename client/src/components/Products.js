@@ -1,39 +1,20 @@
-// // import React, { memo, useEffect } from "react";
-// import { useNavigate, state } from "react-router-dom";
-// // import { deleteProduct } from "../api/productsAPI";
-// const Products = ({ item, categories, getProductList }) => {
-//   const handleRemove = () => {
-//     if (
-//       window.confirm(
-//         `${item.title}(${item.model_number})제품을 삭제하시겠습니까?`
-//       )
-//     ) {
-//       getProductList();
-//     }
-//   };
-//   const navigate = useNavigate();
-//   const handleEdit = () => {
-//     navigate(`/edit/${item.id}`, {
-//       state: { categories: categories, item: item },
-//     });
-//   };
+// import React, { memo, useEffect } from "react";
+import { useNavigate, state } from 'react-router-dom';
+// import { deleteProduct } from "../api/productsAPI";
+const Products = ({ products, loading }) => {
+  if (loading) {
+    return <h2>제품을 불러오는 중</h2>;
+  }
 
-//   return (
-//     <div className="Product">
-//       <img
-//         className="image"
-//         src={process.env.PUBLIC_URL + `/assets/미소.jpg`}
-//         width="100px"
-//       ></img>
-//       <span className="title">{item.title}</span>
-//       <span className="price">{item.price}</span>
-//       <span className="brand">{item.brand}</span>
-//       <span>
-//         <button onClick={handleRemove}>삭제하기</button>
-//         <button onClick={handleEdit}>수정하기</button>
-//       </span>
-//     </div>
-//   );
-// };
+  return (
+    <ul className='list-group'>
+      {products.map((product) => (
+        <li key={product.id} className='list-group-item'>
+          {product.title}
+        </li>
+      ))}
+    </ul>
+  );
+};
 
-// export default Products;
+export default Products;

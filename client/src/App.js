@@ -5,6 +5,7 @@ import './css/app.css';
 import DeliveryAddress from './pages/DeliveryAddress';
 import PurchaseCompleted from './pages/PurchaseCompleted';
 import Product from './components/Products';
+import ProductList from './components/ProductList';
 
 // import Product from './pages/Product';
 // import Basket from './pages/Basket';
@@ -27,6 +28,7 @@ function App() {
           <Route path='/products' element={<ManageProducts />}></Route>
           <Route path='/edit/:id' element={<ManageProductEdit />}></Route>
           <Route path='/new' element={<ManageProductNew />}></Route>
+          <Route path='/list' element={<ProductList />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

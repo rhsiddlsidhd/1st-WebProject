@@ -64,7 +64,7 @@ export const getChildCategory = async (parentCategoryId) => {
 // export const getParentCategory = async () => {
 //   try {
 //     const response = await axios.get(
-//       'http://localhost:3000/api/category?type=대분류'
+//       'http://localhost:3000/api/category/-1'
 //     );
 //     return response.data;
 //   } catch (err) {
@@ -76,7 +76,7 @@ export const getChildCategory = async (parentCategoryId) => {
 // export const getChildCategory = async (parentCategoryId) => {
 //   try {
 //     const response = await axios.get(
-//       `http://localhost:3000/api/category?type=소분류&parentCategory=${parentCategoryId}`
+//       `http://localhost:3000/api/category?parentCategory=${parentCategoryId}`
 //     );
 //     return response.data;
 //   } catch (err) {
