@@ -13,6 +13,9 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  address: {
+    type: String,
+  },
   role_type: {
     type: String,
     default: 'USER',
