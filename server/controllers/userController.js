@@ -1,5 +1,4 @@
 const userService = require('../services/userService');
-const logger = require('../config/logger');
 
 // 사용자 정보 가져오기
 exports.getUser = async (req, res, next) => {
