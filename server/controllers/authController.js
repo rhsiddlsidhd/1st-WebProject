@@ -1,7 +1,7 @@
 const authService = require('../services/authService');
 const { setUserToken } = require('../utils/jwt');
 const logger = require('../config/logger');
-const ApiError = require('../utils/ApiError');
+const APIError = require('../utils/ApiError');
 const httpStatus = require('http-status');
 
 // 로그인
@@ -28,7 +28,7 @@ exports.login = async (req, res, next) => {
 // 로그아웃
 exports.logout = async (req, res) => {
   if (!req.cookies.token) {
-    throw new ApiError(httpStatus[400], 'User Token is not exist');
+    throw new APIError(httpStatus[400], 'User Token is not exist');
   }
 
   try {
