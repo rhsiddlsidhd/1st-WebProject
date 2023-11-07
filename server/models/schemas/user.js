@@ -1,13 +1,12 @@
-const { Schema } = require("mongoose");
-const { UserRoleType } = require("../enums/user_role");
-const shortId = require("../../utils/shortId");
+const { Schema } = require('mongoose');
+
 const UserSchema = new Schema({
-  username: {
+  name: {
     type: String,
     required: true,
   },
   password: {
-    type: password,
+    type: String,
     required: true,
   },
   email: {
@@ -16,35 +15,9 @@ const UserSchema = new Schema({
   },
   role_type: {
     type: String,
-    enum: ["ADMIN", "USER"],
-    default: "USER",
-    required: true,
-  },
-  addresses: {
-    type: [AddressSchema],
-  },
-});
-
-const AddressSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-    required: true,
-  },
-  post_code: {
-    type: String,
-    required: true,
-  },
-  default: {
-    type: Boolean,
+    default: 'USER',
     required: true,
   },
 });
 
-module.exports = {
-  UserSchema,
-  AddressSchema,
-};
+module.exports = UserSchema;
