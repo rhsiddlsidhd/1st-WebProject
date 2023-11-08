@@ -1,8 +1,7 @@
 const categoryService = require('../services/categoryService');
-const catchAsync = require('../utils/catchAsync');
 
 //카테고리 리스트
-exports.getCategoryList = catchAsync(async (req, res, next) => {
+exports.getCategoryList = async (req, res, next) => {
   try {
     const data = await categoryService.categoryList();
     res.json(data);
@@ -10,7 +9,7 @@ exports.getCategoryList = catchAsync(async (req, res, next) => {
     next(e);
     res.status(404).json('[ERROR] Category list is not exist');
   }
-});
+};
 
 // 특정 카테고리 정보 불러오기
 exports.getCategory = async (req, res, next) => {
