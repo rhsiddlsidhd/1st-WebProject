@@ -1,6 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Detail from "./pages/Detail";
+import Cart from "./pages/Cart";
+import DeliveryAddress from "./pages/DeliveryAddress";
+import PurchaseCompleted from "./pages/PurchaseCompleted";
+import ManageProductNew from "./pages/ManageProductNew";
+import ManageProductEdit from "./pages/MangeProductEdit";
 
 import Home from './pages/Home';
 import List from './pages/List';
@@ -21,6 +27,10 @@ function App() {
     <Router>
       <Header />
       <Routes>
+      <Route path="/detail" element={<Detail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/deliveryaddress" element={<DeliveryAddress />} />
+          <Route path="/PurchaseCompleted" element={<PurchaseCompleted />} />
         <Route path='/' element={<Home />}></Route>
         <Route path='/list' element={<List />}></Route>
         <Route path='/category' element={<Category />}></Route>
