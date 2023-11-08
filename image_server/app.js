@@ -1,17 +1,17 @@
-const path = require("path");
-const express = require("express");
-const { nanoid } = require("nanoid");
-const multer = require("multer");
-const fs = require("fs");
-const config = require("./config/config");
+const path = require('path');
+const express = require('express');
+const { nanoid } = require('nanoid');
+const multer = require('multer');
+const fs = require('fs');
+const config = require('./config/config');
 
-const IMAGE_PATH = path.join("./images");
+const IMAGE_PATH = path.join('./images');
 const HOST = `${config.image_server.primary.location}:${config.image_server.primary.port}`;
 
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, cb) {
-      cb(null, "images/");
+      cb(null, 'images/');
     },
     filename(req, file, cb) {
       const ext = path.extname(file.originalname);
@@ -23,21 +23,21 @@ const upload = multer({
 const app = express();
 app.use(
   express.json({
-    limit: "50mb",
+    limit: '50mb',
   })
 );
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.post("/sinbad_images", (req, res) => {
+app.post('/sinbad_images', (req, res) => {
   const result = [];
-  for (let img of req.body["files"]) {
-    let buff = new Buffer.from(img["buffer"], "base64");
-    delete img["buffer"];
+  for (let img of req.body['files']) {
+    let buff = new Buffer.from(img['buffer'], 'base64');
+    delete img['buffer'];
     console.log(img);
     console.log(buff);
-    let filename = `${img["id"]}${img["ext"]}`;
+    let filename = `${img['id']}${img['ext']}`;
     let filepath = `${IMAGE_PATH}/${filename}`;
     let url = `${HOST}/images/${filename}`;
     console.log(filepath);
@@ -45,12 +45,12 @@ app.post("/sinbad_images", (req, res) => {
     result.push({ image_id: img.id, url, size: img.size });
     fs.writeFileSync(filepath, buff);
   }
-  res.json({ message: "Successfully uploaded files", result });
+  res.json({ message: 'Successfully uploaded files', result });
 });
 
-app.delete("/sinbad_images", (req, res) => {
+app.delete('/sinbad_images', (req, res) => {
   const result = [];
-  for (let filename of req.body["files"]) {
+  for (let filename of req.body['files']) {
     if (!filename) {
       continue;
     }
@@ -60,7 +60,7 @@ app.delete("/sinbad_images", (req, res) => {
       result.push(filename);
     }
   }
-  res.json({ message: "Successfully deleted files", result });
+  res.json({ message: 'Successfully deleted files', result });
 });
 
 app.listen(8080, () => {
