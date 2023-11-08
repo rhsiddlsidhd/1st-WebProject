@@ -2,9 +2,9 @@ dev:
   image_server:
     primary:
       location: http://kdt-sw-7-team09.elicecoding.com
-      port: 8080
+      port: 5000
 prod:
   image_server:
     primary:
       location: http://kdt-sw-7-team09.elicecoding.com
-      port: 8080
+      port: 5000

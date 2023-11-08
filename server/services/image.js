@@ -4,6 +4,11 @@ const path = require('path');
 const { nanoid } = require('nanoid');
 const axios = require('axios');
 
+const config = require('../config/config');
+
+const IMAGE_PORT = config.image_server.primary.port;
+const IMAGE_HOST = `${config.image_server.primary.location}:${IMAGE_PORT}`;
+
 const addImages = async (files) => {
   const sendingFiles = [];
   console.log(files);
@@ -27,7 +32,7 @@ const addImages = async (files) => {
       'Content-Type': 'application/json',
     },
     data: { files: sendingFiles },
-    url: 'http://localhost:8080/sinbad_images',
+    url: `${IMAGE_HOST}/sinbad_images`,
   });
 
   const result = [];
@@ -50,7 +55,7 @@ const deleteImages = async (files) => {
       'Content-Type': 'application/json',
     },
     data: { files: files },
-    url: 'http://localhost:8080/sinbad_images',
+    url: `${IMAGE_HOST}/sinbad_images`,
   });
 
   return up.data;
