@@ -99,6 +99,7 @@ module.exports = {
   getCategory,
   updateCategory,
   deleteCategory,
+  getCategoryByParentId,
 };
 
 // multer : 이미지 저장하기
