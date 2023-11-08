@@ -1,6 +1,3 @@
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
-
 import CartWrapper from "../components/cart/CartWrapper";
 import React, { useState, useEffect } from "react";
 import SelectWrapper from "../components/cart/SelectWrapper";
@@ -26,7 +23,6 @@ const Cart = () => {
 
   return (
     <>
-      <Header />
       <div className="body__div--cart-div-size">
         <h3 className="div__h3--cart-title">장바구니</h3>
         <div className="div__div--cart-content-align">
@@ -45,7 +41,6 @@ const Cart = () => {
           />
         </div>
       </div>
-      <Footer />
     </>
   );
 };

@@ -1,103 +1,188 @@
-import imageSrc from "../../images/shinba_d.png";
-import "../../css/app.css";
+import { Link } from "react-router-dom";
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import logoImgage from "../../image/logo.png";
 
 const Header = () => {
-  const [brandView, setBrandView] = useState(false);
-  const [shoesView, setShoesView] = useState(false);
-  const [userView, setUserView] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
-  const toggleBrnadMenu = () => {
-    setBrandView(!brandView);
+  const handleMouseEnter = () => {
+    setExpanded(true);
   };
 
-  const toggleShoesMenu = () => {
-    setShoesView(!shoesView);
-  };
-
-  const toggleUserMenu = () => {
-    setUserView(!userView);
+  const handleMouseLeave = () => {
+    setExpanded(false);
   };
 
   return (
-    <>
-      <header>
-        <div className="header__container">
-          <div className="header__container-items">
-            <div className="header__container-items-logo">
-              <img src={imageSrc} alt="logo" />
-            </div>
-            <nav className="header__container-items-nav">
-              <div>NEW</div>
-              <div>BEST</div>
-              <div>
-                <div
-                  className="header__container-items-nav-brand"
-                  onClick={toggleBrnadMenu}
-                >
-                  BRAND
-                </div>
-                {brandView && (
-                  <ul className="header__container-items-nav-brand__dropdown">
-                    <li>나이키</li>
-                    <li>아디다스</li>
-                    <li>컨버스</li>
-                    <li>휠라</li>
-                    <li>라코스테</li>
-                  </ul>
-                )}
-              </div>
-              <div>
-                <div
-                  className="header__container-items-nav-shoes"
-                  onClick={toggleShoesMenu}
-                >
-                  SHOES
-                </div>
-                {shoesView && (
-                  <ul className="header__container-items-nav-shoes__dropdown">
-                    <li>런닝화</li>
-                    <li>스니커즈</li>
-                    <li>샌들</li>
-                  </ul>
-                )}
-              </div>
-            </nav>
-          </div>
-          <div className="header__container-icons">
-            <div className="header__container-icons-search">
-              <input type="text" placeholder="" />
-              <i class="fa-solid fa-magnifying-glass fa-2xs"></i>
-            </div>
-            <div
-              className="header__container-icons-user"
-              onClick={toggleUserMenu}
-            >
-              <i
-                className="fa-regular fa-user"
-                style={{ color: "#000000" }}
-              ></i>
-              {userView && (
-                <div className="header__container-icons-user-dropdown">
-                  <div className="header__container-icons-user-info">계정</div>
-                  <ul className="header__container-icons-user-info-dropdown">
-                    <li>회원정보관리</li>
-                    <li>주문내역관리</li>
-                    <li>로그아웃</li>
-                  </ul>
-                </div>
-              )}
-            </div>
-            <div>
-              <i
-                className="fa-regular fa-heart"
-                style={{ color: "#000000" }}
-              ></i>
-            </div>
-          </div>
+    <header className={`body__header ${expanded ? "expanded" : ""}`}>
+      <div className="header__div--header-wrap">
+        <h1 className="header__h1--logo">
+          <Link to="/">
+            <img src={logoImgage} alt="logo" />
+          </Link>
+        </h1>
+        <nav
+          className={`header__nav ${expanded ? "expanded" : ""}`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <ul className="nav__ul--gnb">
+            <li>
+              <Link to="/list" className="ul__li--main-menu">
+                BRAND
+              </Link>
+              <ul>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    런닝화
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    스니커즈
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    샌들
+                  </Link>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <Link to="/list" className="ul__li--main-menu">
+                SHOES
+              </Link>
+              <ul>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    나이키
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    아디다스
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    컨버스
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    휠라
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    라코스테
+                  </Link>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <Link to="/list" className="ul__li--main-menu">
+                MAN
+              </Link>
+              <ul>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    나이키
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    아디다스
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    컨버스
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    휠라
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    라코스테
+                  </Link>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <Link to="/list" className="ul__li--main-menu">
+                WOMAN
+              </Link>
+              <ul>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    나이키
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    아디다스
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    컨버스
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    휠라
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/" className="ul__li--sub-menu">
+                    라코스테
+                  </Link>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <div className="header__div--icon">
+          <form>
+            <input
+              type="text"
+              className="form__input--search-text"
+              placeholder="상품을 검색해주세요."
+            />
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              className="form__icon--search-button"
+            />
+          </form>
+          <button>
+            <Link to="/login">
+              <FontAwesomeIcon
+                icon={faUser}
+                className="div__button--user-button"
+              />
+            </Link>
+          </button>
+          <button>
+            <Link to="/cart">
+              <FontAwesomeIcon
+                icon={faHeart}
+                className="div__button--cart-button"
+              />
+            </Link>
+          </button>
         </div>
-      </header>
-    </>
+      </div>
+    </header>
   );
 };
+
 export default Header;

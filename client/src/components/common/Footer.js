@@ -1,4 +1,5 @@
-const Footer = () => {
+import { Link } from "react-router-dom";
+function Footer() {
   return (
     <footer className="body__footer">
       <div className="footer__div--wrap">
@@ -9,24 +10,24 @@ const Footer = () => {
           <div>
             <ul className="div__ul--footer-info">
               <li>
-                <a href="/" className="li__a--footer-info-list">
+                <Link to="/" className="li__a--footer-info-list">
                   이용약관
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/" className="li__a--footer-info-list">
+                <Link to="/" className="li__a--footer-info-list">
                   개인정보처리방침
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/" className="li__a--footer-info-list">
+                <Link to="/" className="li__a--footer-info-list">
                   위치 기반 서비스 약관
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/" className="li__a--footer-info-list">
+                <Link to="/" className="li__a--footer-info-list">
                   영상정보처리기기 운영 방침
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -43,6 +44,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+}
 
 export default Footer;

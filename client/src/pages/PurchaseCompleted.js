@@ -1,6 +1,4 @@
 import React from "react";
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
 
 const PurchaseCompleted = () => {
   const CompleteStyle = {
@@ -13,11 +11,9 @@ const PurchaseCompleted = () => {
 
   return (
     <>
-      <Header />
       <div style={CompleteStyle}>
         <h2>주문이 완료되었습니다</h2>
       </div>
-      <Footer />
     </>
   );
 };
