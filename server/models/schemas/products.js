@@ -1,21 +1,28 @@
-const { Schema } = require("mongoose");
+const { Schema } = require('mongoose');
 
-const ImageSchema = new Schema({
-  file_name: {
-    type: String,
-    required: true,
+const ImageSchema = new Schema(
+  {
+    image_id: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+    size: {
+      type: Number,
+      required: true,
+    },
   },
-  url: {
-    type: String,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 const ProductSchema = new Schema(
   {
     title: { type: String, required: true },
     brand: {
       type: Schema.Types.ObjectId,
-      ref: "Brand",
+      ref: 'Brand',
       required: true,
     },
     type: {
@@ -28,7 +35,7 @@ const ProductSchema = new Schema(
     },
     gender: {
       type: String,
-      enum: ["MALE", "FEMALE", "BOTH"],
+      enum: ['MALE', 'FEMALE', 'BOTH'],
       required: true,
     },
     size: {
@@ -39,7 +46,7 @@ const ProductSchema = new Schema(
     reviews: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Review",
+        ref: 'Review',
       },
     ],
     delivery_type: {
@@ -69,12 +76,10 @@ const ProductSchema = new Schema(
   }
 );
 
-const OptionGroupSchema = new Schema({});
 const OptionSchema = new Schema({});
 
 module.exports = {
   ProductSchema,
-  OptionGroupSchema,
   OptionSchema,
   ImageSchema,
 };

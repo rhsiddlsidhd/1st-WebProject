@@ -1,5 +1,5 @@
-const { Brand } = require("../models");
-const mongoose = require("mongoose");
+const { Brand } = require('../models');
+const mongoose = require('mongoose');
 
 const getBrand = async (_id) => {
   const brand = await Brand.findOne({ _id });

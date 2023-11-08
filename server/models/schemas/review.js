@@ -1,14 +1,14 @@
-const { Schema } = require("mongoose");
+const { Schema } = require('mongoose');
 
 const ReviewSchema = new Schema({
   product: {
     type: Schema.Types.ObjectId,
-    ref: "Product",
+    ref: 'Product',
     required: true,
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
   content: {
