@@ -6,7 +6,8 @@ const fs = require('fs');
 const config = require('./config/config');
 
 const IMAGE_PATH = path.join('./images');
-const HOST = `${config.image_server.primary.location}:${config.image_server.primary.port}`;
+const PORT = config.image_server.primary.port;
+const HOST = `${config.image_server.primary.location}:${PORT}`;
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -63,6 +64,7 @@ app.delete('/sinbad_images', (req, res) => {
   res.json({ message: 'Successfully deleted files', result });
 });
 
-app.listen(8080, () => {
+app.listen(PORT, () => {
+  console.log(HOST);
   console.log(`Image Server Started...`);
 });

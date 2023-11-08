@@ -1,10 +1,10 @@
 dev:
   image_server:
     primary:
-      location: http://localhost
+      location: http://kdt-sw-7-team09.elicecoding.com
       port: 8080
 prod:
   image_server:
     primary:
-      location: http://localhost
+      location: http://kdt-sw-7-team09.elicecoding.com
       port: 8080
