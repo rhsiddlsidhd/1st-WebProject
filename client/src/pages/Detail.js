@@ -1,5 +1,3 @@
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -64,7 +62,6 @@ const Detail = () => {
 
   return (
     <div>
-      <Header />
       <div className="body__div--detail-content">
         {/* 상품 정보 */}
 
@@ -105,7 +102,6 @@ const Detail = () => {
         {/* 상세페이지 이미지 나열 부분 */}
         <div className="div__div--detail-img">{/* 이미지 내용 */}</div>
       </div>
-      <Footer />
     </div>
   );
 };

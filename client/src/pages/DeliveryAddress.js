@@ -1,5 +1,3 @@
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +22,6 @@ const DeliveryAddress = () => {
 
   return (
     <div>
-      <Header />
       <div className="body__div--delivery-address-div-size">
         <form onSubmit={handleSubmit}>
           <label
@@ -58,7 +55,6 @@ const DeliveryAddress = () => {
           </button>
         </form>
       </div>
-      <Footer />
     </div>
   );
 };
