@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const httpStatus = require("http-status");
-const config = require("../config/config");
-const logger = require("../config/logger");
-const ApiError = require("../utils/ApiError");
+const mongoose = require('mongoose');
+const httpStatus = require('http-status');
+const config = require('../config/config');
+const logger = require('../config/logger');
+const ApiError = require('../utils/ApiError');
 
 /**
  * 모든 에러를 ApiError로 변경해준다.
@@ -57,7 +57,7 @@ const errorConverter = (err, req, res, next) => {
  */
 const errorHandler = (err, req, res, next) => {
   let { statusCode, message } = err;
-  if (config.env === "PROD" && !err.isOperational) {
+  if (config.env === 'PROD' && !err.isOperational) {
     statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR];
   }
@@ -70,10 +70,10 @@ const errorHandler = (err, req, res, next) => {
   const response = {
     code: statusCode,
     message,
-    ...(config.env === "DEV" && { stack: err.stack }),
+    ...(config.env === 'DEV' && { stack: err.stack }),
   };
 
-  if (config.env === "DEV") {
+  if (config.env === 'DEV') {
     logger.error(err);
   }
 

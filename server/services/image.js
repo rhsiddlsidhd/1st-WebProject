@@ -1,8 +1,8 @@
-const { Image } = require("../models");
-const mongoose = require("mongoose");
-const path = require("path");
-const { nanoid } = require("nanoid");
-const axios = require("axios");
+const { Image } = require('../models');
+const mongoose = require('mongoose');
+const path = require('path');
+const { nanoid } = require('nanoid');
+const axios = require('axios');
 
 const addImages = async (files) => {
   const sendingFiles = [];
@@ -12,22 +12,22 @@ const addImages = async (files) => {
       ...file,
     };
     let buff = file.buffer;
-    let base64buffer = buff.toString("base64");
+    let base64buffer = buff.toString('base64');
     let ext = path.extname(file.originalname);
-    newItem["buffer"] = base64buffer;
-    newItem["id"] = nanoid();
-    newItem["ext"] = ext;
+    newItem['buffer'] = base64buffer;
+    newItem['id'] = nanoid();
+    newItem['ext'] = ext;
 
     sendingFiles.push(newItem);
   }
 
   const up = await axios({
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     data: { files: sendingFiles },
-    url: "http://localhost:8080/sinbad_images",
+    url: 'http://localhost:8080/sinbad_images',
   });
 
   const result = [];
@@ -45,12 +45,12 @@ const addImages = async (files) => {
 
 const deleteImages = async (files) => {
   const up = await axios({
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     data: { files: files },
-    url: "http://localhost:8080/sinbad_images",
+    url: 'http://localhost:8080/sinbad_images',
   });
 
   return up.data;
