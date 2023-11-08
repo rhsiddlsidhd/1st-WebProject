@@ -70,6 +70,10 @@ const updateOrder = async (id, orderBody) => {
     throw new APIError(httpStatus.NOT_FOUND, 'Order is not exist');
   }
 
+  if (order.delivery_state === '배송중') {
+    throw new APIError(httpStatus[500], 'Order Update is denied.');
+  }
+
   const updatedItem = Order.updateOne(
     { _id: id },
     {
