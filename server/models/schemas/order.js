@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose');
-const ProductSchema = require('./products');
+const { ProductSchema } = require('./products');
 
 const OrderSchema = new Schema({
   user_id: {
@@ -7,7 +7,7 @@ const OrderSchema = new Schema({
     required: true,
   },
   items: {
-    type: [ProductSchema],
+    type: [String],
     required: true,
   },
   address: {

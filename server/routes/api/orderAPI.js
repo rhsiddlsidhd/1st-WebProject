@@ -9,21 +9,28 @@ const orderController = require('../../controllers/orderController');
 const validate = require('../../middlewares/vaildate');
 const orderValidation = require('../../validation/orderValidation');
 
-// // 일반 사용자 : 주문 등록하기
-router.post('/', validate(orderValidation.order), orderController.postOrder);
+// 일반 사용자 : 주문 내역 조회하기
+router.get(
+  '/:id',
+  validate(orderValidation.getOrder),
+  orderController.getOrder
+);
 
-// // 일반 사용자 (탈퇴)
-// router.delete(
-//   '/:id',
-//   validate(userValidation.withdraw),
-//   userController.userWithdraw
-// );
+// 일반 사용자 : 주문 등록하기
+router.post('/', validate(orderValidation.newOrder), orderController.postOrder);
 
-// // 일반 사용자 : 현재 정보 수정
-// router.patch(
-//   '/:id',
-//   validate(userValidation.updateUserInfo),
-//   userController.updateUserInfo
-// );
+// 일반 사용자 : 주문 정보 수정하기
+router.patch(
+  '/:id',
+  validate(orderValidation.updateOrder),
+  orderController.updateOrder
+);
+
+// 일반 사용자 : 주문 정보 삭제하기
+router.delete(
+  '/:id',
+  validate(orderValidation.deleteOrder),
+  orderController.deleteOrder
+);
 
 module.exports = router;
