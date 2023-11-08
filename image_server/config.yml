@@ -1,0 +1,10 @@
+dev:
+  image_server:
+    primary:
+      location: http://localhost
+      port: 8080
+prod:
+  image_server:
+    primary:
+      location: http://localhost
+      port: 8080

@@ -9,6 +9,10 @@ dev:
     primary:
       location: http://localhost
       port: 3000
+  image_server:
+    primary:
+      location: http://localhost
+      port: 8080
 prod:
   mongodb:
     primary:
@@ -17,3 +21,7 @@ prod:
   express:
     primary:
       port:
+  image_server:
+    primary:
+      location: http://localhost
+      port: 8080
