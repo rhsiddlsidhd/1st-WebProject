@@ -99,7 +99,7 @@ const deleteOrder = async (id) => {
     throw new APIError(httpStatus[500], 'Order Update is denied.');
   }
 
-  const result = Order.deleteOne({ _id: id });
+  const result = await Order.deleteOne({ _id: id });
 
   return result;
 };
