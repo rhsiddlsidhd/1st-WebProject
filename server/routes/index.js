@@ -18,8 +18,8 @@ const apiRouter = router
   .use('/brand', brandRouter)
   .use('/user', userRouter)
   .use('/auth', authRouter)
-  .use('/order', orderRouter);
-// .use('/admin', adminRouter);
+  .use('/order', orderRouter)
+  .use('/admin', adminRouter);
 
 module.exports = {
   apiRouter,
