@@ -31,12 +31,9 @@ const getCategoryByParentId = async (categoryParams) => {
   const category = await Category.find({
     parentCategory: data.parentCategory,
   }).exec();
-  console.log(category);
-
   if (!category) {
     throw new APIError(httpStatus.NOT_FOUND, 'Category is not exist.');
   }
-
   return category;
 };
 
