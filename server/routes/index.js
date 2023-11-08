@@ -7,6 +7,7 @@ const categoryRouter = require('./api/categoryAPI');
 const userRouter = require('./api/userAPI');
 const brandRouter = require('./api/brand');
 const authRouter = require('./api/authAPI');
+const orderRouter = require('./api/orderAPI');
 
 logger.info('API 라우터 올라옴');
 
@@ -15,7 +16,8 @@ const apiRouter = router
   .use('/category', categoryRouter)
   .use('/brand', brandRouter)
   .use('/user', userRouter)
-  .use('/auth', authRouter);
+  .use('/auth', authRouter)
+  .use('/order', orderRouter);
 
 module.exports = {
   apiRouter,
