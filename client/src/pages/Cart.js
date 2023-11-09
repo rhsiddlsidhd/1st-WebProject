@@ -36,6 +36,7 @@ const Cart = () => {
           <CartWrapper
             savedItem={savedItem}
             selectedItems={selectedItems}
+            setIsAllChecked={setIsAllChecked}
             setSelectedItems={setSelectedItems}
             setSavedItem={setSavedItem}
           />

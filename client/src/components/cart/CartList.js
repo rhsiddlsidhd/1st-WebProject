@@ -5,6 +5,7 @@ const CartList = ({
   setSavedItem,
   selectedItems,
   setSelectedItems,
+  setIsAllChecked,
 }) => {
   // 수량 추가하기
   const handleIncreaseItem = (item) => {
@@ -39,13 +40,14 @@ const CartList = ({
     }
   };
 
-  // 아이템 체크하기
-  const hendleChecked = (option) => {
-    if (selectedItems.includes(option)) {
-      setSelectedItems(selectedItems.filter((item) => item !== option));
-    } else {
-      setSelectedItems([...selectedItems, option]);
-    }
+  // 부분 선택
+  const hendleChecked = (itemId) => {
+    const updatedSelectedItems = selectedItems.includes(itemId)
+      ? selectedItems.filter((id) => id !== itemId)
+      : [...selectedItems, itemId];
+
+    setSelectedItems(updatedSelectedItems);
+    setIsAllChecked(updatedSelectedItems.length === savedItem.length);
   };
 
   return (

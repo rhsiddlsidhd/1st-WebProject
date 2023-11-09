@@ -6,18 +6,13 @@ const SelectWrapper = ({
   setSelectedItems,
 }) => {
   // 전체 선택
-  const handleAllChecked = (isChecked) => {
-    if (isChecked) {
+  const handleAllChecked = () => {
+    if (!isAllChecked) {
       setSelectedItems(savedItem.map((item) => item.id));
     } else {
-      const allDeselected =
-        selectedItems.length === savedItem.length &&
-        !savedItem.every((item) => selectedItems.includes(item.id));
-      if (!allDeselected) {
-        setSelectedItems([]);
-      }
+      setSelectedItems([]);
     }
-    setIsAllChecked(isChecked);
+    setIsAllChecked(!isAllChecked);
   };
 
   return (
@@ -26,7 +21,7 @@ const SelectWrapper = ({
         <input
           type="checkbox"
           className="cart-checkbox"
-          id="check-all"
+          id="checkbox-all"
           checked={isAllChecked}
           onChange={(e) => handleAllChecked(e.target.checked)}
         />

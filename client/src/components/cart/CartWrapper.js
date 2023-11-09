@@ -2,6 +2,7 @@ import CartList from "./CartList";
 import Purchase from "./Purchase";
 
 const CartWrapper = ({
+  setIsAllChecked,
   savedItem,
   setSavedItem,
   selectedItems,
@@ -14,6 +15,7 @@ const CartWrapper = ({
         selectedItems={selectedItems}
         setSelectedItems={setSelectedItems}
         setSavedItem={setSavedItem}
+        setIsAllChecked={setIsAllChecked}
       />
       <Purchase savedItem={savedItem} />
     </div>
