@@ -1,0 +1,37 @@
+/* CSS for Nav */
+.Pagination nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 16px;
+}
+
+/* CSS for Button */
+.Pagination button {
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 0;
+  color: black;
+  font-size: 1rem;
+}
+
+.Pagination button:hover {
+  background: lemonchiffon;
+  cursor: pointer;
+  transform: translateY(-2px);
+}
+
+.Pagination button:disabled {
+  background: grey;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.Pagination .page {
+  background: rgb(50, 242, 72);
+  font-weight: bold;
+  cursor: not-allowed;
+  transform: none;
+}
