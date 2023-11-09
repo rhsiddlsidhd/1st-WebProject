@@ -36,11 +36,14 @@ function App() {
         <Route path='/auth/login' element={<Login />}></Route>
         <Route path='/auth/join' element={<Join />}></Route>
         <Route path='/user' element={<Userinfo />}></Route>
-        <Route path='/products' element={<ManageProducts />}></Route>
-        <Route path='/productedit/:id' element={<ManageProductEdit />}></Route>
+        <Route path='/manageproducts' element={<ManageProducts />}></Route>
         <Route path='/productnew' element={<ManageProductNew />}></Route>
         <Route path='/plist' element={<ProductList />}></Route>
         <Route path='/user/order' element={<UserOrder />}></Route>
+        <Route path='/productedit' element={<ManageProductEdit />}></Route>
+        <Route path='/plist/:listType' element={<ProductList />}></Route>
+        {/* <Route path='/plist/woman' element={<ProductList />}></Route>
+        <Route path='/plist/man' element={<ProductList />}></Route> */}
       </Routes>
       <Top />
       <Footer />

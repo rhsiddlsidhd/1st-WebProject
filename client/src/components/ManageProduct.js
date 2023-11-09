@@ -1,5 +1,16 @@
 import React, { memo } from 'react';
-const ManageProduct = ({ categories, products, handleEdit, handleRemove }) => {
+const ManageProduct = ({
+  categories,
+  products,
+  handleEdit,
+  handleRemove,
+  brands,
+}) => {
+  const getBrandName = (brandId) => {
+    return brands
+      .filter((brand) => brand._id === brandId)
+      .map((brand) => brand.name);
+  };
   return products.map((item) => (
     <div className='Product'>
       <img
@@ -9,7 +20,7 @@ const ManageProduct = ({ categories, products, handleEdit, handleRemove }) => {
       ></img>
       <span className='title'>{item.title}</span>
       <span className='price'>{item.price}</span>
-      <span className='brand'>{item.brand}</span>
+      <span className='brand'>{getBrandName(item.brand)}</span>
       <span>
         <button
           onClick={() => {

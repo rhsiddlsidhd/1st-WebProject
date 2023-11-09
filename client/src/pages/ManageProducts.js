@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getProducts } from '../api/productsAPI';
+import { getProducts, getBrands } from '../api/productsAPI';
 import ManageProduct from '../components/ManageProduct';
 import CartegoryBar from '../components/CategoryBar';
 import Pagination from '../components/Pagination';
@@ -8,9 +8,9 @@ import Pagination from '../components/Pagination';
 const ManageProducts = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [selected, setSelected] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const productCountRef = useRef(null);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(16);
   const offset = (page - 1) * limit;
@@ -33,7 +33,9 @@ const ManageProducts = () => {
 
   const getProductList = useCallback(async () => {
     const productsData = await getProducts(queryString);
+    const brandList = await getBrands();
     setProducts(productsData);
+    setBrands(brandList);
     setCount(productsData.length);
   }, [queryString]);
 
@@ -43,13 +45,9 @@ const ManageProducts = () => {
 
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
-    console.log('이벤트 타깃');
-    console.log(event.target);
     if (event.target.checked) {
-      console.log('이벤트의 값은 체크드 아님');
       setSelectedCategories([...selectedCategories, value]);
     } else {
-      console.log('이벤트의 값은 체크드');
       setSelectedCategories(
         selectedCategories.filter((category) => category !== value)
       );
@@ -57,11 +55,10 @@ const ManageProducts = () => {
   };
 
   const updateQueryString = () => {
-    queryString +=
+    queryString =
       selectedCategories.length > 0
         ? `?` + selectedCategories.map((it) => `category_id=${it}`).join('&')
         : '';
-    // queryString += '&page=' + page;
     window.history.pushState({}, '', window.location.pathname + queryString);
   };
 
@@ -123,6 +120,7 @@ const ManageProducts = () => {
           getProductList={getProductList}
           handleEdit={handleEdit}
           handleRemove={handleRemove}
+          brands={brands}
         />
       </div>
       <Pagination

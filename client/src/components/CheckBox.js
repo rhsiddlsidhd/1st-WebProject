@@ -14,9 +14,15 @@
 
 // export default Checkbox;
 
-const CheckBox = ({ category, handleCheckboxChange, selectedCategories }) => {
+const CheckBox = ({
+  category,
+  handleCheckboxChange,
+  selectedCategories,
+  type,
+}) => {
   return (
     <div>
+      <span>대분류: {type}</span>
       {category.map((item) => (
         <div key={item._id}>
           <label>

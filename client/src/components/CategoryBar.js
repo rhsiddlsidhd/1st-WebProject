@@ -6,6 +6,7 @@ const CategoryBar = ({
   selectedCategories,
   handleSelect,
   handleCheckboxChange,
+  listType,
 }) => {
   const [parentCategory, setParentCategory] = useState([]);
   const [typeSubCategory, setTypeSubCategort] = useState([]);
@@ -17,46 +18,25 @@ const CategoryBar = ({
   useEffect(() => {
     async function getParentCategories() {
       const responseArr = await getBigCategory();
+      console.log('대분류확인');
+      console.log(responseArr);
       const patentCategoryArr = responseArr.map((cate) => ({
         id: cate._id, //12345
         name: cate.name, //타입, 브랜드, 여성, 남성
       }));
       setParentCategory(patentCategoryArr);
+      console.log('parentCategory');
+      console.log(parentCategory);
     }
     getParentCategories();
   }, []);
 
-  console.log('parent');
-  console.log(parentCategory);
-
-  // useEffect(() => {
-  //   for (let cate of parentCategory) {
-  //     async function getChildCategories() {
-  //       const responseArr = await getChildCategory(cate._id);
-  //       const childCategoryArr = responseArr.map((cate) => ({
-  //         id: cate._id,
-  //         name: cate.name,
-  //       }));
-  //       console.log(cate.name);
-  //       if (cate.name === '여성') {
-  //         setWomanSubCategort(childCategoryArr);
-  //       }
-  //       if (cate.name === '남성') {
-  //         setManSubCategort(childCategoryArr);
-  //       }
-  //       if (cate.name === '브랜드') {
-  //         setBrandSubCategort(childCategoryArr);
-  //       }
-  //       if (cate.name === '타입') {
-  //         setTypeSubCategort(childCategoryArr);
-  //       }
-  //     }
-  //     getChildCategories();
-  //   }
-  // }, [parentCategory]);
-
   const getChildCategories = useCallback(
     async (parentCategory) => {
+      const test = await getChildCategory('654c6dec0a1b315fa221d0a6');
+      console.log('소분류 테스트');
+      console.log(test);
+
       const subCategoryWithParent = await parentCategory.map(
         (eachParentCategory) =>
           getChildCategory(eachParentCategory.id).then((data) => ({
@@ -74,24 +54,37 @@ const CategoryBar = ({
     getChildCategories(parentCategory);
   }, [getChildCategories]);
 
-  console.log('서브카테고리 확인');
-  console.log(subCategory);
-
-  console.log('아이템 데이터 확인');
   subCategory.map((item) => console.log(item.data));
+
+  const getSpecificCateory = (allSubCategory) => {
+    console.log(allSubCategory);
+    if (listType === 'woman')
+      return allSubCategory.filter(
+        (cate) => cate.type === '여성' || cate.type === '브랜드'
+      );
+    if (listType === 'man')
+      return allSubCategory.filter(
+        (cate) => cate.type === '남성' || cate.type === '브랜드'
+      );
+    if (listType === 'all')
+      return allSubCategory.filter(
+        (cate) => cate.type === '타입' || cate.type === '브랜드'
+      );
+    else return allSubCategory;
+  };
 
   return (
     <div className='CategoryBar'>
-      <select onChange={handleSelect}>
+      {/* <select onChange={handleSelect}>
         <option value=''>타입을 선택하세요</option>
         {typeSubCategory.map((item, idx) => (
           <option value={item.id} key={item.id}>
             {item.name}
           </option>
         ))}
-      </select>
+      </select> */}
 
-      {subCategory.map((item) => (
+      {getSpecificCateory(subCategory).map((item) => (
         <Checkbox
           type={item.type}
           category={item.data}
@@ -99,6 +92,14 @@ const CategoryBar = ({
           selectedCategories={selectedCategories}
         />
       ))}
+      {/* {subCategory.map((item) => (
+        <Checkbox
+          type={item.type}
+          category={item.data}
+          handleCheckboxChange={handleCheckboxChange}
+          selectedCategories={selectedCategories}
+        />
+      ))} */}
     </div>
   );
 };
