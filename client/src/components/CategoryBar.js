@@ -6,6 +6,7 @@ const CategoryBar = ({
   selectedCategories,
   handleSelect,
   handleCheckboxChange,
+  listType,
 }) => {
   const [parentCategory, setParentCategory] = useState([]);
   const [typeSubCategory, setTypeSubCategort] = useState([]);
@@ -47,18 +48,34 @@ const CategoryBar = ({
 
   subCategory.map((item) => console.log(item.data));
 
+  const getSpecificCateory = (allSubCategory) => {
+    console.log(allSubCategory);
+    if (listType === 'woman')
+      return allSubCategory.filter(
+        (cate) => cate.type === '여성' || cate.type === '브랜드'
+      );
+    if (listType === 'man')
+      return allSubCategory.filter(
+        (cate) => cate.type === '남성' || cate.type === '브랜드'
+      );
+    if (listType === 'all')
+      return allSubCategory.filter(
+        (cate) => cate.type === '타입' || cate.type === '브랜드'
+      );
+  };
+
   return (
     <div className='CategoryBar'>
-      <select onChange={handleSelect}>
+      {/* <select onChange={handleSelect}>
         <option value=''>타입을 선택하세요</option>
         {typeSubCategory.map((item, idx) => (
           <option value={item.id} key={item.id}>
             {item.name}
           </option>
         ))}
-      </select>
+      </select> */}
 
-      {subCategory.map((item) => (
+      {getSpecificCateory(subCategory).map((item) => (
         <Checkbox
           type={item.type}
           category={item.data}
@@ -66,6 +83,14 @@ const CategoryBar = ({
           selectedCategories={selectedCategories}
         />
       ))}
+      {/* {subCategory.map((item) => (
+        <Checkbox
+          type={item.type}
+          category={item.data}
+          handleCheckboxChange={handleCheckboxChange}
+          selectedCategories={selectedCategories}
+        />
+      ))} */}
     </div>
   );
 };

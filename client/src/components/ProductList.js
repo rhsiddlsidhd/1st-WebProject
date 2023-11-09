@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { getBrands, getProducts } from '../api/productsAPI';
 import CategoryBar from './CategoryBar';
 import Pagination from './Pagination';
@@ -7,6 +7,11 @@ import Products from './Products';
 import '../css/btn.css';
 
 const ProductList = () => {
+  const { listType } = useParams();
+
+  console.log('리스트카테고리확인');
+  console.log(listType);
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState('');
@@ -75,14 +80,13 @@ const ProductList = () => {
   return (
     <div className='ManageProducts'>
       <h2>List</h2>
-      <p>상품 리스트입니다</p>
-
       <h4>{count}개의 상품이 있습니다</h4>
 
       <CategoryBar
         selectedCategories={selectedCategories}
         handleSelect={handleSelect}
         handleCheckboxChange={handleCheckboxChange}
+        listType={listType}
       />
 
       <div>
@@ -98,6 +102,7 @@ const ProductList = () => {
           page={page}
         />
       </div>
+      <div>{listType}페이지 입니다</div>
     </div>
   );
 };
