@@ -32,7 +32,7 @@ const Header = () => {
         >
           <ul className='nav__ul--gnb'>
             <li>
-              <Link to='/plist' className='ul__li--main-menu'>
+              <Link to='/plist/:listType' className='ul__li--main-menu'>
                 BRAND
               </Link>
               <ul>
@@ -54,7 +54,7 @@ const Header = () => {
               </ul>
             </li>
             <li>
-              <Link to='plist' className='ul__li--main-menu'>
+              <Link to='plist/:listType' className='ul__li--main-menu'>
                 SHOES
               </Link>
               <ul>
@@ -86,7 +86,7 @@ const Header = () => {
               </ul>
             </li>
             <li>
-              <Link to='plist' className='ul__li--main-menu'>
+              <Link to='plist/:listType' className='ul__li--main-menu'>
                 MAN
               </Link>
               <ul>
@@ -118,7 +118,7 @@ const Header = () => {
               </ul>
             </li>
             <li>
-              <Link to='/plist' className='ul__li--main-menu'>
+              <Link to='/plist/:listType' className='ul__li--main-menu'>
                 WOMAN
               </Link>
               <ul>

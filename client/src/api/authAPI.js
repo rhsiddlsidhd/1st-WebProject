@@ -4,12 +4,9 @@ import axios from 'axios';
 export const getUser = async ({ email, password }) => {
   try {
     const getItem = { id: email, password: password };
-    console.log('?????????', getItem);
     const response = await axios.post('/api/auth/login', getItem);
-    console.log(response.status);
     return response.data;
   } catch (err) {
-    console.log('?????????', err);
     if (err.message === 'Request failed with status code 504') {
       return 'no user';
     }

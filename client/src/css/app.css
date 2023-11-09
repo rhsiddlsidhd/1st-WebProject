@@ -1096,3 +1096,8 @@ button {
 .div__div--list-flex {
   display: flex;
 }
+
+.body__div--cart-div-wrap {
+  width: 90%;
+  margin: 0 auto;
+}
