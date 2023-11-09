@@ -9,7 +9,7 @@ const getProduct = {
 };
 const getProducts = {
   query: Joi.object().keys({
-    category_id: Joi.string().optional(),
+    category_id: Joi.any().optional(),
     page: Joi.number().min(1).optional(),
   }),
 };
@@ -31,6 +31,7 @@ const createProduct = {
       gender: Joi.string().required(),
       size: Joi.string().required(),
       price: Joi.number().min(0).required(),
+      category_id: Joi.array(),
       // main_images: Joi.array().items({
       //   filename: Joi.string().required(),
       //   raw: Joi.any().reqruied(),
