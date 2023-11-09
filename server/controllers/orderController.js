@@ -1,5 +1,6 @@
 const orderService = require('../services/orderService');
 const APIError = require('../utils/ApiError');
+const httpStatus = require('http-status');
 
 // 주문 조회하기
 exports.getOrder = async (req, res, next) => {
