@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getProducts } from '../api/productsAPI';
+import CategoryBar from './CategoryBar';
 import Pagination from './Pagination';
 import Products from './Products';
-import CategoryBar from './CategoryBar';
 import '../css/btn.css';
 
 const ProductList = () => {
@@ -44,6 +44,8 @@ const ProductList = () => {
 
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
+    console.log('이벤트의밸류확ㅇ;ㄴ');
+    console.log(event.target.value);
     if (event.target.checked) {
       setSelectedCategories([...selectedCategories, value]);
     } else {

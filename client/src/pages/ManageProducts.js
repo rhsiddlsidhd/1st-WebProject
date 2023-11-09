@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getProducts } from '../api/productsAPI';
 import ManageProduct from '../components/ManageProduct';
-import CartegoryBar from '../components/CartegoryBar';
+import CartegoryBar from '../components/CategoryBar';
 import Pagination from '../components/Pagination';
 
 const ManageProducts = () => {
@@ -43,9 +43,13 @@ const ManageProducts = () => {
 
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
+    console.log('이벤트 타깃');
+    console.log(event.target);
     if (event.target.checked) {
+      console.log('이벤트의 값은 체크드 아님');
       setSelectedCategories([...selectedCategories, value]);
     } else {
+      console.log('이벤트의 값은 체크드');
       setSelectedCategories(
         selectedCategories.filter((category) => category !== value)
       );

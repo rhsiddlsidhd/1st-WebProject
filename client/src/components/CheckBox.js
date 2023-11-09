@@ -18,13 +18,13 @@ const CheckBox = ({ category, handleCheckboxChange, selectedCategories }) => {
   return (
     <div>
       {category.map((item) => (
-        <div key={item.id}>
+        <div key={item._id}>
           <label>
             <input
               type='checkbox'
-              value={item.id}
+              value={item._id}
               onChange={handleCheckboxChange}
-              checked={selectedCategories.includes(item.id)}
+              checked={selectedCategories.includes(item._id)}
             />
             {item.name}
           </label>
