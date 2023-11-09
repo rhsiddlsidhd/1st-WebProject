@@ -4,11 +4,7 @@ import axios from 'axios';
 export const getUser = async ({ email, password }) => {
   try {
     const getItem = { id: email, password };
-    const response = await axios.get(
-      'http://localhost:3000/api/auth/login',
-      getItem
-    );
-    console.log(getItem);
+    const response = await axios.get('/api/auth/login', getItem);
     return response.data;
   } catch (err) {
     throw new Error(err);
@@ -19,10 +15,7 @@ export const getUser = async ({ email, password }) => {
 export const postUser = async ({ name, password, email }) => {
   try {
     const newItem = { name, password, email };
-    const response = await axios.post(
-      'http://localhost:3000/api/auth/join',
-      newItem
-    );
+    const response = await axios.post('/api/auth/join', newItem);
     return response.data;
   } catch (err) {
     throw new Error(err);
