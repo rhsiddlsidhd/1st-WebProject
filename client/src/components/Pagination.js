@@ -7,7 +7,7 @@ function Pagination({ total, limit, page, setPage }) {
   const [currPage, setCurrPage] = useState(page);
 
   let firstNum = currPage - (currPage % 5) + 1;
-  let lastNum = Math.min(currPage - (currPage % 5) + 5, numPages);
+  let lastNum = currPage - (currPage % 5) + 5;
 
   return (
     <div className='Pagination'>
@@ -56,17 +56,6 @@ function Pagination({ total, limit, page, setPage }) {
               );
             }
           })}
-        {/* {Array(numPages)
-        .fill()
-        .map((_, i) => (
-          <button
-            key={i + 1}
-            onClick={() => setPage(firstNum + 1 + i)}
-            className={page === firstNum ? 'page' : undefined}
-          >
-            {firstNum + i + 1}
-          </button>
-        ))} */}
         <button
           onClick={() => {
             setPage(page + 1);

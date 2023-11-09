@@ -11,13 +11,19 @@ const ManageProducts = () => {
   const [brands, setBrands] = useState([]);
   const [selected, setSelected] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
+  console.log('selectedCategories');
+  console.log(selectedCategories);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(16);
   const offset = (page - 1) * limit;
-  const currentProducts = products.slice(offset, offset + limit);
+
+  const currentProducts = [];
+  // const currentProducts = products.products.slice(offset, offset + limit);
   const [count, setCount] = useState(0);
 
-  const paginate = (pageNumber) => setPage(pageNumber);
+  const paginate = (pageNumber) => {
+    setPage(pageNumber);
+  };
   let queryString;
 
   const { state } = useLocation();
@@ -32,9 +38,10 @@ const ManageProducts = () => {
   };
 
   const getProductList = useCallback(async () => {
-    const productsData = await getProducts(queryString);
+    const productsData = await getProducts(selectedCategories);
     const brandList = await getBrands();
     setProducts(productsData);
+
     setBrands(brandList);
     setCount(productsData.length);
   }, [queryString]);
@@ -55,25 +62,18 @@ const ManageProducts = () => {
   };
 
   const updateQueryString = () => {
-    queryString =
+    let queryString =
       selectedCategories.length > 0
         ? `?` + selectedCategories.map((it) => `category_id=${it}`).join('&')
         : '';
+    if (!queryString) {
+      queryString += '?';
+    } else {
+      queryString += '&';
+    }
+    queryString += page ? `page=${page}` : 'page=1';
     window.history.pushState({}, '', window.location.pathname + queryString);
   };
-
-  // const updateQueryString = () => {
-  //   const queryObject = {
-  //     page: page,
-  //   };
-  //   if (selectedCategories) {
-  //     queryObject.category_id = selectedCategories;
-  //   }
-  //   console.log(queryObject)
-  //   const query = queryString.stringify(queryObject);
-
-  //   window.history.pushState(null, '', `?${query}`);
-  // };
 
   useEffect(() => {
     updateQueryString();
@@ -114,8 +114,7 @@ const ManageProducts = () => {
 
       <div>
         <ManageProduct
-          // key={item.product_id}
-          products={currentProducts}
+          products={products}
           categories={selectedCategories}
           getProductList={getProductList}
           handleEdit={handleEdit}

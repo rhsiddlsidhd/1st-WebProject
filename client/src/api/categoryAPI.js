@@ -54,9 +54,11 @@ export const updateCategory = async ({ _id }) => {
 // 대분류 카테고리 불러오기
 export const getBigCategory = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/api/category', {
-      params: { parentCategory: '-1' },
-    });
+    const response = await axios.get(`http://localhost:3000/api/category/-1`);
+    // const response = await axios.get('http://localhost:3000/api/category', {
+    //   params: { parentCategory: '-1' },
+    // });
+    console.log('HHH!!!!!!!!!!!', response.data);
     return response.data;
   } catch (err) {
     throw new Error(err);
@@ -66,9 +68,12 @@ export const getBigCategory = async () => {
 // 카테고리 소분류(대분류ID)
 export const getChildCategory = async (parentCategoryId) => {
   try {
-    const response = await axios.get('http://localhost:3000/api/category', {
-      params: { parentCategory: parentCategoryId },
-    });
+    const response = await axios.get(
+      `http://localhost:3000/api/category/${parentCategoryId}`
+    );
+    // const response = await axios.get('http://localhost:3000/api/category/', {
+    //   params: { parentCategory: parentCategoryId },
+    // });
 
     return response.data;
   } catch (err) {

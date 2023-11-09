@@ -4,10 +4,22 @@ import axios from 'axios';
 
 // // get response:
 const API_BASE_URL = 'http://localhost:3000';
-export const getProducts = async (queryString) => {
+export const getProducts = async (categories, page) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/products`);
-    return response.data;
+    console.log('카테고리확인', page);
+    console.log(categories);
+
+    let query = { params: { page: page || 1 } };
+
+    if (categories.length) {
+      query['params']['category_id'] = categories;
+    }
+
+    const response = await axios.get(`${API_BASE_URL}/api/products`, query);
+    console.log('response');
+    console.log(response);
+
+    return response.data.products;
   } catch (err) {
     throw new Error(err);
   }

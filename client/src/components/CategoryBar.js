@@ -33,9 +33,9 @@ const CategoryBar = ({
 
   const getChildCategories = useCallback(
     async (parentCategory) => {
-      const test = await getChildCategory('654c6dec0a1b315fa221d0a6');
-      console.log('소분류 테스트');
-      console.log(test);
+      // const test = await getChildCategory('654c6dec0a1b315fa221d0a6');
+      // console.log('소분류 테스트');
+      // console.log(test);
 
       const subCategoryWithParent = await parentCategory.map(
         (eachParentCategory) =>
