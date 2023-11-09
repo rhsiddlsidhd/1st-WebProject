@@ -12,21 +12,51 @@ const CartList = ({
   const handleIncreaseItem = (item) => {
     const updatedItems = savedItem.map((shoes) => {
       if (shoes.id === item.id) {
-        return { ...shoes, quantity: shoes.quantity + 1 };
+        const localStoragedData =
+          JSON.parse(localStorage.getItem("cartProduct")) || [];
+        const quantityCount = localStoragedData.reduce(
+          (accumulator, currentItem) => {
+            const itemQuantity = currentItem.quantity + 1;
+            return accumulator + itemQuantity;
+          },
+          0
+        );
+
+        const updatedQuantity = shoes.quantity + 1;
+        return { ...shoes, quantity: updatedQuantity, quantityCount };
       }
       return shoes;
     });
+
+    localStorage.setItem("cartProduct", JSON.stringify(updatedItems));
     setSavedItem(updatedItems);
   };
 
   // 수량 줄이기
   const handleDecreaseItem = (item) => {
     const updatedItems = savedItem.map((shoes) => {
-      if (shoes.id === item.id && shoes.quantity > 1) {
-        return { ...shoes, quantity: shoes.quantity - 1 };
+      if (shoes.id === item.id) {
+        const localStoragedData =
+          JSON.parse(localStorage.getItem("cartProduct")) || [];
+        const quantityCount = localStoragedData.reduce(
+          (accumulator, currentItem) => {
+            const itemQuantity = currentItem.quantity - 1;
+            return accumulator - itemQuantity;
+          },
+          0
+        );
+
+        const updatedQuantity = shoes.quantity - 1;
+        // 수량이 0 이하로 내려가지 않도록 조건문 추가
+        if (updatedQuantity < 1) {
+          return { ...shoes, quantity: 1, quantityCount };
+        }
+        return { ...shoes, quantity: updatedQuantity, quantityCount };
       }
       return shoes;
     });
+
+    localStorage.setItem("cartProduct", JSON.stringify(updatedItems));
     setSavedItem(updatedItems);
   };
 
