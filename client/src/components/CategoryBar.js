@@ -26,35 +26,6 @@ const CategoryBar = ({
     getParentCategories();
   }, []);
 
-  console.log('parent');
-  console.log(parentCategory);
-
-  // useEffect(() => {
-  //   for (let cate of parentCategory) {
-  //     async function getChildCategories() {
-  //       const responseArr = await getChildCategory(cate._id);
-  //       const childCategoryArr = responseArr.map((cate) => ({
-  //         id: cate._id,
-  //         name: cate.name,
-  //       }));
-  //       console.log(cate.name);
-  //       if (cate.name === '여성') {
-  //         setWomanSubCategort(childCategoryArr);
-  //       }
-  //       if (cate.name === '남성') {
-  //         setManSubCategort(childCategoryArr);
-  //       }
-  //       if (cate.name === '브랜드') {
-  //         setBrandSubCategort(childCategoryArr);
-  //       }
-  //       if (cate.name === '타입') {
-  //         setTypeSubCategort(childCategoryArr);
-  //       }
-  //     }
-  //     getChildCategories();
-  //   }
-  // }, [parentCategory]);
-
   const getChildCategories = useCallback(
     async (parentCategory) => {
       const subCategoryWithParent = await parentCategory.map(
@@ -74,10 +45,6 @@ const CategoryBar = ({
     getChildCategories(parentCategory);
   }, [getChildCategories]);
 
-  console.log('서브카테고리 확인');
-  console.log(subCategory);
-
-  console.log('아이템 데이터 확인');
   subCategory.map((item) => console.log(item.data));
 
   return (
