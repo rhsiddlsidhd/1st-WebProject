@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getProducts } from '../api/productsAPI';
+import { getBrands, getProducts } from '../api/productsAPI';
 import CategoryBar from './CategoryBar';
 import Pagination from './Pagination';
 import Products from './Products';
@@ -10,6 +10,7 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState('');
+  const [brands, setBrands] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const [page, setPage] = useState(1);
@@ -33,7 +34,9 @@ const ProductList = () => {
   const getProductList = useCallback(async () => {
     setLoading(true);
     const productsData = await getProducts(queryString);
+    const brandList = await getBrands();
     setProducts(productsData);
+    setBrands(brandList);
     setLoading(false);
     setCount(productsData.length);
   }, [queryString]);
@@ -83,7 +86,11 @@ const ProductList = () => {
       />
 
       <div>
-        <Products products={currentProducts} loading={loading} />
+        <Products
+          products={currentProducts}
+          loading={loading}
+          brands={brands}
+        />
         <Pagination
           setPage={paginate}
           limit={limit}
