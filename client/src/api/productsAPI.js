@@ -2,98 +2,98 @@
 // FIXME api요청주소 BASE_URL/api로 변경
 import axios from 'axios';
 
-// // // get response:
-// const API_BASE_URL = 'http://localhost:3000';
-// export const getProducts = async (queryString) => {
-//   try {
-//     const response = await axios.get(`${API_BASE_URL}/api/products`);
-//     return response.data;
-//   } catch (err) {
-//     throw new Error(err);
-//   }
-// };
-const arr = [
-  {
-    id: '몽고DB에서 부여한 고유 ID',
-    title: '가젤 볼드 W',
-    brand: 'adidas',
-    type: 'sneakers',
-    price: '10000',
-    model_number: '1234567',
-    gender: 'woman',
-    sizes: ['220', '230', '235', '240', '245'],
-    option_groups: {
-      color: ['begie'],
-      etc: '추가 옵션 생길 수 있음',
-    },
-    reviews: ['ex.작성한 리뷰 데이터 ID1', 'ex.작성한 리뷰 데이터 ID2'],
-    discount_ratio: '0',
-    main_images: [
-      'ex)상품 정보 image 데이터 ID1',
-      'ex)상품 정보 image 데이터 ID2',
-    ],
-    detail_images: [
-      'ex)상세 정보 image 데이터 ID1',
-      'ex)상세 정보 image 데이터 ID2',
-    ],
-  },
-  {
-    id: '몽고DB에서 부여한 고유 ID2',
-    title: '1461 3홀 모노 블랙',
-    brand: '닥터마틴',
-    type: 'Derby',
-    price: '10000',
-    model_number: '0003339',
-    gender: 'man',
-    sizes: ['235', '240', '245', '260', '270'],
-    option_groups: {
-      color: ['black'],
-      etc: '추가 옵션 생길 수 있음2',
-    },
-    reviews: ['ex.작성한 리뷰 데이터 ID1', 'ex.작성한 리뷰 데이터 ID2'],
-    discount_ratio: '5 (5프로 할인)',
-    main_images: [
-      'ex)상품 정보 image 데이터 ID1',
-      'ex)상품 정보 image 데이터 ID2',
-    ],
-    detail_images: [
-      'ex)상세 정보 image 데이터 ID1',
-      'ex)상세 정보 image 데이터 ID2',
-    ],
-  },
-  {
-    id: '몽고DB에서 부여한 고유 ID3',
-    title: '모나코 M 스니커즈',
-    brand: 'Boutique',
-    type: 'sneakers',
-    price: '10000',
-    model_number: 'ok928j23',
-    gender: 'man',
-    sizes: ['250', '255', '260', '265', '270'],
-    option_groups: {
-      color: ['black', 'white', 'red'],
-      etc: '추가 옵션 생길 수 있음2',
-    },
-    reviews: ['ex.작성한 리뷰 데이터 ID1', 'ex.작성한 리뷰 데이터 ID2'],
-    discount_ratio: '2',
-    main_images: [
-      'ex)상품 정보 image 데이터 ID1',
-      'ex)상품 정보 image 데이터 ID2',
-    ],
-    detail_images: [
-      'ex)상세 정보 image 데이터 ID1',
-      'ex)상세 정보 image 데이터 ID2',
-    ],
-  },
-];
-
-export const getProducts = async () => {
+// // get response:
+const API_BASE_URL = 'http://localhost:3000';
+export const getProducts = async (queryString) => {
   try {
-    return arr;
+    const response = await axios.get(`${API_BASE_URL}/api/products`);
+    return response.data;
   } catch (err) {
     throw new Error(err);
   }
 };
+// const arr = [
+//   {
+//     id: '몽고DB에서 부여한 고유 ID',
+//     title: '가젤 볼드 W',
+//     brand: 'adidas',
+//     type: 'sneakers',
+//     price: '10000',
+//     model_number: '1234567',
+//     gender: 'woman',
+//     sizes: ['220', '230', '235', '240', '245'],
+//     option_groups: {
+//       color: ['begie'],
+//       etc: '추가 옵션 생길 수 있음',
+//     },
+//     reviews: ['ex.작성한 리뷰 데이터 ID1', 'ex.작성한 리뷰 데이터 ID2'],
+//     discount_ratio: '0',
+//     main_images: [
+//       'ex)상품 정보 image 데이터 ID1',
+//       'ex)상품 정보 image 데이터 ID2',
+//     ],
+//     detail_images: [
+//       'ex)상세 정보 image 데이터 ID1',
+//       'ex)상세 정보 image 데이터 ID2',
+//     ],
+//   },
+//   {
+//     id: '몽고DB에서 부여한 고유 ID2',
+//     title: '1461 3홀 모노 블랙',
+//     brand: '닥터마틴',
+//     type: 'Derby',
+//     price: '10000',
+//     model_number: '0003339',
+//     gender: 'man',
+//     sizes: ['235', '240', '245', '260', '270'],
+//     option_groups: {
+//       color: ['black'],
+//       etc: '추가 옵션 생길 수 있음2',
+//     },
+//     reviews: ['ex.작성한 리뷰 데이터 ID1', 'ex.작성한 리뷰 데이터 ID2'],
+//     discount_ratio: '5 (5프로 할인)',
+//     main_images: [
+//       'ex)상품 정보 image 데이터 ID1',
+//       'ex)상품 정보 image 데이터 ID2',
+//     ],
+//     detail_images: [
+//       'ex)상세 정보 image 데이터 ID1',
+//       'ex)상세 정보 image 데이터 ID2',
+//     ],
+//   },
+//   {
+//     id: '몽고DB에서 부여한 고유 ID3',
+//     title: '모나코 M 스니커즈',
+//     brand: 'Boutique',
+//     type: 'sneakers',
+//     price: '10000',
+//     model_number: 'ok928j23',
+//     gender: 'man',
+//     sizes: ['250', '255', '260', '265', '270'],
+//     option_groups: {
+//       color: ['black', 'white', 'red'],
+//       etc: '추가 옵션 생길 수 있음2',
+//     },
+//     reviews: ['ex.작성한 리뷰 데이터 ID1', 'ex.작성한 리뷰 데이터 ID2'],
+//     discount_ratio: '2',
+//     main_images: [
+//       'ex)상품 정보 image 데이터 ID1',
+//       'ex)상품 정보 image 데이터 ID2',
+//     ],
+//     detail_images: [
+//       'ex)상세 정보 image 데이터 ID1',
+//       'ex)상세 정보 image 데이터 ID2',
+//     ],
+//   },
+// ];
+
+// export const getProducts = async () => {
+//   try {
+//     return arr;
+//   } catch (err) {
+//     throw new Error(err);
+//   }
+// };
 
 export const getProduct = async () => {
   try {

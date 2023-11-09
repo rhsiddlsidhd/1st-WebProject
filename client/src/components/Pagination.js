@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 function Pagination({ total, limit, page, setPage }) {
   const numPages = Math.ceil(total / limit);
+  console.log('페이지수는');
+  console.log(numPages);
   const [currPage, setCurrPage] = useState(page);
   let firstNum = currPage - (currPage % 5) + 1;
   let lastNum = currPage - (currPage % 5) + 5;

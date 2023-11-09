@@ -13,7 +13,7 @@ const ProductList = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(16);
   const offset = (page - 1) * limit;
   const [count, setCount] = useState(0);
 
@@ -44,8 +44,6 @@ const ProductList = () => {
 
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
-    console.log('이벤트의밸류확ㅇ;ㄴ');
-    console.log(event.target.value);
     if (event.target.checked) {
       setSelectedCategories([...selectedCategories, value]);
     } else {
