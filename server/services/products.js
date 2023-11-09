@@ -9,7 +9,6 @@ const getProductById = async (product_id) => {
 };
 const getProducts = async (page, category_id) => {
   const perPage = 30;
-
   let query = {};
   if (category_id !== undefined) {
     query = {
@@ -17,7 +16,6 @@ const getProducts = async (page, category_id) => {
     };
   }
   const total = await Product.countDocuments(query);
-  console.log(total);
   const products = await Product.find(query)
     .sort({ createdAt: -1 })
     .skip(perPage * (page - 1))

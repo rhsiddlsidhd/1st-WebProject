@@ -25,11 +25,8 @@ exports.getProducts = catchAsync(async (req, res, next) => {
   } else {
     category_id = [category_id];
   }
-  console.log(category_id);
   const page = req.query.page;
-  const products = await productsService.getProducts(page || 1, [
-    ...category_id,
-  ]);
+  const products = await productsService.getProducts(page || 1, category_id);
   res.status(httpStatus.OK).json(products);
 });
 
