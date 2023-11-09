@@ -18,17 +18,25 @@ const CategoryBar = ({
   useEffect(() => {
     async function getParentCategories() {
       const responseArr = await getBigCategory();
+      console.log('대분류확인');
+      console.log(responseArr);
       const patentCategoryArr = responseArr.map((cate) => ({
         id: cate._id, //12345
         name: cate.name, //타입, 브랜드, 여성, 남성
       }));
       setParentCategory(patentCategoryArr);
+      console.log('parentCategory');
+      console.log(parentCategory);
     }
     getParentCategories();
   }, []);
 
   const getChildCategories = useCallback(
     async (parentCategory) => {
+      const test = await getChildCategory('654c6dec0a1b315fa221d0a6');
+      console.log('소분류 테스트');
+      console.log(test);
+
       const subCategoryWithParent = await parentCategory.map(
         (eachParentCategory) =>
           getChildCategory(eachParentCategory.id).then((data) => ({
@@ -62,6 +70,7 @@ const CategoryBar = ({
       return allSubCategory.filter(
         (cate) => cate.type === '타입' || cate.type === '브랜드'
       );
+    else return allSubCategory;
   };
 
   return (

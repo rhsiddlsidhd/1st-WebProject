@@ -33,7 +33,9 @@ const ManageProductNew = () => {
     for (var pair of formData.entries()) {
       console.log(pair[0] + ', ' + pair[1]);
     }
-    // const response = await addProduct(formData);
+    const response = await addProduct(formData);
+    console.log('상품추가결과');
+    console.log(response);
   };
 
   const brandList = ['adidas', 'Boutique', '닥터마틴'];

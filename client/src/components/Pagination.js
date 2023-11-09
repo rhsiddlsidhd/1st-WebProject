@@ -5,8 +5,9 @@ function Pagination({ total, limit, page, setPage }) {
   console.log('페이지수는');
   console.log(numPages);
   const [currPage, setCurrPage] = useState(page);
+
   let firstNum = currPage - (currPage % 5) + 1;
-  let lastNum = currPage - (currPage % 5) + 5;
+  let lastNum = Math.min(currPage - (currPage % 5) + 5, numPages);
 
   return (
     <div className='Pagination'>
