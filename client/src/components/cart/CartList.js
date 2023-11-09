@@ -1,6 +1,7 @@
 import React from "react";
 
 const CartList = ({
+  handleDeleteItem,
   savedItem,
   setSavedItem,
   selectedItems,
@@ -29,17 +30,6 @@ const CartList = ({
     setSavedItem(updatedItems);
   };
 
-  // (쓰레기통)삭제하기
-  const handleDeleteItem = (item) => {
-    const cartItem = savedItem.filter((shoes) => shoes.id !== item.id);
-
-    if (window.confirm(`${item.id}현재 장바구니 상품을 삭제하시겠습니까?`)) {
-      localStorage.removeItem("cartProduct");
-      setSavedItem(cartItem);
-      alert("삭제되었습니다.");
-    }
-  };
-
   // 부분 선택
   const hendleChecked = (itemId) => {
     const updatedSelectedItems = selectedItems.includes(itemId)
@@ -55,10 +45,9 @@ const CartList = ({
       <div className="div__div--cart-list-style">
         {savedItem.map((item) => (
           <div className="div__div-cart-list-all-add" key={item.id}>
-            <label className="checkbox-container" for="cart-checkbox-content">
+            <label className="checkbox-container">
               <input
                 type="checkbox"
-                id="cart-checkbox-content"
                 className="cart-checkbox"
                 checked={selectedItems.includes(item.id)}
                 onChange={() => hendleChecked(item.id)}
@@ -72,6 +61,7 @@ const CartList = ({
                 <img src="#" alt={item.img} />
                 <div className="div__div-cart-list-add-item-brand">
                   {item.brandname}
+                  <br />
                   {item.productname}
                 </div>
                 <div className="div__div-cart-list-add-item-size">

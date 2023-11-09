@@ -18,8 +18,33 @@ const Cart = () => {
   // 체크 아이템
   const [selectedItems, setSelectedItems] = useState([]);
 
-  //변 함 초
-  // 컴포넌트가 렌더링 될 때마다 특정 작업을 실행할 수 있도록 하는 Hook
+  // (쓰레기통)삭제하기
+  const handleDeleteItem = (item) => {
+    if (window.confirm(`${item.id}현재 장바구니 상품을 삭제하시겠습니까?`)) {
+      const localStoragedData =
+        JSON.parse(localStorage.getItem("cartProduct")) || [];
+      const updatedCartItems = localStoragedData.filter(
+        (shoes) => shoes.id !== item.id
+      );
+      localStorage.setItem("cartProduct", JSON.stringify(updatedCartItems));
+      setSavedItem(updatedCartItems);
+      alert("삭제되었습니다.");
+    }
+  };
+
+  //선택삭제
+  const selectDelete = () => {
+    if (window.confirm("선택된 항목을 삭제하시겠습니까?")) {
+      const localStoragedData =
+        JSON.parse(localStorage.getItem("cartProduct")) || [];
+      const updatedCartItems = localStoragedData.filter((item) => {
+        return !selectedItems.includes(item.id);
+      });
+      localStorage.setItem("cartProduct", JSON.stringify(updatedCartItems));
+      setSavedItem(updatedCartItems);
+      alert("선택된 항목이 삭제되었습니다.");
+    }
+  };
 
   return (
     <>
@@ -29,9 +54,9 @@ const Cart = () => {
           <SelectWrapper
             savedItem={savedItem}
             isAllChecked={isAllChecked}
-            selectedItems={selectedItems}
             setIsAllChecked={setIsAllChecked}
             setSelectedItems={setSelectedItems}
+            selectDelete={selectDelete}
           />
           <CartWrapper
             savedItem={savedItem}
@@ -39,6 +64,7 @@ const Cart = () => {
             setIsAllChecked={setIsAllChecked}
             setSelectedItems={setSelectedItems}
             setSavedItem={setSavedItem}
+            handleDeleteItem={handleDeleteItem}
           />
         </div>
       </div>

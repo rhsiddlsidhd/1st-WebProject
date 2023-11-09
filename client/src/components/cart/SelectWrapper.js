@@ -1,7 +1,7 @@
 const SelectWrapper = ({
+  selectDelete,
   savedItem,
   isAllChecked,
-  selectedItems,
   setIsAllChecked,
   setSelectedItems,
 }) => {
@@ -29,8 +29,19 @@ const SelectWrapper = ({
           <i className="fa-solid fa-check"></i>
         </span>
       </label>
-      <p className="div__p--select-all-text">전체선택</p>
-      <button className="div__button--select-delete-button">선택삭제</button>
+      <p
+        className="div__p--select-all-text"
+        onClick={handleAllChecked}
+        style={{ cursor: "pointer" }}
+      >
+        전체선택
+      </p>
+      <button
+        className="div__button--select-delete-button"
+        onClick={selectDelete}
+      >
+        선택삭제
+      </button>
     </div>
   );
 };
