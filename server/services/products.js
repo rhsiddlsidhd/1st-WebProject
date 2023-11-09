@@ -1,4 +1,5 @@
 const { Product, Image } = require('../models');
+
 const catchAsync = require('../utils/catchAsync');
 
 const getProductById = async (product_id) => {
@@ -21,7 +22,6 @@ const getProducts = async (page, category_id) => {
     .sort({ createdAt: -1 })
     .skip(perPage * (page - 1))
     .limit(perPage);
-
   return { products, total, currentPage: page };
 };
 
