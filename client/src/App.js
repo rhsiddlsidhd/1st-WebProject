@@ -6,7 +6,6 @@ import Cart from './pages/Cart';
 import DeliveryAddress from './pages/DeliveryAddress';
 import PurchaseCompleted from './pages/PurchaseCompleted';
 import Home from './pages/Home';
-import List from './pages/List';
 import Login from './pages/Login';
 import Join from './pages/Join';
 import Userinfo from './pages/Userinfo';
@@ -31,7 +30,6 @@ function App() {
         <Route path='/deliveryaddress' element={<DeliveryAddress />} />
         <Route path='/PurchaseCompleted' element={<PurchaseCompleted />} />
         <Route path='/' element={<Home />}></Route>
-        <Route path='/list' element={<List />}></Route>
         <Route path='/category' element={<Category />}></Route>
         <Route path='/auth/login' element={<Login />}></Route>
         <Route path='/auth/join' element={<Join />}></Route>

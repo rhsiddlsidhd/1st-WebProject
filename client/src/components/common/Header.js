@@ -32,7 +32,7 @@ const Header = () => {
         >
           <ul className='nav__ul--gnb'>
             <li>
-              <Link to='/list' className='ul__li--main-menu'>
+              <Link to='/plist' className='ul__li--main-menu'>
                 BRAND
               </Link>
               <ul>
@@ -54,7 +54,7 @@ const Header = () => {
               </ul>
             </li>
             <li>
-              <Link to='/list' className='ul__li--main-menu'>
+              <Link to='plist' className='ul__li--main-menu'>
                 SHOES
               </Link>
               <ul>
@@ -86,7 +86,7 @@ const Header = () => {
               </ul>
             </li>
             <li>
-              <Link to='/list' className='ul__li--main-menu'>
+              <Link to='plist' className='ul__li--main-menu'>
                 MAN
               </Link>
               <ul>
@@ -118,7 +118,7 @@ const Header = () => {
               </ul>
             </li>
             <li>
-              <Link to='/list' className='ul__li--main-menu'>
+              <Link to='/plist' className='ul__li--main-menu'>
                 WOMAN
               </Link>
               <ul>
@@ -152,17 +152,6 @@ const Header = () => {
           </ul>
         </nav>
         <div className='header__div--icon'>
-          <form>
-            <input
-              type='text'
-              className='form__input--search-text'
-              placeholder='상품을 검색해주세요.'
-            />
-            <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              className='form__icon--search-button'
-            />
-          </form>
           <button>
             <Link to='/auth/login'>
               <FontAwesomeIcon
