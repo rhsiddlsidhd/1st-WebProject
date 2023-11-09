@@ -12,7 +12,7 @@ const ManageProducts = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const productCountRef = useRef(null);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(16);
   const offset = (page - 1) * limit;
   const currentProducts = products.slice(offset, offset + limit);
   const [count, setCount] = useState(0);
