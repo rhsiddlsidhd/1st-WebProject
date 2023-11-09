@@ -56,7 +56,7 @@ const Detail = () => {
       localStorage.setItem("cartProduct", JSON.stringify(updateStorage));
       alert("장바구니에 상품이 추가되었습니다.");
     } else if (isDuplication) {
-      alert("이미 장바구니에 삼품이 있습니다.");
+      alert("이미 장바구니에 상품이 있습니다.");
     }
   };
 
@@ -72,8 +72,8 @@ const Detail = () => {
             <p className="div__p--product-name">{product.productname}</p>
             <p className="div__p--price">{`${product.price} 원`}</p>
             <select className="div__select--select-style">
-              <option value="" disabled selected hidden>
-                사이즈 선택
+              <option value="" disabled hidden>
+                {/* 사이즈 선택 */}
               </option>
               {/* 해당 데이터의 사이즈를 전부 펼쳐야함 */}
               {data.map((item, index) => (

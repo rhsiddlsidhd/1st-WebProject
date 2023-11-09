@@ -381,7 +381,10 @@ button {
 .div__p--select-all-text {
   text-align: start;
 }
-
+.div__p--select-all-text {
+  display: flex;
+  align-items: center;
+}
 .div__input--checkbox-style {
   margin-right: 10px;
 }
@@ -393,31 +396,150 @@ button {
 
 .body__div--cart-div-content-flex {
   display: flex;
+  height: 350px;
+  width: 100%;
 }
 
-.div__hr--hr-style {
+.div__div--cart-list-style {
   width: 800px;
+  height: 350px;
+  border-top: 1px solid #a5a5a5;
+  border-bottom: 1px solid #a5a5a5;
+
+  overflow: scroll;
 }
+.div__div--cart-list-style::-webkit-scrollbar {
+  display: none;
+}
+
+/* 여기추가 */
+
+/* checkbox custom */
+.checkbox-container {
+  position: relative;
+  cursor: pointer;
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+}
+
+.cart-checkbox {
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #c2c2c2;
+
+  cursor: pointer;
+}
+
+.checkbox-container > .checkmark > .fa-check {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+}
+
+.cart-checkbox:checked {
+  background-color: #41b979;
+}
+/*  */
+/* add item */
+.div__div-cart-list-all-add {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  margin-top: 30px;
+}
+
+.div__div-cart-list-add {
+  width: 100%;
+  height: 100px;
+}
+
+.div__div-cart-list-add-item {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.div__div-cart-list-add-item > img {
+  width: 100px;
+  height: 100px;
+}
+
+.div__div-cart-list-add-item-brand {
+  width: 250px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.div__div-cart-list-add-item-size {
+  width: 50px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.div__div-cart-list-add-item-price {
+  width: 125px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+.number {
+  display: flex;
+  border: 1px solid black;
+}
+.number button,
+.number div {
+  width: 25px;
+  height: 25px;
+}
+
+.div__div-cart-list-add-item-delete i {
+  width: 25px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+/*  */
 
 .div__form--order-sheet-style {
   width: 350px;
   height: 250px;
   background: #fafafa;
   margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .div__p--product-amount-flex,
+.div__p--delivery-fee-text-flex,
 .div__p--total-payment-amount-flex {
   display: flex;
-  justify-content: space-around;
+  width: 80%;
+  justify-content: space-between;
 }
 
 .div__p--product-amount-flex {
   margin-top: 30px;
 }
 
+.div__p--delivery-fee-text-flex {
+  margin-top: 30px;
+}
+
 .div__p--total-payment-amount-flex {
-  margin-top: 100px;
+  margin-top: 80px;
 }
 
 .div__button--purchase-button-style {
@@ -426,7 +548,7 @@ button {
   border-radius: 10px;
   background: var(--black-color);
   color: var(--white-color);
-  margin-top: 180px;
+  margin-top: 100px;
 }
 
 .div__button--purchase-button-style:hover {

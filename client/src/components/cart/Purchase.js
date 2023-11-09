@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Purchase = ({ savedItem }) => {
+const Purchase = ({
+  savedItem,
+  totalPrice,
+  totalPaymentAmount,
+  deliveryFee,
+  selectedItems,
+}) => {
   const navigate = useNavigate();
   // 구매하기 boolean으로 관리
   const [isPurchase, setIsPurchase] = useState(false);
@@ -9,49 +15,55 @@ const Purchase = ({ savedItem }) => {
   // 구매하기
   const handlePurchase = () => {
     if (isPurchase) {
-      navigate("/deliveryaddress");
+      if (window.confirm(`선택한 상품을 구매 하시겠습니까?`)) {
+        localStorage.removeItem("savedItem");
+        navigate("/deliveryaddress");
+      }
     }
   };
 
   // 구매하기 활성화시 이동
   useEffect(() => {
-    if (savedItem.length < 1) {
+    if (savedItem.length < 1 || selectedItems.length === 0) {
       setIsPurchase(false);
     } else {
       setIsPurchase(true);
     }
-  }, [savedItem]);
+  }, [savedItem, selectedItems]);
 
   return (
-    <>
+    <div>
       <form className="div__form--order-sheet-style">
         <div className="div__p--product-amount-flex">
           <p className="div__p--product-amount-text">상품 금액</p>
 
-          <p className="div__p--product-amount">
-            {savedItem.reduce((total, item) => total + item.price, 0)}
+          <p className="div__p--product-amount">{`${totalPrice}원`}</p>
+        </div>
+        <div className="div__p--delivery-fee-text-flex">
+          <p className="div__p--delivery-fee-text">배송비</p>
+          <p className="div__p--delivery-fee">
+            {selectedItems.length > 0 ? `${deliveryFee}원` : `0원`}
           </p>
         </div>
-        {/* 배송비 넣으면 좋을듯함 */}
         <div className="div__p--total-payment-amount-flex">
           <p className="div__p--total-payment-amount-text">총 결제 금액</p>
           <p className="div__p--total-payment-amount">
             {/* reduce 배열을 축소하거나 합치는 함수 reduce((callback),0) */}
-            {savedItem.reduce((total, item) => total + item.price, 0)}
+            {`${totalPaymentAmount}원`}
           </p>
         </div>
-        <button
-          className="div__button--purchase-button-style"
-          onClick={handlePurchase}
-          disabled={!isPurchase}
-          style={{
-            opacity: isPurchase ? 1 : 0.5,
-          }}
-        >
-          구매하기
-        </button>
       </form>
-    </>
+      <button
+        className="div__button--purchase-button-style"
+        onClick={handlePurchase}
+        disabled={!isPurchase}
+        style={{
+          opacity: isPurchase ? 1 : 0.5,
+        }}
+      >
+        구매하기
+      </button>
+    </div>
   );
 };
 
