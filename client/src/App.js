@@ -18,6 +18,7 @@ import ManageProducts from './pages/ManageProducts';
 import ManageProduct from './components/ManageProduct';
 import ManageProductNew from './pages/ManageProductNew';
 import ManageProductEdit from './pages/ManageProductEdit';
+import UserOrder from './pages/UserOrder';
 import './css/app.css';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path='/productedit/:id' element={<ManageProductEdit />}></Route>
         <Route path='/productnew' element={<ManageProductNew />}></Route>
         <Route path='/plist' element={<ProductList />}></Route>
+        <Route path='/user/order' element={<UserOrder />}></Route>
       </Routes>
       <Top />
       <Footer />
