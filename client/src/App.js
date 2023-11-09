@@ -37,6 +37,7 @@ function App() {
         <Route path='/user' element={<Userinfo />}></Route>
         <Route path='/manageproducts' element={<ManageProducts />}></Route>
         <Route path='/productnew' element={<ManageProductNew />}></Route>
+        <Route path='/productedit' element={<ManageProductEdit />}></Route>
         <Route path='/plist/:listType' element={<ProductList />}></Route>
         {/* <Route path='/plist/woman' element={<ProductList />}></Route>
         <Route path='/plist/man' element={<ProductList />}></Route> */}
