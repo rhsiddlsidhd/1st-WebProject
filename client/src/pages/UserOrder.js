@@ -1,4 +1,15 @@
+import { useEffect, useState } from 'react';
+import { getUserOrderList } from '../api/userOrderAPI';
+
 function UserOrder() {
+  const [userOrderList, setUserOrderList] = useState([]);
+
+  useEffect(() => {
+    const orderList = getUserOrderList('kakao1234@test.com');
+    setUserOrderList(userOrderList);
+  }, []);
+
+  console.log(userOrderList);
   return (
     <div className='body__div--login-content'>
       <h3 className='body__h3--orderList-logo'>주문 정보 관리</h3>
@@ -26,7 +37,7 @@ function UserOrder() {
             <div className='div__orderList--order-column'>230000</div>
             <div className='div__orderList--order-column'>주문 완료</div>
             <div className='div__orderList--order-column'>수정하기</div>
-            <div className='div__orderList--order-column'> 취소하기</div>
+            <div className='div__orderList--order-column'>취소하기</div>
           </div>
         </div>
       </div>
