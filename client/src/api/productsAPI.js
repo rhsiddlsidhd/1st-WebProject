@@ -164,3 +164,13 @@ export const deleteProduct = async ({ name, brand, gender, type }) => {
     throw new Error(err);
   }
 };
+
+export const getBrands = async () => {
+  try {
+    const response = await axios.get('http://localhost:3000/api/brand');
+
+    return response.data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};

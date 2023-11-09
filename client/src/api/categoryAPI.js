@@ -50,6 +50,13 @@ export const getBigCategory = async () => {
         categoryType: '대분류',
         __v: 0,
       },
+      {
+        _id: '6545f7b88cc79ac2c20162ba',
+        name: '타입',
+        parentCategory: '-1',
+        categoryType: '대분류',
+        __v: 0,
+      },
     ];
     return data;
   } catch (err) {
@@ -122,6 +129,13 @@ export const getChildCategory = async (parentCategoryId) => {
       {
         _id: '6545f7b88cc79ac2c20162ba',
         name: '남성',
+        parentCategory: '-1',
+        categoryType: '대분류',
+        __v: 0,
+      },
+      {
+        _id: '6545f7b88cc79ac2c20162ba',
+        name: '타입',
         parentCategory: '-1',
         categoryType: '대분류',
         __v: 0,

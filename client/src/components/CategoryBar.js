@@ -6,6 +6,7 @@ const CategoryBar = ({
   selectedCategories,
   handleSelect,
   handleCheckboxChange,
+  listType,
 }) => {
   const [parentCategory, setParentCategory] = useState([]);
   const [typeSubCategory, setTypeSubCategort] = useState([]);
@@ -26,35 +27,6 @@ const CategoryBar = ({
     getParentCategories();
   }, []);
 
-  console.log('parent');
-  console.log(parentCategory);
-
-  // useEffect(() => {
-  //   for (let cate of parentCategory) {
-  //     async function getChildCategories() {
-  //       const responseArr = await getChildCategory(cate._id);
-  //       const childCategoryArr = responseArr.map((cate) => ({
-  //         id: cate._id,
-  //         name: cate.name,
-  //       }));
-  //       console.log(cate.name);
-  //       if (cate.name === '여성') {
-  //         setWomanSubCategort(childCategoryArr);
-  //       }
-  //       if (cate.name === '남성') {
-  //         setManSubCategort(childCategoryArr);
-  //       }
-  //       if (cate.name === '브랜드') {
-  //         setBrandSubCategort(childCategoryArr);
-  //       }
-  //       if (cate.name === '타입') {
-  //         setTypeSubCategort(childCategoryArr);
-  //       }
-  //     }
-  //     getChildCategories();
-  //   }
-  // }, [parentCategory]);
-
   const getChildCategories = useCallback(
     async (parentCategory) => {
       const subCategoryWithParent = await parentCategory.map(
@@ -74,24 +46,36 @@ const CategoryBar = ({
     getChildCategories(parentCategory);
   }, [getChildCategories]);
 
-  console.log('서브카테고리 확인');
-  console.log(subCategory);
-
-  console.log('아이템 데이터 확인');
   subCategory.map((item) => console.log(item.data));
+
+  const getSpecificCateory = (allSubCategory) => {
+    console.log(allSubCategory);
+    if (listType === 'woman')
+      return allSubCategory.filter(
+        (cate) => cate.type === '여성' || cate.type === '브랜드'
+      );
+    if (listType === 'man')
+      return allSubCategory.filter(
+        (cate) => cate.type === '남성' || cate.type === '브랜드'
+      );
+    if (listType === 'all')
+      return allSubCategory.filter(
+        (cate) => cate.type === '타입' || cate.type === '브랜드'
+      );
+  };
 
   return (
     <div className='CategoryBar'>
-      <select onChange={handleSelect}>
+      {/* <select onChange={handleSelect}>
         <option value=''>타입을 선택하세요</option>
         {typeSubCategory.map((item, idx) => (
           <option value={item.id} key={item.id}>
             {item.name}
           </option>
         ))}
-      </select>
+      </select> */}
 
-      {subCategory.map((item) => (
+      {getSpecificCateory(subCategory).map((item) => (
         <Checkbox
           type={item.type}
           category={item.data}
@@ -99,6 +83,14 @@ const CategoryBar = ({
           selectedCategories={selectedCategories}
         />
       ))}
+      {/* {subCategory.map((item) => (
+        <Checkbox
+          type={item.type}
+          category={item.data}
+          handleCheckboxChange={handleCheckboxChange}
+          selectedCategories={selectedCategories}
+        />
+      ))} */}
     </div>
   );
 };
