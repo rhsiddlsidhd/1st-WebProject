@@ -4,7 +4,6 @@ import { getChildCategory, deleteCategory } from '../api/categoryAPI';
 function ChildCategory({ parentCategoryId }) {
   const [childCatgory, setChildCategory] = useState([]);
 
-  console.log('?????');
   const refreshChild = () => {
     getChildCategory(parentCategoryId).then((response) => {
       setChildCategory(response);
