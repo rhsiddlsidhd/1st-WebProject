@@ -616,96 +616,6 @@ button {
   background: var(--black-color);
 }
 
-/* list */
-.body__div--product-list-content {
-  width: 100%;
-  height: 2000px;
-  margin-top: 180px;
-}
-
-.div__div--product-list-content-wrap {
-  width: 90%;
-  margin: 0 auto;
-  display: flex;
-}
-
-.body__div--side-filter-menu {
-  width: 150px;
-  height: 400px;
-}
-
-.ul__li--shoes-kind-title,
-.ul__li--brand-title {
-  font-size: 20px;
-  font-weight: 800;
-  margin-bottom: 20px;
-}
-
-.div__div--filter-hr {
-  width: 100px;
-  margin-top: 30px;
-}
-
-.ul__li--brand-title {
-  margin-top: 30px;
-  padding-top: 10px;
-}
-
-.ul__li--filter-menu {
-  margin: 10px 0;
-}
-
-.div__div--title-align {
-  display: flex;
-  justify-content: space-around;
-}
-
-.li__button--align {
-  color: #9d9d9d;
-}
-
-.div__h2--list-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.div__ul--align-list {
-  display: flex;
-  gap: 20px;
-  position: absolute;
-  right: 5%;
-}
-
-.div__ul--align-list li {
-  justify-content: end;
-}
-
-/* 상품 리스트 */
-.div__div--list-product-img {
-  width: 280px;
-  height: 280px;
-  border: 1px solid;
-}
-
-.div__div--list-brand-name {
-  font-weight: 800;
-}
-
-.div__div--list-product-name {
-  margin: 5px 0 10px;
-  letter-spacing: -5%;
-}
-
-.div__div--list-product-price {
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.div__div--list-flex {
-  display: flex;
-}
-
 /* footer */
 .body__footer {
   width: 100%;
@@ -882,4 +792,91 @@ button {
   color: #9d9d9d;
   width: 20%;
   text-align: end;
+}
+
+/* ProductList */
+.body__div--product-list-content {
+  width: 100%;
+  height: 2000px;
+  margin-top: 180px;
+}
+
+.div__div--product-list-content-wrap {
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.body__div--side-filter-menu {
+  width: 150px;
+  height: 400px;
+  position: fixed;
+  margin-top: 40px;
+}
+
+.div__div--product-list {
+  width: 100%;
+  height: 100px;
+  text-align: center;
+}
+
+.div__div--shoes-title {
+  margin-bottom: 40px;
+}
+
+/* Products */
+.li__span--product-image {
+  width: 200px;
+  height: 200px;
+  border: 1px solid;
+  margin-bottom: 5px;
+}
+
+.ul__li--group-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.li__span--product-brand {
+  font-weight: 800;
+}
+
+.li__span--product-title {
+  margin: 10px 0 25px 0;
+}
+
+.li__span--product-price {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.div__div--products {
+  width: 85%;
+  height: 100%;
+  margin-left: 180px;
+}
+
+/* 상품 리스트 */
+.div__div--list-product-img {
+  width: 280px;
+  height: 280px;
+  border: 1px solid;
+}
+
+.div__div--list-brand-name {
+  font-weight: 800;
+}
+
+.div__div--list-product-name {
+  margin: 5px 0 10px;
+  letter-spacing: -5%;
+}
+
+.div__div--list-product-price {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.div__div--list-flex {
+  display: flex;
 }
