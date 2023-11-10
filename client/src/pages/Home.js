@@ -4,20 +4,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import visualImage1 from '../image/visualImage1.jpg';
 import { getBrands, getProducts } from '../api/productsAPI';
 import Products from '../components/Products';
-
-// 이미지 슬라이더 구현
-// const [slideImage, setSlideImage] = useState(0);
-// const nextSlide = () => {
-//     if(slideImage < Image.length - 1) setSlideImage(slideImage + 1);
-//     else setSlideImage(0);
-// };
-// const prevSlide = () => {
-//     if(slideImage > 0) setSlideImage(slideImage - 1);
-//     else setSlideImage(0);
-// };
-// useInterval(() => {
-//     nextSlide();
-// }, 8000)
+import trendingimage from '../image/trendingimage.png';
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -55,193 +42,33 @@ function Home() {
       </ul>
       <div className='body__div--index-content-wrap'>
         {/* 베스트 상품 영역 */}
-        <Products products={products.slice(0, 4)} brands={brands} />
         <div className='div__div--best'>
           <h2 className='div__h2--title'>BEST</h2>
-          <div className='div__div--best-list'>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-          </div>
-          <div className='div__div--best-list'>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-          </div>
+          <Products products={products.slice(0, 5)} brands={brands} />
+          <br />
+          <br />
+          <Products products={products.slice(0, 5)} brands={brands} />
         </div>
-        {/* 트렌드 영역 */}
+        {/* Trending */}
         <div className='div__div--trending'>
-          <h2 className='div__h2--trending-title'>Trending Now</h2>
-          <div className='div__div--trend-wrap'>
-            <Link to='/'>
-              <div className='div__div--trend-img-1'></div>
-            </Link>
-            <Link to='/'>
-              <div className='div__div--trend-img-2'></div>
-            </Link>
-          </div>
+          <img
+            src={trendingimage}
+            alt='트렌드이미지'
+            className='li__img--trendimage'
+          />
+          <p className='div__h2--trending-text1'>Own the Floor</p>
+          <p className='div__h2--trending-text2'>
+            스튜디오 밖에서도 빛나는 스니커즈
+          </p>
+          <button className='div__h2--trending-buy-button'>구매하기</button>
         </div>
         <div className='div__div--new'>
           {/* 신제품 영역 */}
           <h2 className='div__h2--new-title'>NEW</h2>
-          <div className='div__div--best-list'>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-          </div>
-          <div className='div__div--best-list'>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-            <div>
-              <Link to='/'>
-                <div className='div__div--best-product-img'>이미지</div>
-                <div className='div__div--best-brand-name'>nike</div>
-                <div className='div__div--best-product-name'>
-                  볼드 코어 블랙 클라우드 화이트
-                </div>
-                <div className='div__div--best-product-price'>139,000</div>
-              </Link>
-            </div>
-          </div>
+          <Products products={products.slice(0, 5)} brands={brands} />
+          <br />
+          <br />
+          <Products products={products.slice(0, 5)} brands={brands} />
         </div>
       </div>
     </div>
