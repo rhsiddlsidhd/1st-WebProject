@@ -45,7 +45,7 @@ function App() {
         <Route path='/manageproducts' element={<ManageProducts />}></Route>
         <Route path='/productnew' element={<ManageProductNew />}></Route>
         <Route path='/productedit' element={<ManageProductEdit />}></Route>
-        <Route path='/manageorder' element={<Manageorder />}></Route>
+        <Route path='/manageorder' element={<ManageOrder />}></Route>
 
         {/* 사용자페이지 */}
         <Route path='/user/order' element={<UserOrder />}></Route>
