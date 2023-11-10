@@ -81,7 +81,7 @@ const ManageProductNew = () => {
           >
             <option>타입 선택</option>
             {typeSubCategories.map((type, idx) => (
-              <option value={type._id} key={idx}>
+              <option value={type.name} key={idx}>
                 {type.name}
               </option>
             ))}
