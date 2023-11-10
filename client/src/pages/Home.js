@@ -55,7 +55,7 @@ function Home() {
       </ul>
       <div className='body__div--index-content-wrap'>
         {/* 베스트 상품 영역 */}
-        <Products products={products.slice(0, 3)} brands={brands} />
+        <Products products={products.slice(0, 4)} brands={brands} />
         <div className='div__div--best'>
           <h2 className='div__h2--title'>BEST</h2>
           <div className='div__div--best-list'>
