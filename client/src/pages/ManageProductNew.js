@@ -133,7 +133,7 @@ const ManageProductNew = () => {
             onChange={handleInputChange}
           />
         </div>
-        <ManageImage prd={{ ...product }}></ManageImage>
+        <ManageImage></ManageImage>
         <div className='control_box'>
           <button type='button' onClick={() => navigate(-1)}>
             추가 취소
