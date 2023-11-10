@@ -1,5 +1,6 @@
 const userService = require('../services/userService');
 const APIError = require('../utils/ApiError');
+const httpStatus = require('http-status');
 
 // 사용자 정보 가져오기
 exports.getUser = async (req, res, next) => {

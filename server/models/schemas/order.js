@@ -14,6 +14,10 @@ const OrderSchema = new Schema({
     type: String,
     required: true,
   },
+  addressDetail: {
+    type: String,
+    required: true,
+  },
   date: {
     type: String,
     required: true,

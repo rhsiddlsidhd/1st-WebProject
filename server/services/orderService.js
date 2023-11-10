@@ -9,6 +9,7 @@ const createOrder = async (orderBody) => {
     orderBody.id.length < 1 ||
     orderBody.items.length < 1 ||
     orderBody.address.length < 1 ||
+    orderBody.addressDetail.length < 1 ||
     orderBody.total_price.length < 1
   ) {
     throw new APIError(
@@ -31,6 +32,7 @@ const createOrder = async (orderBody) => {
     user_id: orderBody.id,
     items: orderBody.items,
     address: orderBody.address,
+    addressDetail: orderBody.addressDetail.length,
     total_price: orderBody.total_price,
     date: orderTime,
   };
@@ -62,7 +64,7 @@ const getOrder = async (id, order) => {
   return data;
 };
 
-//주문 내역 수정하기
+//주소 수정하기
 const updateOrder = async (id, orderBody) => {
   const order = await Order.findOne({ _id: id }).exec();
 
@@ -79,8 +81,7 @@ const updateOrder = async (id, orderBody) => {
     {
       $set: {
         address: orderBody.address,
-        total_price: orderBody.total_price,
-        items: orderBody.items,
+        addressDetail: orderBody.addressDetail,
       },
     }
   ).exec();
