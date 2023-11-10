@@ -18,13 +18,20 @@ const Products = ({ products, loading, brands }) => {
   return (
     <ul className='list-group'>
       {products.map((product) => (
-        <li key={product.id} className='list-group-item'>
-          <img src={product.main_images[0]?.url ?? ''} />
-          <span>
-            {product.title}/{product.model_number}
-          </span>
-          <span>{product.price}원</span>{' '}
-          <span>브랜드:{getBrandName(product.brand)}</span>
+        <li key={product.id} className='ul__li--group-item'>
+          <img
+            src={product.main_images[0]?.url ?? ''}
+            className='li__img--product-image'
+          />
+          <div className='li__img--product-brand'>
+            브랜드:{getBrandName(product.brand)}
+          </div>
+          <div className='li__div--product-title'>
+            {product.title} / {product.model_number}
+          </div>
+          <div className='li__div--product-price'>
+            {new Intl.NumberFormat().format(product.price)} 원
+          </div>{' '}
         </li>
       ))}
     </ul>

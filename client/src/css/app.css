@@ -243,6 +243,7 @@ table {
 .div__div--best {
   width: 100%;
   height: 1000px;
+  text-align: center;
 }
 
 .div__h2--title {
@@ -290,9 +291,47 @@ table {
   opacity: 0.5;
 }
 
+.div__div--trending {
+  width: 100%;
+  height: 1000px;
+  text-align: center;
+}
+
+.div__h2--trending-text1 {
+  margin-top: 60px;
+}
+
+.div__h2--trending-text2 {
+  font-weight: 800;
+  font-size: 30px;
+  margin-top: 10px;
+  margin-bottom: 70px;
+}
+
+.div__h2--trending-buy-button {
+  display: block;
+  padding: 15px 40px;
+  border: 1px solid;
+  color: var(--white-color);
+  background: var(--black-color);
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+.div__h2--trending-buy-button:hover {
+  color: var(--black-color);
+  background: var(--white-color);
+}
+
+.li__img--trendimage {
+  width: 1800px;
+}
+
 .div__div--new {
   width: 100%;
   height: 1000px;
+  text-align: center;
+  margin-top: 300px;
 }
 
 .div__h2--new-title {
@@ -460,7 +499,7 @@ table {
 .cart-checkbox:checked {
   background-color: #41b979;
 }
-/*  */
+
 /* add item */
 .div__div-cart-list-all-add {
   display: flex;
@@ -1032,13 +1071,42 @@ table {
   margin: 0 auto;
 }
 
-/* manageProducts 수정할거임*/
-.ManageProducts {
-  margin-top: 200px;
+/* ManageProducts */
+.div__manage-products-content {
+  margin-top: 150px;
+  text-align: center;
 }
 
-.Manageddddd {
-  margin-top: 200px;
+.div__button--manege-products-button {
+  border: 1px solid;
+  padding: 10px 20px;
+}
+
+.button__link--category-button {
+  width: 100%;
+  height: 100%;
+}
+
+.div__button--manege-products-button:hover {
+  color: var(--white-color);
+  background: var(--black-color);
+}
+
+.div__button--manege-products-button-wrap {
+  display: flex;
+  gap: 10px;
+  justify-content: right;
+  margin-top: 40px;
+}
+
+.div__manage-products-content-wrap {
+  width: 90%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.div__manage-products-content-title {
+  margin-bottom: 20px;
 }
 
 /* manageOrder */
@@ -1080,4 +1148,132 @@ table {
 
 .table__thead--manege-order-title th:nth-child(2) {
   width: 30%;
+}
+
+/* ManegeProduct */
+
+.table__thead--table-content tr {
+  border-bottom: 1px solid;
+}
+
+.table__tbody--table-content td {
+  height: 100px;
+}
+
+.table__tbody--table-content tr {
+  border-bottom: 1px solid;
+}
+
+/* ManageProductNew */
+.div__manage-product-add-content {
+  margin-top: 150px;
+  width: 100%;
+  height: 600px;
+}
+
+.div__manage-product-add-content-wrap {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.form__label--input-title-hidden {
+  display: none;
+}
+
+.form__input--input-value-style {
+  width: 400px;
+  height: 48px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.div__form--manage-product-edit {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.form__button--image-upload {
+  width: 370px;
+  height: 370px;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.div__button--product-add-button {
+  width: 195px;
+  height: 48px;
+  color: var(--white-color);
+  border-radius: 10px;
+  background: var(--greed-color);
+}
+
+.div__button--product-add-button:hover {
+  opacity: 0.7;
+}
+
+.div__button--product-cancel-button {
+  width: 195px;
+  height: 48px;
+  border-radius: 10px;
+  margin-right: 10px;
+  background: var(--red-color);
+  color: var(--white-color);
+}
+
+.div__button--product-cancel-button:hover {
+  opacity: 0.7;
+}
+
+.div__div--button-flex {
+  width: 195px;
+  display: flex;
+  gap: 10px;
+}
+
+.form__input--input-value-style-type,
+.form__input--input-value-style-brand {
+  width: 195px;
+}
+
+.div__div--input-list-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.div__h2--product-add-title {
+  margin-bottom: 60px;
+}
+
+/* Products */
+.list-group {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.ul__li--group-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.li__img--product-brand {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.li__img--product-image {
+  width: 300px;
+  height: 300px;
+}
+
+.li__div--product-title {
+  margin-top: 10px;
+}
+
+.li__div--product-price {
+  font-size: 20px;
+  margin-top: 10px;
 }
