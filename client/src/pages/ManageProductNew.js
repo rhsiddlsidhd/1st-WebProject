@@ -6,7 +6,7 @@ import ManageImage from '../components/ManageImage';
 
 const ManageProductNew = () => {
   let { state } = useLocation();
-  const { categories } = state;
+  // const { categories } = state;
   const { brands } = state;
   const { typeSubCategories } = state;
 

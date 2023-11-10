@@ -94,7 +94,7 @@ const ManageProducts = () => {
     navigate(`/productedit/${product._id}`, {
       state: {
         // categories: categories,
-        item: item,
+        item: product,
         categories: selectedCategories,
         brands: brands,
         typeSubCategories,
