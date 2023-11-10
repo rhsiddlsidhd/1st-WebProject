@@ -59,17 +59,11 @@ exports.addImagesToProduct = catchAsync(async (req, res, next) => {
   }
 
   const images = await imageService.addImages(req.files);
-
+  let result;
   if (image_type === 'main') {
-    const result = await productsService.addMainImagesToProduct(
-      product,
-      images
-    );
+    result = await productsService.addMainImagesToProduct(product, images);
   } else if (image_type === 'detail') {
-    const result = await productsService.addDetailImagesToProduct(
-      product,
-      images
-    );
+    result = await productsService.addDetailImagesToProduct(product, images);
   }
   logger.info(result);
   res.status(httpStatus.OK).json(result);
@@ -87,16 +81,11 @@ exports.deleteImagesInProduct = catchAsync(async (req, res, next) => {
 
   const images = req.body.images;
 
+  let result;
   if (image_type === 'main') {
-    const result = await productsService.deleteMainImagesToProduct(
-      product,
-      images
-    );
+    result = await productsService.deleteMainImagesToProduct(product, images);
   } else if (image_type === 'detail') {
-    const result = await productsService.deleteDetailImagesToProduct(
-      product,
-      images
-    );
+    result = await productsService.deleteDetailImagesToProduct(product, images);
   }
   logger.info(result);
   res.status(httpStatus.OK).json(result);
@@ -113,12 +102,11 @@ exports.deleteAllImagesInProduct = catchAsync(async (req, res, next) => {
     throw new ApiError(httpStatus.NOT_FOUND, '상품을 찾지 못하였습니다.');
   }
 
+  let result;
   if (image_type === 'main') {
-    const result = await productsService.deleteAllMainImagesToProduct(product);
+    result = await productsService.deleteAllMainImagesToProduct(product);
   } else if (image_type === 'detail') {
-    const result = await productsService.deleteDetailMainImagesToProduct(
-      product
-    );
+    result = await productsService.deleteDetailMainImagesToProduct(product);
   }
 
   logger.info(result);
