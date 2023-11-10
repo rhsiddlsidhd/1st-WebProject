@@ -174,7 +174,7 @@ const ManageImage = ({ prd }) => {
         <button onClick={handleAddImages('main')}>추가</button>
         <table>
           <tbody>
-            {mainImages.map((img, index) => {
+            {mainImages?.map((img, index) => {
               return (
                 <tr>
                   <td>{index + 1}</td>
@@ -217,7 +217,7 @@ const ManageImage = ({ prd }) => {
         <button onClick={handleAddImages('detail')}>추가</button>
         <table>
           <tbody>
-            {detailImages.map((img, index) => {
+            {detailImages?.map((img, index) => {
               return (
                 <tr>
                   <td>{index + 1}</td>
