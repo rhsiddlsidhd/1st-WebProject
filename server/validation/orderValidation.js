@@ -6,6 +6,7 @@ const newOrder = {
     .keys({
       id: Joi.string().min(1).required(),
       items: Joi.array().min(1).required(),
+      total_price: Joi.string().min(1).required(),
       address: Joi.string().min(1).required(),
     })
     .unknown(false),
