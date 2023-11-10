@@ -4,16 +4,22 @@ import { getProducts, getBrands, deleteProduct } from '../api/productsAPI';
 import ManageProduct from '../components/ManageProduct';
 import CategoryBar from '../components/CategoryBar';
 import Pagination from '../components/Pagination';
+import {
+  getBigCategory,
+  // getCategory,
+  getChildCategory,
+} from '../api/categoryAPI';
 
 const ManageProducts = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
-  const [selected, setSelected] = useState('');
+  const [typeSubCategories, setTypeSubCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
   const [total, setTotal] = useState(1);
+
   let queryString;
 
   const paginate = (pageNumber) => {
@@ -25,16 +31,17 @@ const ManageProducts = () => {
     if (state) setSelectedCategories(state);
   }, [state]);
 
-  const handleSelect = (e) => {
-    const value = e.target.value;
-    setSelected(value);
-    setSelectedCategories([...selectedCategories, value]);
-  };
-
   const getProductList = useCallback(async () => {
     const data = await getProducts(selectedCategories, page);
     const products = data.products;
     const total = data.total;
+
+    const bigCategory = await getBigCategory();
+    const [typeCategory] = bigCategory.filter(
+      (category) => category.name === '타입'
+    );
+    const typeCategories = await getChildCategory(typeCategory._id);
+    setTypeSubCategories(typeCategories);
 
     const brandList = await getBrands();
     setProducts(products);
@@ -72,10 +79,6 @@ const ManageProducts = () => {
     window.history.pushState({}, '', window.location.pathname + queryString);
   };
 
-  // useEffect(() => {
-  //   updateQueryString();
-  // }, [selectedCategories, page]);
-
   const handleRemove = async (item) => {
     if (
       window.confirm(
@@ -104,6 +107,7 @@ const ManageProducts = () => {
               state: {
                 categories: selectedCategories,
                 brands: brands,
+                typeSubCategories,
               },
             })
           }
@@ -113,7 +117,6 @@ const ManageProducts = () => {
       </div>
       <CategoryBar
         selectedCategories={selectedCategories}
-        handleSelect={handleSelect}
         handleCheckboxChange={handleCheckboxChange}
       />
 

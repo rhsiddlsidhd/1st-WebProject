@@ -4,11 +4,14 @@ import { useLocation } from 'react-router';
 import { addProduct } from '../api/productsAPI';
 
 const ManageProductNew = () => {
-  console.log(useLocation());
   let { state } = useLocation();
   const { categories } = state;
   const { brands } = state;
-  const typeList = ['sneakers', 'Derby'];
+  const { typeSubCategories } = state;
+
+  console.log('타입서브카테고리확인!!!!!!!!!!!!!!!!');
+  console.log(typeSubCategories);
+  // const typeList = ['sneakers', 'Derby'];
   const [product, setProduct] = useState({});
   const navigate = useNavigate();
 
@@ -19,6 +22,11 @@ const ManageProductNew = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // if (product.title.length < 5) {
+    //   alert('상품 이름은 5글자 이상 입력하세요');
+    //   return;
+    // }
+
     const jsonData = {
       title: product.title,
       model_number: product.model_number,
@@ -72,9 +80,9 @@ const ManageProductNew = () => {
             onChange={handleInputChange}
           >
             <option>타입 선택</option>
-            {typeList.map((type, idx) => (
-              <option value={type} key={idx}>
-                {type}
+            {typeSubCategories.map((type, idx) => (
+              <option value={type._id} key={idx}>
+                {type.name}
               </option>
             ))}
           </select>
@@ -133,9 +141,7 @@ const ManageProductNew = () => {
           />
         </div>
         <div className='control_box'>
-          <button onClick={() => navigate(`/products?cateogory=${categories}`)}>
-            추가 취소
-          </button>
+          <button onClick={() => navigate(-1)}>추가 취소</button>
           <button type='submit'>상품 추가</button>
         </div>
       </form>

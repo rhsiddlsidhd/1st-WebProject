@@ -12,7 +12,6 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(30);
@@ -23,12 +22,6 @@ const ProductList = () => {
   useEffect(() => {
     if (state) setSelectedCategories(state);
   }, [state]);
-
-  const handleSelect = (e) => {
-    const value = e.target.value;
-    setSelected(value);
-    setSelectedCategories([...selectedCategories, value]);
-  };
 
   const getProductList = useCallback(async () => {
     const data = await getProducts(selectedCategories, page);
@@ -81,7 +74,6 @@ const ProductList = () => {
       <CategoryBar
         selectedCategories={selectedCategories}
         setSelectedCategories={setSelectedCategories}
-        handleSelect={handleSelect}
         listType={listType}
         handleCheckboxChange={handleCheckboxChange}
       />

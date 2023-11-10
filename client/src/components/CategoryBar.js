@@ -5,15 +5,10 @@ import Checkbox from './CheckBox';
 const CategoryBar = ({
   selectedCategories,
   setSelectedCategories,
-  handleSelect,
   handleCheckboxChange,
   listType,
 }) => {
   const [parentCategory, setParentCategory] = useState([]);
-  const [typeSubCategory, setTypeSubCategort] = useState([]);
-  const [womanSubCategory, setWomanSubCategort] = useState([]);
-  const [manSubCategory, setManSubCategort] = useState([]);
-  const [brandSubCategory, setBrandSubCategort] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
 
   useEffect(() => {

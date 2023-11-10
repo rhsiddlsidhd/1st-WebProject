@@ -58,7 +58,6 @@ export const getBigCategory = async () => {
     // const response = await axios.get('http://localhost:3000/api/category', {
     //   params: { parentCategory: '-1' },
     // });
-    console.log('HHH!!!!!!!!!!!', response.data);
     return response.data;
   } catch (err) {
     throw new Error(err);
