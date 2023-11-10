@@ -5,6 +5,3 @@ node_modules
 image_server/**/images/**
 
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
