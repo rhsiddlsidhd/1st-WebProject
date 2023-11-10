@@ -40,7 +40,10 @@ function App() {
         <Route path='/productnew' element={<ManageProductNew />}></Route>
         <Route path='/plist' element={<ProductList />}></Route>
         <Route path='/user/order' element={<UserOrder />}></Route>
-        <Route path='/productedit' element={<ManageProductEdit />}></Route>
+        <Route
+          path='/productedit/:product_id'
+          element={<ManageProductEdit />}
+        ></Route>
         <Route path='/plist/:listType' element={<ProductList />}></Route>
         {/* <Route path='/plist/woman' element={<ProductList />}></Route>
         <Route path='/plist/man' element={<ProductList />}></Route> */}

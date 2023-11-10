@@ -41,15 +41,10 @@ const ManageProductNew = () => {
   };
 
   return (
-    <div>
+    <div class='ManageProductEdit'>
       <h2>Update Product</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <div>dddddd</div>
-          <div>dddddd</div>
-          <div>dddddd</div>
-          <div>dddddd</div>
-          <div>dddddd</div>
           <label htmlFor='title'>제품명</label>
           <input
             type='text'

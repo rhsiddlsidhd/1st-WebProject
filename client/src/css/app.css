@@ -1108,3 +1108,11 @@ button {
 .div__div--list-flex {
   display: flex;
 }
+
+.ManageProducts {
+  margin-top: 80px;
+}
+
+.ManageProductEdit {
+  margin-top: 80px;
+}

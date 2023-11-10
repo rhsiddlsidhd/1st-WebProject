@@ -4,7 +4,13 @@ const ManageImage = ({ prd }) => {
 
   return (
     <div>
-      <button>이미지추가</button>
+      <div>
+        메인이미지
+        <ul>
+          <li>1번 이미지</li>
+        </ul>
+      </div>
+      <div>상세이미지</div>
     </div>
   );
 };
