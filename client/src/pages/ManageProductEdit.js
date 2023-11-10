@@ -1,67 +1,91 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, state } from 'react-router-dom';
-import { useLocation } from 'react-router';
-import { updateProduct } from '../api/productsAPI';
+import { useLocation, useParams } from 'react-router';
+import { updateProduct, getBrands, getProduct } from '../api/productsAPI';
+import { getChildCategory, getBigCategory } from '../api/categoryAPI';
 import ManageImage from '../components/ManageImage';
 
 const ManageProductEdit = () => {
+  const { product_id } = useParams();
   let { state } = useLocation();
-  const { categories } = state; //선택된 카테고리
-  const { brands } = state;
-  const { typeSubCategories } = state;
-  const { item } = state;
-  const [product, setProduct] = useState(item);
+  // // const { categories } = state; //선택된 카테고리
+  // const { brands } = state;
+  // const { typeSubCategories } = state;
+  // const { item } = state;
+  const [product, setProduct] = useState({});
+  const [brands, setBands] = useState([]);
+  const [typeSubCategories, setTypeSubCategories] = useState([]);
 
-  const navigate = useNavigate();
-  const handleInputChange = (e) => {
-    let { name, value } = e.target;
-    setProduct({ ...product, [name]: value });
-  };
+  useEffect(() => {
+    async function getBrandAndProduct() {
+      const brandList = await getBrands();
+      console.log('brandList-->', brandList);
+      setBands(brandList);
+      const response = await getProduct(product_id);
+      console.log('response-->', response);
+      console.log('response.products-->', response.products[0]);
+      setProduct(response.products[0]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (product.title.length < 5) {
-      alert('상품 이름은 5글자 이상 입력하세요');
-      return;
+      const bigCategory = await getBigCategory();
+      const [typeCategory] = bigCategory.filter(
+        // (category) => category.name === 'TYPE'
+        (category) => category.name === 'WOMAN'
+      );
+      const typeCategories = await getChildCategory(typeCategory._id);
+      setTypeSubCategories(typeCategories);
+      console.log('typeCategories-->', typeCategories);
     }
+    getBrandAndProduct();
+  }, []);
 
-    const jsonData = {
-      title: product.title,
-      model_number: product.model_number,
-      type: product.type,
-      // type: '스니커즈',
-      brand: product.brand,
-      price: product.price,
-      gender: product.gender,
-      size: product.size,
-    };
+  // const navigate = useNavigate();
+  // const handleInputChange = (e) => {
+  //   let { name, value } = e.target;
+  //   setProduct({ ...product, [name]: value });
+  // };
 
-    const response = await updateProduct(product._id, jsonData);
-    alert('상품이 수정되었습니다.');
-    navigate(-1);
-    // console.log(response);
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-  let imgSrc = '';
-  const baseImgSrc = process.env.PUBLIC_URL + `/image/기본제품이미지.jpg`;
-  console.log('product-->', product);
-  console.log('product.main_images-->', product.main_images);
-  if (product.main_images.length) {
-    if (product.main_images[0]) {
-      imgSrc = product.main_images[0].url;
-    } else {
-      imgSrc = baseImgSrc;
-    }
-  } else {
-    imgSrc = baseImgSrc;
-  }
+  //   if (product.title.length < 5) {
+  //     alert('상품 이름은 5글자 이상 입력하세요');
+  //     return;
+  //   }
+
+  //   const jsonData = {
+  //     title: product.title,
+  //     model_number: product.model_number,
+  //     // type: product.type,
+  //     type: '스니커즈',
+  //     brand: product.brand,
+  //     price: product.price,
+  //     gender: product.gender,
+  //     size: product.size,
+  //   };
+
+  //   const response = await updateProduct(product._id, jsonData);
+  //   alert('상품이 수정되었습니다.');
+  //   navigate(-1);
+  //   // console.log(response);
+  // };
+
+  // let imgSrc = '';
+  // const baseImgSrc = process.env.PUBLIC_URL + `/image/기본제품이미지.jpg`;
+  // if (product.main_images.length) {
+  //   if (product.main_images[0]) {
+  //     imgSrc = product.main_images[0].url;
+  //   } else {
+  //     imgSrc = baseImgSrc;
+  //   }
+  // } else {
+  //   imgSrc = baseImgSrc;
+  // }
 
   // const brandList = ['adclassNameas', 'Boutique', '닥터마틴'];
   // const typeList = ['sneakers', 'Derby'];
   return (
     <div className='ManageProductEdit'>
-      <h2>상품 정보 수정</h2>
+      {/* <h2>상품 정보 수정</h2>
       <form onSubmit={handleSubmit}>
         <img src={imgSrc} alt='상품 이미지' />
         <div>
@@ -154,14 +178,15 @@ const ManageProductEdit = () => {
         </div>
         <div className='control_box'>
           <button
-            onClick={() => navigate(`/manageproducts`, { state: categories })}
+          // onClick={() => navigate(`/manageproducts`, { state: categories })}
+          // onClick={() => navigate(`/manageproducts`, { state: categories })}
           >
             수정 취소
           </button>
           <button type='submit'>상품 수정</button>
         </div>
       </form>
-      <ManageImage prd={{ ...product }}></ManageImage>
+      <ManageImage prd={{ ...product }}></ManageImage> */}
     </div>
   );
 };

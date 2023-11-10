@@ -93,7 +93,7 @@ const ManageProducts = () => {
   const handleEdit = (product, categories) => {
     navigate(`/productedit/${product._id}`, {
       state: {
-        // categories: categories,
+        categories: categories,
         item: product,
         categories: selectedCategories,
         brands: brands,
