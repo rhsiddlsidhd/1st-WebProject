@@ -35,7 +35,6 @@ function Login() {
       .catch((error) => {
         console.error(error);
       });
-    return userIdList;
   }, []);
 
   // 유저 정보 Id 존재 여부 확인
@@ -46,8 +45,9 @@ function Login() {
       alert('존재하지 않는 아이디입니다.');
     }
   };
+  console.log();
 
-  // 유저 정보 password get
+  // // 유저 정보 password get
   useEffect(() => {
     getUser()
       .then((data) => {

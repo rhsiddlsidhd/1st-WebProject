@@ -4,14 +4,19 @@ import { getUserOrderList } from '../api/userOrderAPI';
 function UserOrder() {
   const [userOrderList, setUserOrderList] = useState([]);
 
+  const getOrderList = async () => {
+    //TODO: 로그인 이후에 id 값 가져오기
+    const orderList = getUserOrderList('kakao1234@test.com').then((data) => {
+      setUserOrderList(data);
+    });
+  };
+
   useEffect(() => {
-    const orderList = getUserOrderList('kakao1234@test.com');
-    setUserOrderList(userOrderList);
+    getOrderList();
   }, []);
 
-  console.log(userOrderList);
   return (
-    <div className='body__div--login-content'>
+    <div className='body__div--orderList-content'>
       <h3 className='body__h3--orderList-logo'>주문 정보 관리</h3>
 
       <div className='div__orderList--container'>
@@ -27,18 +32,24 @@ function UserOrder() {
         </div>
 
         <div className='div__orderList--contents'>
-          <div className='div__orderList--order'>
-            <div className='div__orderList--order-column'>
-              <div>이미지 들어갈거임</div>
-            </div>
-            <div className='div__orderList--order-column'>상품명</div>
-            <div className='div__orderList--order-column'>사이즈</div>
-            <div className='div__orderList--order-column'>1</div>
-            <div className='div__orderList--order-column'>230000</div>
-            <div className='div__orderList--order-column'>주문 완료</div>
-            <div className='div__orderList--order-column'>수정하기</div>
-            <div className='div__orderList--order-column'>취소하기</div>
-          </div>
+          {userOrderList.map((order) => {
+            return (
+              <div className='div__orderList--order'>
+                <div className='div__orderList--order-column'>
+                  <div>이미지 들어갈거임</div>
+                </div>
+                <div className='div__orderList--order-column'>상품명</div>
+                <div className='div__orderList--order-column'>사이즈</div>
+                <div className='div__orderList--order-column'>1</div>
+                <div className='div__orderList--order-column'>230000</div>
+                <div className='div__orderList--order-column'>
+                  {order['delivery_state']}
+                </div>
+                <div className='div__orderList--order-column'>수정하기</div>
+                <div className='div__orderList--order-column'>취소하기</div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
