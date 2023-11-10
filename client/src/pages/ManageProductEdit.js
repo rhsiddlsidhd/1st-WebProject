@@ -3,14 +3,29 @@ import { useNavigate, state } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import { updateProduct } from '../api/productsAPI';
 import ManageImage from '../components/ManageImage';
+import baseShoeImage from '../image/base_product_image.png';
+import axios from 'axios';
 
 const ManageProductEdit = () => {
   let { state } = useLocation();
-  const { categories } = state; //선택된 카테고리
-  const { brands } = state;
-  const { typeSubCategories } = state;
-  const { item } = state;
+  const { _id, categories, brands, typeSubCategories, item } = state; //선택된 카테고리
   const [product, setProduct] = useState(item);
+
+  console.log('useLoocation :', state);
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: `/api/products/${item._id}`,
+    })
+      .then((res) => {
+        const prd = res.data;
+        console.log('---------->', prd);
+        setProduct(prd);
+      })
+      .catch((e) => {
+        console.log('~~~~~~~~~', e);
+      });
+  }, []);
 
   const navigate = useNavigate();
   const handleInputChange = (e) => {
@@ -44,9 +59,7 @@ const ManageProductEdit = () => {
   };
 
   let imgSrc = '';
-  const baseImgSrc = process.env.PUBLIC_URL + `/image/기본제품이미지.jpg`;
-  console.log('product-->', product);
-  console.log('product.main_images-->', product.main_images);
+  const baseImgSrc = baseShoeImage;
   if (product.main_images.length) {
     if (product.main_images[0]) {
       imgSrc = product.main_images[0].url;
@@ -161,7 +174,7 @@ const ManageProductEdit = () => {
           <button type='submit'>상품 수정</button>
         </div>
       </form>
-      <ManageImage prd={{ ...product }}></ManageImage>
+      <ManageImage prd={product}></ManageImage>
     </div>
   );
 };

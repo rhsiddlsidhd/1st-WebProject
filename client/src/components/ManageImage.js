@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import '../css/manage_image.css';
 import Modal from 'react-modal';
+import axios from 'axios';
 
 const customModalStyles = {
   overlay: {
@@ -32,9 +33,13 @@ const customModalStyles = {
 const ManageImage = ({ prd }) => {
   const [product, setProduct] = useState(prd);
   const [mainImages, setMainImages] = useState(prd.main_images);
-  const [detailImages, setdetailImages] = useState(prd.detail_images);
+  const [detailImages, setDetailImages] = useState(prd.detail_images);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalText, setModalText] = useState('');
+
+  const mainInputRef = useRef(null);
+  const detailInputRef = useRef(null);
+
   console.log('ManageImage :', product);
   const handleMove = (target, direction, index) => (e) => {
     e.preventDefault();
@@ -65,14 +70,36 @@ const ManageImage = ({ prd }) => {
       setMainImages(arranged);
     }
   };
-  const handleDeleteImage = (img_id) => (e) => {
+
+  useEffect(() => {
+    setMainImages(product.main_images);
+    setDetailImages(product.detail_images);
+  }, [product]);
+
+  const handleDeleteImage = (target, img_id) => (e) => {
     e.preventDefault();
+    const product_id = product._id;
     setModalText(`이미지를 삭제 중입니다...\n${img_id}`);
     setModalIsOpen(true);
-    setTimeout(() => {
-      //해당 부분은 삭제 로직으로 대체될 코드
-      setModalIsOpen(false);
-    }, 1200);
+    axios({
+      method: 'DELETE',
+      url: `/api/products/${product_id}/images/${target}`,
+      data: JSON.stringify({ images: [img_id] }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        const prd = res.data;
+        console.log('after delete product :', prd);
+        setProduct(prd);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setModalIsOpen(false);
+      });
   };
 
   const handleUpdateImages = (e) => {
@@ -85,6 +112,50 @@ const ManageImage = ({ prd }) => {
     }, 1200);
   };
 
+  const handleAddImages = (target) => (e) => {
+    e.preventDefault();
+    e.persist();
+    if (target === 'main') {
+      mainInputRef.current.click();
+    } else {
+      detailInputRef.current.click();
+    }
+  };
+
+  const handleFilesChange = (target) => (e) => {
+    const files = e.target.files;
+    const product_id = product._id;
+    if (files.length === 0) {
+      return;
+    }
+    setModalText('이미지를 업로드 중입니다...');
+    setModalIsOpen(true);
+    console.log(target, 'files are', files);
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append('files', file);
+    }
+    axios({
+      method: 'POST',
+      url: `/api/products/${product_id}/images/${target}`,
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((res) => {
+        const prd = res.data;
+        console.log('result product :', prd);
+        setProduct(prd);
+        setMainImages(prd.main_images);
+        setDetailImages(prd.detail_images);
+      })
+      .finally(() => {
+        setModalIsOpen(false);
+      });
+    console.log(formData);
+  };
+
   return (
     <div>
       <Modal isOpen={modalIsOpen} style={customModalStyles} ariaHideApp={true}>
@@ -92,7 +163,15 @@ const ManageImage = ({ prd }) => {
       </Modal>
       <div>
         메인이미지
-        <button>추가</button>
+        <input
+          type='file'
+          ref={mainInputRef}
+          onChange={handleFilesChange('main')}
+          accept='image/jpg,image/png,image/jpeg,image/gif'
+          multiple
+          hidden
+        />
+        <button onClick={handleAddImages('main')}>추가</button>
         <table>
           <tbody>
             {mainImages.map((img, index) => {
@@ -115,7 +194,7 @@ const ManageImage = ({ prd }) => {
                     </button>
                   </td>
                   <td>
-                    <button onClick={handleDeleteImage(img.image_id)}>
+                    <button onClick={handleDeleteImage('main', img.image_id)}>
                       delete
                     </button>
                   </td>
@@ -127,7 +206,15 @@ const ManageImage = ({ prd }) => {
       </div>
       <div>
         상세이미지
-        <button>추가</button>
+        <input
+          type='file'
+          ref={detailInputRef}
+          onChange={handleFilesChange('detail')}
+          accept='image/jpg,image/png,image/jpeg,image/gif'
+          multiple
+          hidden
+        />
+        <button onClick={handleAddImages('detail')}>추가</button>
         <table>
           <tbody>
             {detailImages.map((img, index) => {
@@ -150,7 +237,9 @@ const ManageImage = ({ prd }) => {
                     </button>
                   </td>
                   <td>
-                    <button>delete</button>
+                    <button onClick={handleDeleteImage('detail', img.image_id)}>
+                      delete
+                    </button>
                   </td>
                 </tr>
               );
