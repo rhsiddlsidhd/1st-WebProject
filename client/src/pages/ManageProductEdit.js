@@ -5,41 +5,44 @@ import { updateProduct } from '../api/productsAPI';
 
 const ManageProductEdit = () => {
   let { state } = useLocation();
-  const categories = state.categories;
-  const productItem = state.item;
-  const [product, setProduct] = useState(productItem);
+  const { categories } = state; //선택된 카테고리
+  const { brands } = state;
+  const { typeSubCategories } = state;
+  const { product } = state;
+  const [updatedProduct, setUpdatedProduct] = useState(product);
 
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     let { name, value } = e.target;
-    if (name === 'sizes') {
-      value = value.trim(' ').split(',');
-      console.log(value);
-    }
-    setProduct({ ...product, [name]: value });
+    setUpdatedProduct({ ...updatedProduct, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('title', product.title);
-    formData.append('model_number', product.model_number);
-    formData.append('type', product.type);
-    formData.append('brand', product.brand);
-    formData.append('price', product.price);
-    formData.append('gender', product.gender);
-    formData.append('sizes', product.sizes);
-
-    for (const pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
+    if (product.title.length < 5) {
+      alert('상품 이름은 5글자 이상 입력하세요');
+      return;
     }
-    // const response = await updateProduct(formData);
+
+    const jsonData = {
+      title: product.title,
+      model_number: product.model_number,
+      type: product.type,
+      brand: product.brand,
+      price: product.price,
+      gender: product.gender,
+      size: product.size,
+    };
+
+    const response = await updateProduct(jsonData);
+    alert('상품이 수정되었습니다.');
+    navigate(-1);
     // console.log(response);
   };
 
-  const brandList = ['adclassNameas', 'Boutique', '닥터마틴'];
-  const typeList = ['sneakers', 'Derby'];
+  // const brandList = ['adclassNameas', 'Boutique', '닥터마틴'];
+  // const typeList = ['sneakers', 'Derby'];
   return (
     <div className='ManageProductEdit'>
       <h2>Update Product</h2>
@@ -81,9 +84,10 @@ const ManageProductEdit = () => {
             value={product.type}
             onChange={handleInputChange}
           >
-            {typeList.map((type, classNamex) => (
-              <option value={type} key={classNamex}>
-                {type}
+            <option>타입 선택</option>
+            {typeSubCategories.map((type, idx) => (
+              <option value={type.name} key={idx}>
+                {type.name}
               </option>
             ))}
           </select>
@@ -92,14 +96,16 @@ const ManageProductEdit = () => {
         <div>
           <label htmlFor='brand'>브랜드:</label>
           <select
-            className='brand'
+            id='brand'
             name='brand'
             value={product.brand}
             onChange={handleInputChange}
           >
-            {brandList.map((brand, classNamex) => (
-              <option value={brand} key={classNamex}>
-                {brand}
+            <option>브랜드를 선택</option>
+
+            {brands.map((brand, idx) => (
+              <option value={brand._id} key={idx}>
+                {brand.name}
               </option>
             ))}
           </select>
@@ -122,8 +128,10 @@ const ManageProductEdit = () => {
             value={product.gender}
             onChange={handleInputChange}
           >
-            <option value={'man'}>남성</option>
-            <option value={'woman'}>여성</option>
+            <option>성별을 선택하세요</option>
+            <option value={'BOTH'}>모두</option>
+            <option value={'MALE'}>남성</option>
+            <option value={'FEMALE'}>여성</option>
           </select>
         </div>
         <div>

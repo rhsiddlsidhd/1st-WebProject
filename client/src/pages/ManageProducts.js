@@ -90,9 +90,15 @@ const ManageProducts = () => {
       getProductList();
     }
   };
-  const handleEdit = (item, categories) => {
-    navigate(`/productedit/${item.id}`, {
-      state: { categories: categories, item: item },
+  const handleEdit = (product, categories) => {
+    navigate(`/productedit/${product.id}`, {
+      state: {
+        // categories: categories,
+        product: product,
+        categories: selectedCategories,
+        brands: brands,
+        typeSubCategories,
+      },
     });
   };
 

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, state } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import { addProduct } from '../api/productsAPI';
+import ManageImage from '../components/ManageImage';
 
 const ManageProductNew = () => {
   let { state } = useLocation();
@@ -137,6 +138,7 @@ const ManageProductNew = () => {
             onChange={handleInputChange}
           />
         </div>
+        <ManageImage prd={{ ...product }}></ManageImage>
         <div className='control_box'>
           <button type='button' onClick={() => navigate(-1)}>
             추가 취소

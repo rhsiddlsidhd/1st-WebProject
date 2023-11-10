@@ -22,18 +22,18 @@ export const postUser = async ({ name, password, email }) => {
   }
 };
 
-const signIn = async () => {
-  getUser({ email: userId, password: userPassword }).then((data) => {
-    doubleCheckId(data);
-  });
-};
+// const signIn = async () => {
+//   getUser({ email: userId, password: userPassword }).then((data) => {
+//     doubleCheckId(data);
+//   });
+// };
 
-useEffect(() => {
-  getUser({ email: userId, password: userPassword })
-    .then((data) => {
-      doubleCheckId(data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}, []);
+// useEffect(() => {
+//   getUser({ email: userId, password: userPassword })
+//     .then((data) => {
+//       doubleCheckId(data);
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// }, []);
