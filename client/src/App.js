@@ -32,7 +32,7 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<Home />}></Route>
-        <Route path='/plist/:listType' element={<ProductList />}></Route>
+        <Route path='/plist/all' element={<ProductList />}></Route>
         <Route path='/detail' element={<Detail />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/deliveryaddress' element={<DeliveryAddress />} />

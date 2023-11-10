@@ -32,7 +32,9 @@ const Header = () => {
         <nav className='header__nav'>
           <ul className='nav__ul--gnb'>
             {bigCategoryList.map((category, _id) => (
-              <li key={_id}>{category.name}</li>
+              <li key={_id}>
+                <Link to={`/${category.name}`}>{category.name}</Link>
+              </li>
             ))}
           </ul>
         </nav>
