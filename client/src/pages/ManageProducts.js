@@ -90,11 +90,11 @@ const ManageProducts = () => {
       getProductList();
     }
   };
-  const handleEdit = (product, categories) => {
-    navigate(`/productedit/${product.id}`, {
+  const handleEdit = (item, categories) => {
+    navigate(`/productedit/${item._id}`, {
       state: {
         // categories: categories,
-        product: product,
+        item: item,
         categories: selectedCategories,
         brands: brands,
         typeSubCategories,
@@ -119,8 +119,7 @@ const ManageProducts = () => {
             })
           }
         >
-          상품추가 상품추가 상품추가 상품추가 상품추가 상품추가 상품추가
-          상품추가 상품추가 상품추가
+          상품추가
         </button>
       </div>
       <CategoryBar

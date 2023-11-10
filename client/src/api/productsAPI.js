@@ -143,19 +143,13 @@ export const addProduct = async (newProduct) => {
   }
 };
 
-// response: 삭제와 수정의 응답 같음.
-// {
-//   "message": "Product Info Updated/ Delete Success",
-//   "updatedItem": [
-//     "몽고DB에서 부여한 고유 ID"
-//   ]
-// }
-//
-// 삭제가 됐을때 객체정보 던지는 기능하는 부분이있음 -> 삭제완료가 완료된 메시지만.
-//
-export const updateProduct = async (updatedProduct) => {
+export const updateProduct = async (id, updatedProduct) => {
   try {
-    const response = await axios.post('/api/products/:id', updatedProduct);
+    const response = await axios.patch(
+      `/api/products/${id}`,
+      JSON.stringify(updatedProduct),
+      { headers: { 'Content-Type': 'application/json' } }
+    );
 
     return response.data;
   } catch (err) {

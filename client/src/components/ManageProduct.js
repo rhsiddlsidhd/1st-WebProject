@@ -14,10 +14,11 @@ const ManageProduct = ({
   return products.map((item) => (
     <div className='Product'>
       <img
-        className='image'
-        src={process.env.PUBLIC_URL + `/assets/미소.jpg`}
-        width='100px'
-      ></img>
+        src={
+          item.main_images[0]?.url ??
+          process.env.PUBLIC_URL + `/images/기본제품이미지.jpg`
+        }
+      />
       <span className='title'>{item.title}</span>
       <span className='price'>{item.price}</span>
       <span className='brand'>{getBrandName(item.brand)}</span>

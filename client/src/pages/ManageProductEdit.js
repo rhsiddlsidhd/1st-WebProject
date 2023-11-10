@@ -8,13 +8,13 @@ const ManageProductEdit = () => {
   const { categories } = state; //선택된 카테고리
   const { brands } = state;
   const { typeSubCategories } = state;
-  const { product } = state;
-  const [updatedProduct, setUpdatedProduct] = useState(product);
+  const { item } = state;
+  const [product, setProduct] = useState(item);
 
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     let { name, value } = e.target;
-    setUpdatedProduct({ ...updatedProduct, [name]: value });
+    setProduct({ ...product, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -28,14 +28,15 @@ const ManageProductEdit = () => {
     const jsonData = {
       title: product.title,
       model_number: product.model_number,
-      type: product.type,
+      // type: product.type,
+      type: '스니커즈',
       brand: product.brand,
       price: product.price,
       gender: product.gender,
       size: product.size,
     };
 
-    const response = await updateProduct(jsonData);
+    const response = await updateProduct(item._id, jsonData);
     alert('상품이 수정되었습니다.');
     navigate(-1);
     // console.log(response);
@@ -46,13 +47,16 @@ const ManageProductEdit = () => {
   return (
     <div className='ManageProductEdit'>
       <h2>Update Product</h2>
+      <div>ddddddddd</div>
+      <div>ddddddddd</div>
+      <div>ddddddddd</div>
+      <div>ddddddddd</div>
+      <div>ddddddddd</div>
       <form onSubmit={handleSubmit}>
         <img
-          className='image'
           src={
-            product.image
-              ? product.image
-              : process.env.PUBLIC_URL + `/assets/미소.jpg`
+            product.main_images[0]?.url ??
+            process.env.PUBLIC_URL + `/images/기본제품이미지.jpg`
           }
           alt='상품 이미지'
         />
@@ -135,12 +139,12 @@ const ManageProductEdit = () => {
           </select>
         </div>
         <div>
-          <label htmlFor='sizes'>사이즈</label>
+          <label htmlFor='size'>사이즈</label>
           <input
             type='text'
-            className='sizes'
-            name='sizes'
-            value={product.sizes}
+            className='size'
+            name='size'
+            value={product.size}
             onChange={handleInputChange}
           />
         </div>
