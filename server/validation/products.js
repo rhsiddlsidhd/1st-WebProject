@@ -42,10 +42,29 @@ const createProduct = {
 
 const patchProduct = {};
 
+const addImage = {
+  params: Joi.object()
+    .keys({
+      id: Joi.string(),
+      image_type: Joi.string().valid('main', 'detail').required(),
+    })
+    .unknown(false),
+};
+const deleteImage = {
+  params: Joi.object()
+    .keys({
+      id: Joi.string(),
+      image_type: Joi.string().valid('main', 'detail').required(),
+    })
+    .unknown(false),
+};
+
 module.exports = {
   getProduct,
   getProducts,
   deleteProduct,
   createProduct,
   patchProduct,
+  addImage,
+  deleteImage,
 };
