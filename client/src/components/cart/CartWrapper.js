@@ -28,6 +28,8 @@ const CartWrapper = ({
         totalPaymentAmount={totalPaymentAmount}
         deliveryFee={deliveryFee}
         selectedItems={selectedItems}
+        setSavedItem={setSavedItem}
+        setSelectedItems={setSelectedItems}
       />
     </div>
   );

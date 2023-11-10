@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 const Purchase = ({
   savedItem,
   totalPrice,
@@ -13,11 +13,36 @@ const Purchase = ({
   const [isPurchase, setIsPurchase] = useState(false);
 
   // 구매하기
-  const handlePurchase = () => {
+  // const handlePurchase = () => {
+  //   if (isPurchase) {
+  //     if (window.confirm(`선택한 상품을 구매 하시겠습니까?`)) {
+  //       navigate("/deliveryaddress");
+  //     }
+  //   }
+  // };
+
+  //Order API
+  // 구매하기
+  const handlePurchase = async () => {
     if (isPurchase) {
       if (window.confirm(`선택한 상품을 구매 하시겠습니까?`)) {
-        localStorage.removeItem("savedItem");
-        navigate("/deliveryaddress");
+        try {
+          const response = await axios.post("http://localhost:3000/api/order", {
+            savedItem: savedItem,
+            totalPrice: totalPrice,
+            totalPaymentAmount: totalPaymentAmount,
+            deliveryFee: deliveryFee,
+            selectedItems: selectedItems,
+          });
+
+          if (response.status === 200) {
+            navigate("/deliveryaddress");
+          } else {
+            console.error("API 호출 실패");
+          }
+        } catch (error) {
+          console.error("API 호출 중 오류:", error);
+        }
       }
     }
   };

@@ -19,9 +19,12 @@ const Detail = () => {
   // 데이터 get해오는 useEffect
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/products")
+      .get(
+        "http://localhost:3000/api/products?category_id=6549935f18f0a98398d93e55"
+      )
       .then((response) => {
         setData(response.data);
+        console.log(data);
       })
       .catch((error) => {
         console.error("데이터를 불러오는 중 오류 발생: ", error);

@@ -12,6 +12,8 @@ const Cart = () => {
     setSavedItem(items);
   }, []);
 
+  console.log(savedItem);
+
   // 전체 선택 상태
   const [isAllChecked, setIsAllChecked] = useState(false);
 
@@ -56,7 +58,7 @@ const Cart = () => {
     }
   };
 
-  console.log(selectedItems);
+  // console.log(selectedItems);
 
   //배송비
   const deliveryFee = 3000;
