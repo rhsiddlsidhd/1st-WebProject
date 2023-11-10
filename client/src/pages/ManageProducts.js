@@ -90,8 +90,8 @@ const ManageProducts = () => {
       getProductList();
     }
   };
-  const handleEdit = (item, categories) => {
-    navigate(`/productedit/${item._id}`, {
+  const handleEdit = (product, categories) => {
+    navigate(`/productedit/${product._id}`, {
       state: {
         // categories: categories,
         item: item,
