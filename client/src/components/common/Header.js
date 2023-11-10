@@ -1,154 +1,39 @@
 import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import logoImgage from '../../image/logo.png';
+import { getBigCategory } from '../../api/categoryAPI';
 
 const Header = () => {
-  const [expanded, setExpanded] = useState(false);
+  // 대분류 목록 불러오기
+  const [bigCategoryList, setBigCategoryList] = useState([]);
 
-  const handleMouseEnter = () => {
-    setExpanded(true);
-  };
+  useEffect(() => {
+    refresh();
+  }, []);
 
-  const handleMouseLeave = () => {
-    setExpanded(false);
+  const refresh = () => {
+    getBigCategory().then((response) => {
+      setBigCategoryList(response);
+    });
   };
 
   return (
-    <header className={`body__header ${expanded ? 'expanded' : ''}`}>
+    <header className='body__header'>
       <div className='header__div--header-wrap'>
         <h1 className='header__h1--logo'>
           <Link to='/'>
             <img src={logoImgage} alt='logo' />
           </Link>
         </h1>
-        <nav
-          className={`header__nav ${expanded ? 'expanded' : ''}`}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
+        <nav className='header__nav'>
           <ul className='nav__ul--gnb'>
-            <li>
-              <Link to='/plist/:listType' className='ul__li--main-menu'>
-                BRAND
-              </Link>
-              <ul>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    런닝화
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    스니커즈
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    샌들
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link to='plist/:listType' className='ul__li--main-menu'>
-                SHOES
-              </Link>
-              <ul>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    나이키
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    아디다스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    컨버스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    휠라
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    라코스테
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link to='plist/:listType' className='ul__li--main-menu'>
-                MAN
-              </Link>
-              <ul>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    나이키
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    아디다스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    컨버스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    휠라
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    라코스테
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link to='/plist/:listType' className='ul__li--main-menu'>
-                WOMAN
-              </Link>
-              <ul>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    나이키
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    아디다스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    컨버스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    휠라
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    라코스테
-                  </Link>
-                </li>
-              </ul>
-            </li>
+            {bigCategoryList.map((category, _id) => (
+              <li key={_id}>{category.name}</li>
+            ))}
           </ul>
         </nav>
         <div className='header__div--icon'>
