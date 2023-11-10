@@ -7,15 +7,18 @@ import Products from './Products';
 import '../css/btn.css';
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [selected, setSelected] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState([]);
 
+  const { listType } = useParams();
+
+  const [products, setProducts] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(1);
-  const offset = (page - 1) * limit;
-  const [count, setCount] = useState(0);
+
+  const [limit, setLimit] = useState(30);
+  const [total, setTotal] = useState(1);
 
   let queryString;
 
@@ -24,19 +27,18 @@ const ProductList = () => {
     if (state) setSelectedCategories(state);
   }, [state]);
 
-  const handleSelect = (e) => {
-    const value = e.target.value;
-    setSelected(value);
-    setSelectedCategories([...selectedCategories, value]);
-  };
-
   const getProductList = useCallback(async () => {
-    setLoading(true);
-    const productsData = await getProducts(queryString);
-    setProducts(productsData);
-    setLoading(false);
-    setCount(productsData.length);
-  }, [queryString]);
+
+    const data = await getProducts(selectedCategories, page);
+    const products = data.products;
+    const total = data.total;
+
+    const brandList = await getBrands();
+    setProducts(products);
+    setBrands(brandList);
+    setTotal(total);
+    updateQueryString();
+  }, [selectedCategories, page]);
 
   useEffect(() => {
     getProductList();
@@ -56,18 +58,18 @@ const ProductList = () => {
   };
 
   const updateQueryString = () => {
-    queryString =
+    let queryString =
       selectedCategories.length > 0
         ? `?` + selectedCategories.map((it) => `category_id=${it}`).join('&')
         : '';
+    if (!queryString) {
+      queryString += '?';
+    } else {
+      queryString += '&';
+    }
+    queryString += page ? `page=${page}` : 'page=1';
     window.history.pushState({}, '', window.location.pathname + queryString);
   };
-
-  useEffect(() => {
-    updateQueryString();
-  }, [selectedCategories]);
-
-  const currentProducts = products.slice(offset, offset + limit);
 
   const paginate = (pageNumber) => setPage(pageNumber);
 

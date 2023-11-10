@@ -1,43 +1,54 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getProducts, getBrands } from '../api/productsAPI';
+import { getProducts, getBrands, deleteProduct } from '../api/productsAPI';
 import ManageProduct from '../components/ManageProduct';
-import CartegoryBar from '../components/CategoryBar';
+import CategoryBar from '../components/CategoryBar';
 import Pagination from '../components/Pagination';
+import {
+  getBigCategory,
+  // getCategory,
+  getChildCategory,
+} from '../api/categoryAPI';
 
 const ManageProducts = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
-  const [selected, setSelected] = useState('');
+  const [typeSubCategories, setTypeSubCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(16);
-  const offset = (page - 1) * limit;
-  const currentProducts = products.slice(offset, offset + limit);
-  const [count, setCount] = useState(0);
+  const [limit, setLimit] = useState(30);
+  const [total, setTotal] = useState(1);
 
-  const paginate = (pageNumber) => setPage(pageNumber);
   let queryString;
+
+  const paginate = (pageNumber) => {
+    setPage(pageNumber);
+  };
 
   const { state } = useLocation();
   useEffect(() => {
     if (state) setSelectedCategories(state);
   }, [state]);
 
-  const handleSelect = (e) => {
-    const value = e.target.value;
-    setSelected(value);
-    setSelectedCategories([...selectedCategories, value]);
-  };
-
   const getProductList = useCallback(async () => {
-    const productsData = await getProducts(queryString);
+    const data = await getProducts(selectedCategories, page);
+    const products = data.products;
+    const total = data.total;
+
+    const bigCategory = await getBigCategory();
+    const [typeCategory] = bigCategory.filter(
+      (category) => category.name === '타입'
+    );
+    const typeCategories = await getChildCategory(typeCategory._id);
+    setTypeSubCategories(typeCategories);
+
     const brandList = await getBrands();
-    setProducts(productsData);
+    setProducts(products);
     setBrands(brandList);
-    setCount(productsData.length);
-  }, [queryString]);
+    setTotal(total);
+    updateQueryString();
+  }, [selectedCategories, page]);
 
   useEffect(() => {
     getProductList();
@@ -55,36 +66,26 @@ const ManageProducts = () => {
   };
 
   const updateQueryString = () => {
-    queryString =
+    let queryString =
       selectedCategories.length > 0
         ? `?` + selectedCategories.map((it) => `category_id=${it}`).join('&')
         : '';
+    if (!queryString) {
+      queryString += '?';
+    } else {
+      queryString += '&';
+    }
+    queryString += page ? `page=${page}` : 'page=1';
     window.history.pushState({}, '', window.location.pathname + queryString);
   };
 
-  // const updateQueryString = () => {
-  //   const queryObject = {
-  //     page: page,
-  //   };
-  //   if (selectedCategories) {
-  //     queryObject.category_id = selectedCategories;
-  //   }
-  //   console.log(queryObject)
-  //   const query = queryString.stringify(queryObject);
-
-  //   window.history.pushState(null, '', `?${query}`);
-  // };
-
-  useEffect(() => {
-    updateQueryString();
-  }, [selectedCategories, page]);
-
-  const handleRemove = (item) => {
+  const handleRemove = async (item) => {
     if (
       window.confirm(
         `${item.title}(${item.model_number})제품을 삭제하시겠습니까?`
       )
     ) {
+      await deleteProduct(item._id);
       getProductList();
     }
   };
@@ -96,26 +97,32 @@ const ManageProducts = () => {
 
   return (
     <div className='ManageProducts'>
-      <h2>List</h2>
+      <h2 className='Manageddddd'>List</h2>
       <p>관리자 제품관리 리스트입니다</p>
-      <h4>{count}개의 상품이 있습니다</h4>
+      <h4>{total}개의 상품이 있습니다</h4>
       <div>
         <button
-          onClick={() => navigate('/productnew', { state: selectedCategories })}
+          onClick={() =>
+            navigate('/productnew', {
+              state: {
+                categories: selectedCategories,
+                brands: brands,
+                typeSubCategories,
+              },
+            })
+          }
         >
           상품추가
         </button>
       </div>
-      <CartegoryBar
+      <CategoryBar
         selectedCategories={selectedCategories}
-        handleSelect={handleSelect}
         handleCheckboxChange={handleCheckboxChange}
       />
 
       <div>
         <ManageProduct
-          // key={item.product_id}
-          products={currentProducts}
+          products={products}
           categories={selectedCategories}
           getProductList={getProductList}
           handleEdit={handleEdit}
@@ -123,12 +130,7 @@ const ManageProducts = () => {
           brands={brands}
         />
       </div>
-      <Pagination
-        setPage={paginate}
-        limit={limit}
-        total={products.length}
-        page={page}
-      />
+      <Pagination setPage={paginate} limit={limit} total={total} page={page} />
     </div>
   );
 };

@@ -138,7 +138,7 @@ const ManageProductEdit = () => {
         </div>
         <div className='control_box'>
           <button
-            onClick={() => navigate(`/manageList`, { state: categories })}
+            onClick={() => navigate(`/manageproducts`, { state: categories })}
           >
             수정 취소
           </button>
