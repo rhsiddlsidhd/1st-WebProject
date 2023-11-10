@@ -18,6 +18,9 @@ const OrderSchema = new Schema({
     type: String,
     required: true,
   },
+  total_price: {
+    type: Number,
+  },
   delivery_state: {
     type: String,
     default: '주문 완료',
