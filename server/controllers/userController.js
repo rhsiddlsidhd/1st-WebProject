@@ -15,8 +15,8 @@ exports.getUser = async (req, res, next) => {
 
     res.status(200).json(user);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Get User Info is FAILED');
+    next(e);
   }
 };
 
@@ -33,8 +33,8 @@ exports.userWithdraw = async (req, res, next) => {
 
     res.status(200).json(data);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Withdraw User Info is FAILED');
+    next(e);
   }
 };
 
@@ -50,7 +50,7 @@ exports.updateUserInfo = async (req, res, next) => {
 
     res.status(200).json(result);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Update User Info is FAILED');
+    next(e);
   }
 };

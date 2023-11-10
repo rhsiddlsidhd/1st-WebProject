@@ -22,7 +22,6 @@ const updateUserInfo = {
     .keys({
       name: Joi.string().min(1).required(),
       password: Joi.string().required(),
-      address: Joi.string().min(1).required(),
     })
     .unknown(false),
   params: Joi.object()

@@ -52,13 +52,12 @@ const getOrder = async (id, order) => {
   }
 
   if (!order) {
-    data = await Order.find({});
+    data = await Order.find({ user_id: id });
   } else {
     data = await Order.find({ _id: order });
-  }
-
-  if (!data) {
-    throw new APIError(httpStatus.NOT_FOUND, 'Order is not exist');
+    if (!data) {
+      throw new APIError(httpStatus.NOT_FOUND, 'Order is not exist');
+    }
   }
 
   return data;
