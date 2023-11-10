@@ -24,6 +24,8 @@ const CategoryBar = ({
     getParentCategories();
   }, []);
 
+  console.log('소분류불러오기전 대분류확인');
+  console.log(parentCategory);
   const getChildCategories = useCallback(
     async (parentCategory) => {
       const subCategoryWithParent = await parentCategory.map(
@@ -34,6 +36,8 @@ const CategoryBar = ({
           }))
       );
       const res = await Promise.all(subCategoryWithParent);
+      console.log('res!!!!!!!!!!!!!!!!!!!!!!!');
+      console.log(res);
       setSubCategory(...subCategory, res);
 
       const womanId = parentCategory
@@ -57,7 +61,6 @@ const CategoryBar = ({
   subCategory.map((item) => console.log(item.data));
 
   const getSpecificCateory = (allSubCategory) => {
-    console.log(allSubCategory);
     if (listType === 'woman')
       return allSubCategory.filter(
         (cate) => cate.type === 'WOMAN' || cate.type === 'BRAND'
