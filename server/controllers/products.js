@@ -51,7 +51,7 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
 exports.addImagesToProduct = catchAsync(async (req, res, next) => {
   logger.info('상품 이미지 추가');
   const product_id = req.params.id;
-  console.log(product_id);
+  const image_type = req.params.image_type;
   const product = await productsService.getProductById(product_id);
 
   if (!product) {
@@ -59,7 +59,18 @@ exports.addImagesToProduct = catchAsync(async (req, res, next) => {
   }
 
   const images = await imageService.addImages(req.files);
-  const result = await productsService.addMainImagesToProduct(product, images);
+
+  if (image_type === 'main') {
+    const result = await productsService.addMainImagesToProduct(
+      product,
+      images
+    );
+  } else if (image_type === 'detail') {
+    const result = await productsService.addDetailImagesToProduct(
+      product,
+      images
+    );
+  }
   logger.info(result);
   res.status(httpStatus.OK).json(result);
 });
@@ -67,7 +78,7 @@ exports.addImagesToProduct = catchAsync(async (req, res, next) => {
 exports.deleteImagesInProduct = catchAsync(async (req, res, next) => {
   logger.info('상품 이미지 삭제');
   const product_id = req.params.id;
-  console.log(product_id);
+  const image_type = req.params.image_type;
   const product = await productsService.getProductById(product_id);
 
   if (!product) {
@@ -76,10 +87,17 @@ exports.deleteImagesInProduct = catchAsync(async (req, res, next) => {
 
   const images = req.body.images;
 
-  const result = await productsService.deleteMainImagesToProduct(
-    product,
-    images
-  );
+  if (image_type === 'main') {
+    const result = await productsService.deleteMainImagesToProduct(
+      product,
+      images
+    );
+  } else if (image_type === 'detail') {
+    const result = await productsService.deleteDetailImagesToProduct(
+      product,
+      images
+    );
+  }
   logger.info(result);
   res.status(httpStatus.OK).json(result);
 });
@@ -87,14 +105,22 @@ exports.deleteImagesInProduct = catchAsync(async (req, res, next) => {
 exports.deleteAllImagesInProduct = catchAsync(async (req, res, next) => {
   logger.info('상품 이미지 전체 삭제');
   const product_id = req.params.id;
-  console.log(product_id);
+  const image_type = req.params.image_type;
+
   const product = await productsService.getProductById(product_id);
 
   if (!product) {
     throw new ApiError(httpStatus.NOT_FOUND, '상품을 찾지 못하였습니다.');
   }
 
-  const result = await productsService.deleteAllMainImagesToProduct(product);
+  if (image_type === 'main') {
+    const result = await productsService.deleteAllMainImagesToProduct(product);
+  } else if (image_type === 'detail') {
+    const result = await productsService.deleteDetailMainImagesToProduct(
+      product
+    );
+  }
+
   logger.info(result);
   res.status(httpStatus.OK).json(result);
 });

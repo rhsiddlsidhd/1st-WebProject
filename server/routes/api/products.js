@@ -28,7 +28,20 @@ router
     validate(productsValidation.createProduct),
     productsController.createProduct
   )
-  .post('/:id/images', upload.any(), productsController.addImagesToProduct)
-  .delete('/:id/images', productsController.deleteImagesInProduct)
-  .delete('/:id/images/all', productsController.deleteAllImagesInProduct);
+  .post(
+    '/:id/images/:image_type',
+    upload.any(),
+    validate(productsValidation.addImage),
+    productsController.addImagesToProduct
+  )
+  .delete(
+    '/:id/images/:image_type',
+    validate(productsValidation.deleteImage),
+    productsController.deleteImagesInProduct
+  )
+  .delete(
+    '/:id/images/:image_type/all',
+    validate(productsValidation.deleteImage),
+    productsController.deleteAllImagesInProduct
+  );
 module.exports = router;

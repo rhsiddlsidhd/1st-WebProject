@@ -44,8 +44,9 @@ const addMainImagesToProduct = async (product, images) => {
   const result = await product.save();
   return result;
 };
+
 const addDetailImagesToProduct = async (product, images) => {
-  product.main_images = images;
+  product.detail_images = images;
   const result = await product.save();
   return result;
 };
@@ -92,7 +93,6 @@ const deleteAllMainImagesToProduct = async (product) => {
 const deleteAllDetailImagesToProduct = async (product) => {
   for (let img of product.detail_images) {
     let iresult = await Image.deleteOne({ image_id: img.image_id });
-    result.push(iresult);
   }
 
   product.detail_images = [];
