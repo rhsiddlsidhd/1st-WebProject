@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { getUserOrderList, deleteOrder } from '../api/userOrderAPI';
+import { getCookie } from './../utils/cookieUtils';
 import { Link } from 'react-router-dom';
 
 import '../css/userOrderCSS.css';
 
 function UserOrder() {
   const [userOrderList, setUserOrderList] = useState([]);
+  const [user_id, setUserId] = useState(getCookie('user_id'));
 
   const getOrderList = async () => {
     //TODO: 로그인 이후에 id 값 가져오기
-    await getUserOrderList('kakao1234@test.com').then((data) => {
+    await getUserOrderList(user_id).then((data) => {
       setUserOrderList(data);
     });
   };
@@ -48,52 +50,58 @@ function UserOrder() {
         </div>
 
         <div className='div__orderList--contents'>
-          {userOrderList.map((order) => {
-            return (
-              <div key={order['_id']} className='div__orderList--order'>
-                <div className='div__orderList--order-column'>
-                  <div>이미지 들어갈거임</div>
+          {userOrderList.length < 1 ? (
+            <div className='div__orderList--order'>
+              <div>현재 주문한 내역이 없습니다</div>
+            </div>
+          ) : (
+            userOrderList.map((order) => {
+              return (
+                <div key={order['_id']} className='div__orderList--order'>
+                  <div className='div__orderList--order-column'>
+                    <div>이미지 들어갈거임</div>
+                  </div>
+                  <div className='div__orderList--order-column'>
+                    {order['date']}
+                  </div>
+                  <div className='div__orderList--order-column'>
+                    {order['total_price']}
+                  </div>
+                  <div className='div__orderList--order-column'>
+                    {order['delivery_state']}
+                  </div>
+                  <div className='div__orderList--order-column'>
+                    {order['items'].length}
+                  </div>
+                  <div className='div__orderList--order-column'>
+                    {order['delivery_state'] === '주문 완료' ? (
+                      <Link
+                        to={`/address/${order['_id']}?address=${order['address']}&detail=${order['addressDetail']}`}
+                      >
+                        수정하기
+                      </Link>
+                    ) : (
+                      '수정불가'
+                    )}
+                  </div>
+                  <div className='div__orderList--order-column'>
+                    {order['delivery_state'] === '주문 완료' ? (
+                      <button
+                        className='button__orderDelete'
+                        value={order['_id']}
+                        key={order['_id']}
+                        onClick={clickDeleteBtn}
+                      >
+                        취소하기
+                      </button>
+                    ) : (
+                      '취소불가'
+                    )}
+                  </div>
                 </div>
-                <div className='div__orderList--order-column'>
-                  {order['date']}
-                </div>
-                <div className='div__orderList--order-column'>
-                  {order['total_price']}
-                </div>
-                <div className='div__orderList--order-column'>
-                  {order['delivery_state']}
-                </div>
-                <div className='div__orderList--order-column'>
-                  {order['items'].length}
-                </div>
-                <div className='div__orderList--order-column'>
-                  {order['delivery_state'] === '주문 완료' ? (
-                    <Link
-                      to={`/address/${order['_id']}?address=${order['address']}&detail=${order['addressDetail']}`}
-                    >
-                      수정하기
-                    </Link>
-                  ) : (
-                    '수정불가'
-                  )}
-                </div>
-                <div className='div__orderList--order-column'>
-                  {order['delivery_state'] === '주문 완료' ? (
-                    <button
-                      className='button__orderDelete'
-                      value={order['_id']}
-                      key={order['_id']}
-                      onClick={clickDeleteBtn}
-                    >
-                      취소하기
-                    </button>
-                  ) : (
-                    '취소불가'
-                  )}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </div>
     </div>

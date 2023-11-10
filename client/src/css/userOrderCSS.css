@@ -2,7 +2,7 @@
 /* user order list */
 .body__div--orderList-content {
   width: 100%;
-  height: 480px;
+  height: 100vh;
   text-align: center;
   margin-top: 90px;
 }
@@ -25,7 +25,6 @@
 
 .div__orderList--container {
   font-family: 'Noto Sans KR', sans-serif;
-  height: 390px;
   width: 100%;
   display: block;
   flex-direction: column;

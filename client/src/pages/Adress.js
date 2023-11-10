@@ -14,7 +14,6 @@ const Address = () => {
   const [addressDetail, setaddressDetail] = useState('');
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     updateAddress({ id: orderId, address, addressDetail });
     alert('주소 수정 완료!');
     navigate('/user/order');
