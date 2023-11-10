@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, state } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import { updateProduct } from '../api/productsAPI';
+import ManageImage from '../components/ManageImage';
 
 const ManageProductEdit = () => {
   let { state } = useLocation();
@@ -43,7 +44,6 @@ const ManageProductEdit = () => {
   };
 
   let imgSrc = '';
-  console.log('-->', product);
   const baseImgSrc = process.env.PUBLIC_URL + `/image/기본제품이미지.jpg`;
   if (product.main_images.length) {
     if (product.main_images[0]) {
@@ -159,6 +159,7 @@ const ManageProductEdit = () => {
           <button type='submit'>상품 수정</button>
         </div>
       </form>
+      <ManageImage prd={{ ...product }}></ManageImage>
     </div>
   );
 };
