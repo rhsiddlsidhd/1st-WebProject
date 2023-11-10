@@ -36,30 +36,32 @@ const ManageProductEdit = () => {
       size: product.size,
     };
 
-    const response = await updateProduct(item._id, jsonData);
+    const response = await updateProduct(product._id, jsonData);
     alert('상품이 수정되었습니다.');
     navigate(-1);
     // console.log(response);
   };
 
+  let imgSrc = '';
+  console.log('-->', product);
+  const baseImgSrc = process.env.PUBLIC_URL + `/image/기본제품이미지.jpg`;
+  if (product.main_images.length) {
+    if (product.main_images[0]) {
+      imgSrc = product.main_images[0].url;
+    } else {
+      imgSrc = baseImgSrc;
+    }
+  } else {
+    imgSrc = baseImgSrc;
+  }
+
   // const brandList = ['adclassNameas', 'Boutique', '닥터마틴'];
   // const typeList = ['sneakers', 'Derby'];
   return (
     <div className='ManageProductEdit'>
-      <h2>Update Product</h2>
-      <div>ddddddddd</div>
-      <div>ddddddddd</div>
-      <div>ddddddddd</div>
-      <div>ddddddddd</div>
-      <div>ddddddddd</div>
+      <h2>상품 정보 수정</h2>
       <form onSubmit={handleSubmit}>
-        <img
-          src={
-            product.main_images[0]?.url ??
-            process.env.PUBLIC_URL + `/images/기본제품이미지.jpg`
-          }
-          alt='상품 이미지'
-        />
+        <img src={imgSrc} alt='상품 이미지' />
         <div>
           <label htmlFor='title'>제품명</label>
           <input
