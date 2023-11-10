@@ -38,6 +38,9 @@ const ProductSchema = new Schema(
       enum: ['MALE', 'FEMALE', 'BOTH'],
       required: true,
     },
+    category_id: {
+      type: [{ type: String }],
+    },
     size: {
       type: String,
       required: true,

@@ -17,9 +17,16 @@ exports.getProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.getProducts = catchAsync(async (req, res, next) => {
-  const category_id = req.query.category_id;
+  let category_id = req.query.category_id;
+  if (category_id instanceof Array) {
+    category_id = [...category_id];
+  } else if (category_id === undefined) {
+    category_id = undefined;
+  } else {
+    category_id = [category_id];
+  }
   const page = req.query.page;
-  const products = await productsService.getProducts(page || 1);
+  const products = await productsService.getProducts(page || 1, category_id);
   res.status(httpStatus.OK).json(products);
 });
 

@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
+import ChildCategory from '../components/ChildCategory';
 import {
   getCategory,
   getBigCategory,
   postCategory,
   deleteCategory,
+  getChildCategory,
 } from '../api/categoryAPI';
 
 function Category() {
   //데이터 가져오기 변수
-  const [category, setCategory] = useState([]);
   const [bigCategory, setBigCategory] = useState([]);
 
   //데이터 보내기 변수
@@ -16,27 +17,16 @@ function Category() {
   const [categoryType, setCategoryType] = useState('');
   const [parentCategory, setParentCategory] = useState('-1');
 
-  // 카테고리 전체 목록 get
-  useEffect(() => {
-    getCategory()
-      .then((response) => {
-        setCategory(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
   // 대분류 목록 get
   useEffect(() => {
-    getBigCategory()
-      .then((response) => {
-        setBigCategory(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    refresh();
   }, []);
+
+  const refresh = () => {
+    getBigCategory().then((response) => {
+      setBigCategory(response);
+    });
+  };
 
   // 카테고리 추가 post
   const createNewData = async (e) => {
@@ -57,6 +47,7 @@ function Category() {
     getCategory();
 
     await deleteCategory(deleteId);
+    refresh();
   };
 
   return (
@@ -70,12 +61,12 @@ function Category() {
           <div className='div__div--category-list-data-box'>
             {/* 카테고리 목록 데이터 */}
 
-            {category.map((item) => {
-              if ((item['parentCategory'] = '-1')) {
-                // 대분류일 경우 만들어질 UI
-                return (
+            {bigCategory.map((item) => {
+              return (
+                <>
                   <div
                     id={item['_id']}
+                    key={item['_id']}
                     className='div__div--category-list-data'
                   >
                     <div className='div__div--blank'></div>
@@ -90,28 +81,9 @@ function Category() {
                       삭제
                     </button>
                   </div>
-                );
-              } else {
-                // 소분류일 경우 만들어질 UI
-                return (
-                  <div
-                    id={item['_id']}
-                    className='div__div--category-list-data'
-                  >
-                    <div className='div__div--blank'>*ㄴ</div>
-                    <p className='div__p--category-big-name-data'>
-                      {item['name']}
-                    </p>
-                    <button
-                      type='submit'
-                      className='div__button--delete-button'
-                      onClick={deleteData}
-                    >
-                      삭제
-                    </button>
-                  </div>
-                );
-              }
+                  <ChildCategory parentCategoryId={item['_id']} />
+                </>
+              );
             })}
           </div>
         </div>
@@ -130,7 +102,6 @@ function Category() {
                 value={categoryName}
                 onChange={(e) => setCategoryName(e.target.value)}
               />
-              {console.log(categoryName)}
             </div>
             <div className='form__div--category-info-gap'>
               <label className='form_label--category-label'>
@@ -144,8 +115,12 @@ function Category() {
                 }}
               >
                 <option value='default'>분류를 선택해주세요.</option>
-                <option value='대분류'>대분류</option>
-                <option value='소분류'>소분류</option>
+                <option key='대분류' value='대분류'>
+                  대분류
+                </option>
+                <option key='소분류' value='소분류'>
+                  소분류
+                </option>
               </select>
               {/* {console.log(categoryType)}  */}
             </div>

@@ -8,7 +8,8 @@ const createOrder = async (orderBody) => {
   if (
     orderBody.id.length < 1 ||
     orderBody.items.length < 1 ||
-    orderBody.address.length < 1
+    orderBody.address.length < 1 ||
+    orderBody.total_price.length < 1
   ) {
     throw new APIError(
       httpStatus.NO_CONTENT,
@@ -30,6 +31,7 @@ const createOrder = async (orderBody) => {
     user_id: orderBody.id,
     items: orderBody.items,
     address: orderBody.address,
+    total_price: orderBody.total_price,
     date: orderTime,
   };
 
@@ -47,10 +49,8 @@ const getOrder = async (id, order) => {
     throw new APIError(httpStatus.NOT_FOUND, 'User is not exist.');
   }
 
-  console.log(order);
-
   if (!order) {
-    data = await Order.findOne({});
+    data = await Order.find({});
   } else {
     data = await Order.find({ _id: order });
   }
@@ -79,6 +79,7 @@ const updateOrder = async (id, orderBody) => {
     {
       $set: {
         address: orderBody.address,
+        total_price: orderBody.total_price,
         items: orderBody.items,
       },
     }

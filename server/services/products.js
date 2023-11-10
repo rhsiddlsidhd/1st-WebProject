@@ -1,4 +1,5 @@
 const { Product, Image } = require('../models');
+
 const catchAsync = require('../utils/catchAsync');
 
 const getProductById = async (product_id) => {
@@ -6,15 +7,20 @@ const getProductById = async (product_id) => {
 
   return product;
 };
-const getProducts = async (page) => {
+const getProducts = async (page, category_id) => {
   const perPage = 30;
-  const total = await Product.countDocuments();
-  const products = await Product.find({})
+  let query = {};
+  if (category_id !== undefined) {
+    query = {
+      category_id: { $in: category_id },
+    };
+  }
+  const total = await Product.countDocuments(query);
+  const products = await Product.find(query)
     .sort({ createdAt: -1 })
     .skip(perPage * (page - 1))
     .limit(perPage);
-
-  return products;
+  return { products, total, currentPage: page };
 };
 
 const createProduct = async (body) => {
