@@ -41,21 +41,6 @@ function Login() {
     }
   };
 
-  // 유저 정보 password get
-  // useEffect(() => {
-  //   getUser()
-  //     .then((data) => {
-  //       doubleCheckPassword(data.password);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
-
-  // const doubleCheckPassword = (userPassword) => {
-
-  // };
-
   return (
     <div className='body__div--login-content'>
       <h3 className='body__h3--login-logo'>SINBA_D</h3>

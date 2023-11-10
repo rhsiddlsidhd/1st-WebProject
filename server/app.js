@@ -32,7 +32,7 @@ app.use(morgan.errorHandler);
 // });
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:5002' }));
 app.use(cookieParser());
 app.use('/api', apiRouter);
 

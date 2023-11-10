@@ -3,4 +3,10 @@
 node_modules
 
 image_server/**/images/**
+!image_server/**/images/test_image.png
+
 .DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+

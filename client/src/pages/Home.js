@@ -1,6 +1,9 @@
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import visualImage1 from '../image/visualImage1.jpg';
+import { getBrands, getProducts } from '../api/productsAPI';
+import Products from '../components/Products';
 
 // 이미지 슬라이더 구현
 // const [slideImage, setSlideImage] = useState(0);
@@ -17,6 +20,22 @@ import visualImage1 from '../image/visualImage1.jpg';
 // }, 8000)
 
 function Home() {
+  const [products, setProducts] = useState([]);
+  const [brands, setBrands] = useState([]);
+
+  useEffect(() => {
+    const getProductList = async () => {
+      const data = await getProducts('', 1);
+      const products = data.products;
+      console.log('홈에서 products data 확인');
+      console.log(products);
+      const brandList = await getBrands();
+      setProducts(products);
+      setBrands(brandList);
+    };
+    getProductList();
+  }, []);
+
   return (
     // 메인 비주얼 영역
     <div className='body__div--index-content'>
@@ -36,6 +55,7 @@ function Home() {
       </ul>
       <div className='body__div--index-content-wrap'>
         {/* 베스트 상품 영역 */}
+        <Products products={products.slice(0, 4)} brands={brands} />
         <div className='div__div--best'>
           <h2 className='div__h2--title'>BEST</h2>
           <div className='div__div--best-list'>

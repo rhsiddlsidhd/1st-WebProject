@@ -9,9 +9,6 @@ const ManageProductNew = () => {
   const { brands } = state;
   const { typeSubCategories } = state;
 
-  console.log('타입서브카테고리확인!!!!!!!!!!!!!!!!');
-  console.log(typeSubCategories);
-  // const typeList = ['sneakers', 'Derby'];
   const [product, setProduct] = useState({});
   const navigate = useNavigate();
 
@@ -22,10 +19,10 @@ const ManageProductNew = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (product.title.length < 5) {
-    //   alert('상품 이름은 5글자 이상 입력하세요');
-    //   return;
-    // }
+    if (product.title.length < 5) {
+      alert('상품 이름은 5글자 이상 입력하세요');
+      return;
+    }
 
     const jsonData = {
       title: product.title,
@@ -126,8 +123,8 @@ const ManageProductNew = () => {
           >
             <option>성별을 선택하세요</option>
             <option value={'BOTH'}>모두</option>
-            <option value={'man'}>남성</option>
-            <option value={'woman'}>여성</option>
+            <option value={'MALE'}>남성</option>
+            <option value={'FEMALE'}>여성</option>
           </select>
         </div>
         <div>
@@ -141,7 +138,9 @@ const ManageProductNew = () => {
           />
         </div>
         <div className='control_box'>
-          <button onClick={() => navigate(-1)}>추가 취소</button>
+          <button type='button' onClick={() => navigate(-1)}>
+            추가 취소
+          </button>
           <button type='submit'>상품 추가</button>
         </div>
       </form>

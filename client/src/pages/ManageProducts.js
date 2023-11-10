@@ -38,7 +38,8 @@ const ManageProducts = () => {
 
     const bigCategory = await getBigCategory();
     const [typeCategory] = bigCategory.filter(
-      (category) => category.name === '타입'
+      // (category) => category.name === 'TYPE'
+      (category) => category.name === 'MAN'
     );
     const typeCategories = await getChildCategory(typeCategory._id);
     setTypeSubCategories(typeCategories);
@@ -99,7 +100,7 @@ const ManageProducts = () => {
     <div className='ManageProducts'>
       <h2 className='Manageddddd'>List</h2>
       <p>관리자 제품관리 리스트입니다</p>
-      <h4>{total}개의 상품이 있습니다</h4>
+
       <div>
         <button
           onClick={() =>
@@ -112,7 +113,8 @@ const ManageProducts = () => {
             })
           }
         >
-          상품추가
+          상품추가 상품추가 상품추가 상품추가 상품추가 상품추가 상품추가
+          상품추가 상품추가 상품추가
         </button>
       </div>
       <CategoryBar
