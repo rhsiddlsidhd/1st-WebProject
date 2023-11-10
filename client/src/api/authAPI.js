@@ -31,7 +31,7 @@ export const getUser = async () => {
 export const postUser = async ({ name, password, email }) => {
   try {
     const newItem = { name, password, email };
-    const response = await axios.post('localhost:3000/api/auth/join', newItem);
+    const response = await axios.post('/api/auth/join', newItem);
 
     return response;
   } catch (err) {

@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // // get response:
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = '';
 export const getProducts = async (categories, page) => {
   try {
     console.log('카테고리확인', page);
@@ -109,9 +109,7 @@ export const getProducts = async (categories, page) => {
 
 export const getProduct = async () => {
   try {
-    const response = await axios.get(
-      'http://localhost:3000/api/products?id=4548'
-    );
+    const response = await axios.get('/api/products?id=4548');
     return response.data;
   } catch (err) {
     throw new Error(err);
@@ -121,7 +119,7 @@ export const getProduct = async () => {
 // export const getProduct = async () => {
 //   try {
 //     const response = await axios.get(
-//       'http://localhost:3000/api/products?id=4548'
+//       '/api/products?id=4548'
 //     );
 //     return response.data;
 //   } catch (err) {
@@ -134,7 +132,7 @@ export const getProduct = async () => {
 export const addProduct = async (newProduct) => {
   try {
     const response = await axios.post(
-      'http://localhost:3000/api/products',
+      '/api/products',
       JSON.stringify(newProduct),
       { headers: { 'Content-Type': 'application/json' } }
     );
@@ -157,10 +155,7 @@ export const addProduct = async (newProduct) => {
 //
 export const updateProduct = async (updatedProduct) => {
   try {
-    const response = await axios.post(
-      'http://localhost:3000/api/products/:id',
-      updatedProduct
-    );
+    const response = await axios.post('/api/products/:id', updatedProduct);
 
     return response.data;
   } catch (err) {
@@ -170,9 +165,7 @@ export const updateProduct = async (updatedProduct) => {
 
 export const deleteProduct = async (id) => {
   try {
-    const response = await axios.delete(
-      `http://localhost:3000/api/products/${id}`
-    );
+    const response = await axios.delete(`/api/products/${id}`);
 
     return response.data;
   } catch (err) {
@@ -182,7 +175,7 @@ export const deleteProduct = async (id) => {
 
 export const getBrands = async () => {
   try {
-    const response = await axios.get('http://localhost:3000/api/brand');
+    const response = await axios.get('/api/brand');
 
     return response.data;
   } catch (err) {
