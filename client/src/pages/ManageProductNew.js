@@ -42,7 +42,7 @@ const ManageProductNew = () => {
 
   return (
     <div class='ManageProductEdit'>
-      <h2>Update Product</h2>
+      <h2>새로운 상품 추가</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor='title'>제품명</label>

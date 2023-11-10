@@ -32,7 +32,9 @@ const ManageProduct = ({
         </button>
         <button
           onClick={() => {
-            handleEdit(item, categories);
+            const product = item;
+            console.log('product :', product);
+            handleEdit(product, categories);
           }}
         >
           수정하기
