@@ -4,6 +4,7 @@ import Footer from './components/common/Footer';
 import Detail from './pages/Detail';
 import Cart from './pages/Cart';
 import DeliveryAddress from './pages/DeliveryAddress';
+import Address from './pages/Adress';
 import PurchaseCompleted from './pages/PurchaseCompleted';
 import Home from './pages/Home';
 import List from './pages/List';
@@ -29,13 +30,14 @@ function App() {
         <Route path='/detail' element={<Detail />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/deliveryaddress' element={<DeliveryAddress />} />
+        <Route path='/address/:id' element={<Address />} />
         <Route path='/PurchaseCompleted' element={<PurchaseCompleted />} />
         <Route path='/' element={<Home />}></Route>
         <Route path='/list' element={<List />}></Route>
         <Route path='/category' element={<Category />}></Route>
         <Route path='/auth/login' element={<Login />}></Route>
         <Route path='/auth/join' element={<Join />}></Route>
-        <Route path='/user' element={<Userinfo />}></Route>
+        <Route path='/userinfo' element={<Userinfo />}></Route>
         <Route path='/manageproducts' element={<ManageProducts />}></Route>
         <Route path='/productnew' element={<ManageProductNew />}></Route>
         <Route path='/plist' element={<ProductList />}></Route>

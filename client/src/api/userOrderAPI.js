@@ -12,3 +12,14 @@ export const getUserOrderList = async (email) => {
     throw new Error(err);
   }
 };
+
+// 주문 삭제하기
+export const deleteOrder = async (order_id) => {
+  try {
+    const response = await axios.delete(`/api/order/${order_id}`);
+
+    return response.data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};

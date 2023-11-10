@@ -21,19 +21,3 @@ export const postUser = async ({ name, password, email }) => {
     throw new Error(err);
   }
 };
-
-const signIn = async () => {
-  getUser({ email: userId, password: userPassword }).then((data) => {
-    doubleCheckId(data);
-  });
-};
-
-useEffect(() => {
-  getUser({ email: userId, password: userPassword })
-    .then((data) => {
-      doubleCheckId(data);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}, []);
