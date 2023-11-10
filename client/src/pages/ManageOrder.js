@@ -2,49 +2,45 @@ import { useEffect, useState } from 'react';
 import { getUserOrderList } from '../api/userOrderAPI';
 
 const ManageOrder = () => {
-  return function UserOrder() {
-    const [userOrderList, setUserOrderList] = useState([]);
-
-    useEffect(() => {
-      const orderList = getUserOrderList('kakao1234@test.com');
-      setUserOrderList(userOrderList);
-    }, []);
-
-    console.log(userOrderList);
-    return (
-      <div className='body__div--login-content'>
-        <h3 className='body__h3--orderList-logo'>주문 정보 관리</h3>
-
-        <div className='div__orderList--container'>
-          <div className='div__orderList--header'>
-            <div>상품 이미지</div>
-            <div>상품명</div>
-            <div>사이즈</div>
-            <div>수량</div>
-            <div>가격</div>
-            <div>배송상태</div>
-            <div>주문 수정</div>
-            <div>주문 취소</div>
-          </div>
-
-          <div className='div__orderList--contents'>
-            <div className='div__orderList--order'>
-              <div className='div__orderList--order-column'>
-                <div>이미지 들어갈거임</div>
-              </div>
-              <div className='div__orderList--order-column'>상품명</div>
-              <div className='div__orderList--order-column'>사이즈</div>
-              <div className='div__orderList--order-column'>1</div>
-              <div className='div__orderList--order-column'>230000</div>
-              <div className='div__orderList--order-column'>주문 완료</div>
-              <div className='div__orderList--order-column'>수정하기</div>
-              <div className='div__orderList--order-column'>취소하기</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  return (
+    <div className='body__div--manage-order-content'>
+      <h3 className='body__h3--manage-order-logo'>주문 관리</h3>
+      <table className='div__table--manage-order-content'>
+        <thead className='table__thead--manege-order-title'>
+          <tr>
+            <th>상품이미지</th>
+            <th>주문 일자</th>
+            <th>가격</th>
+            <th>배송 상태 변경</th>
+            <th>주문 취소</th>
+          </tr>
+        </thead>
+        <tbody className='table__tbody--manege-order-content'>
+          <tr>
+            <td className='div__orderList--manege-order-image'>
+              이미지 들어갈거임
+            </td>
+            <td>주문 날짜</td>
+            <td>230000</td>
+            <td>
+              <select className='div__orderList--manege-order-column '>
+                <option>상품 준비중</option>
+                <option>주문 완료</option>
+                <option>배송중</option>
+                <option>배송 완료</option>
+              </select>
+            </td>
+            <td>
+              {' '}
+              <button className='div__orderList--manege-order-column'>
+                취소하기
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 export default ManageOrder;
