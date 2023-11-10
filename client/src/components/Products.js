@@ -20,6 +20,7 @@ const Products = ({ products, loading, brands }) => {
       {products.map((product) => (
         <li key={product.id} className='list-group-item'>
           <span>이미지들어감</span>
+          <img src={product.main_images[0].url ?? ''} />
           <span>
             {product.title}/{product.model_number}
           </span>
