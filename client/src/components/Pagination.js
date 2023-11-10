@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 
 function Pagination({ total, limit, page, setPage }) {
   const numPages = Math.ceil(total / limit);
-  console.log('페이지수는');
-  console.log(numPages);
-  const [currPage, setCurrPage] = useState(page);
 
+  console.log('jjjjjjjjjjjjjjjjjjjjjjjjjj', total, limit);
+  console.log(total / limit);
+  console.log(numPages);
+
+  const [currPage, setCurrPage] = useState(page);
   let firstNum = currPage - (currPage % 5) + 1;
   let lastNum = currPage - (currPage % 5) + 5;
 
@@ -21,41 +23,54 @@ function Pagination({ total, limit, page, setPage }) {
         >
           &lt;
         </button>
-        <button
+        {/* <button
           onClick={() => setPage(firstNum)}
           className={page === firstNum ? 'page' : null}
         >
           {firstNum}
-        </button>
-        {Array(4)
+        </button> */}
+        {Array(numPages)
           .fill()
           .map((_, i) => {
-            if (i <= 2) {
-              return (
-                <button
-                  border='true'
-                  key={i + 1}
-                  onClick={() => {
-                    setPage(firstNum + 1 + i);
-                  }}
-                  className={page === firstNum + 1 + i ? 'page' : null}
-                >
-                  {firstNum + 1 + i}
-                </button>
-              );
-            } else if (i >= 3) {
-              return (
-                <button
-                  border='true'
-                  key={i + 1}
-                  onClick={() => setPage(lastNum)}
-                  className={page === lastNum ? 'page' : null}
-                >
-                  {lastNum}
-                </button>
-              );
-            }
+            return (
+              <button
+                border='true'
+                key={i + 1}
+                onClick={() => {
+                  setPage(1 + i);
+                }}
+                className={page === 1 + i ? 'page' : null}
+              >
+                {1 + i}
+              </button>
+            );
+            // if (i <= 2) {
+            //   return (
+            //     <button
+            //       border='true'
+            //       key={i + 1}
+            //       onClick={() => {
+            //         setPage(firstNum + 1 + i);
+            //       }}
+            //       className={page === firstNum + 1 + i ? 'page' : null}
+            //     >
+            //       {firstNum + 1 + i}
+            //     </button>
+            //   );
+            // } else if (i >= 3) {
+            //   return (
+            //     <button
+            //       border='true'
+            //       key={i + 1}
+            //       onClick={() => setPage(lastNum)}
+            //       className={page === lastNum ? 'page' : null}
+            //     >
+            //       {i + 1}
+            //     </button>
+            //   );
+            // }
           })}
+
         <button
           onClick={() => {
             setPage(page + 1);

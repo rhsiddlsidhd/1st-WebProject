@@ -9,20 +9,14 @@ import '../css/btn.css';
 const ProductList = () => {
   const { listType } = useParams();
 
-  console.log('리스트카테고리확인');
-  console.log(listType);
-
   const [products, setProducts] = useState([]);
+  const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState('');
-  const [brands, setBrands] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(16);
-  const offset = (page - 1) * limit;
-  const [count, setCount] = useState(0);
-
+  const [limit, setLimit] = useState(30);
+  const [total, setTotal] = useState(1);
   let queryString;
 
   const { state } = useLocation();
@@ -37,14 +31,16 @@ const ProductList = () => {
   };
 
   const getProductList = useCallback(async () => {
-    setLoading(true);
-    const productsData = await getProducts(queryString);
+    const data = await getProducts(selectedCategories, page);
+    const products = data.products;
+    const total = data.total;
+
     const brandList = await getBrands();
-    setProducts(productsData);
+    setProducts(products);
     setBrands(brandList);
-    setLoading(false);
-    setCount(productsData.length);
-  }, [queryString]);
+    setTotal(total);
+    updateQueryString();
+  }, [selectedCategories, page]);
 
   useEffect(() => {
     getProductList();
@@ -62,43 +58,40 @@ const ProductList = () => {
   };
 
   const updateQueryString = () => {
-    queryString =
+    let queryString =
       selectedCategories.length > 0
         ? `?` + selectedCategories.map((it) => `category_id=${it}`).join('&')
         : '';
+    if (!queryString) {
+      queryString += '?';
+    } else {
+      queryString += '&';
+    }
+    queryString += page ? `page=${page}` : 'page=1';
     window.history.pushState({}, '', window.location.pathname + queryString);
   };
-
-  useEffect(() => {
-    updateQueryString();
-  }, [selectedCategories]);
-
-  const currentProducts = products.slice(offset, offset + limit);
 
   const paginate = (pageNumber) => setPage(pageNumber);
 
   return (
     <div className='ManageProducts'>
       <h2>List</h2>
-      <h4>{count}개의 상품이 있습니다</h4>
+      <h4>{total}개의 상품이 있습니다</h4>
 
       <CategoryBar
         selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
         handleSelect={handleSelect}
-        handleCheckboxChange={handleCheckboxChange}
         listType={listType}
+        handleCheckboxChange={handleCheckboxChange}
       />
 
       <div>
-        <Products
-          products={currentProducts}
-          loading={loading}
-          brands={brands}
-        />
+        <Products products={products} loading={loading} brands={brands} />
         <Pagination
           setPage={paginate}
           limit={limit}
-          total={products.length}
+          total={total}
           page={page}
         />
       </div>

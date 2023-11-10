@@ -4,48 +4,46 @@ import { useLocation } from 'react-router';
 import { addProduct } from '../api/productsAPI';
 
 const ManageProductNew = () => {
+  console.log(useLocation());
   let { state } = useLocation();
-  const categories = state;
+  const { categories } = state;
+  const { brands } = state;
+  const typeList = ['sneakers', 'Derby'];
   const [product, setProduct] = useState({});
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     let { name, value } = e.target;
-    if (name === 'sizes') {
-      value = value.trim(' ').split(',');
-      console.log(value);
-    }
     setProduct({ ...product, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const jsonData = {
+      title: product.title,
+      model_number: product.model_number,
+      type: product.type,
+      brand: product.brand,
+      price: product.price,
+      gender: product.gender,
+      size: product.size,
+    };
 
-    const formData = new FormData();
-    formData.append('title', product.title);
-    formData.append('model_number', product.model_number);
-    formData.append('type', product.type);
-    formData.append('brand', product.brand);
-    formData.append('price', product.price);
-    formData.append('gender', product.gender);
-    formData.append('sizes', product.sizes);
-
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
-    const response = await addProduct(formData);
-    console.log('상품추가결과');
-    console.log(response);
+    await addProduct(jsonData);
+    alert('상품이 추가되었습니다.');
+    navigate(-1);
   };
-
-  const brandList = ['adidas', 'Boutique', '닥터마틴'];
-  const typeList = ['sneakers', 'Derby'];
 
   return (
     <div>
       <h2>Update Product</h2>
       <form onSubmit={handleSubmit}>
         <div>
+          <div>dddddd</div>
+          <div>dddddd</div>
+          <div>dddddd</div>
+          <div>dddddd</div>
+          <div>dddddd</div>
           <label htmlFor='title'>제품명</label>
           <input
             type='text'
@@ -73,6 +71,7 @@ const ManageProductNew = () => {
             value={product.type}
             onChange={handleInputChange}
           >
+            <option>타입 선택</option>
             {typeList.map((type, idx) => (
               <option value={type} key={idx}>
                 {type}
@@ -89,9 +88,11 @@ const ManageProductNew = () => {
             value={product.brand}
             onChange={handleInputChange}
           >
-            {brandList.map((brand, idx) => (
-              <option value={brand} key={idx}>
-                {brand}
+            <option>브랜드를 선택</option>
+
+            {brands.map((brand, idx) => (
+              <option value={brand._id} key={idx}>
+                {brand.name}
               </option>
             ))}
           </select>
@@ -102,6 +103,7 @@ const ManageProductNew = () => {
             type='text'
             id='price'
             name='price'
+            placeholder='가격 입력'
             value={product.price}
             onChange={handleInputChange}
           />
@@ -114,17 +116,19 @@ const ManageProductNew = () => {
             value={product.gender}
             onChange={handleInputChange}
           >
+            <option>성별을 선택하세요</option>
+            <option value={'BOTH'}>모두</option>
             <option value={'man'}>남성</option>
             <option value={'woman'}>여성</option>
           </select>
         </div>
         <div>
-          <label htmlFor='sizes'>사이즈</label>
+          <label htmlFor='size'>사이즈</label>
           <input
             type='text'
-            id='sizes'
-            name='sizes'
-            value={product.sizes}
+            id='size'
+            name='size'
+            value={product.size}
             onChange={handleInputChange}
           />
         </div>

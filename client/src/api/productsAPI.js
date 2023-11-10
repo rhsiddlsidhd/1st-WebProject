@@ -19,7 +19,7 @@ export const getProducts = async (categories, page) => {
     console.log('response');
     console.log(response);
 
-    return response.data.products;
+    return response.data;
   } catch (err) {
     throw new Error(err);
   }
@@ -135,7 +135,8 @@ export const addProduct = async (newProduct) => {
   try {
     const response = await axios.post(
       'http://localhost:3000/api/products',
-      newProduct
+      JSON.stringify(newProduct),
+      { headers: { 'Content-Type': 'application/json' } }
     );
 
     return response.data;
@@ -167,9 +168,11 @@ export const updateProduct = async (updatedProduct) => {
   }
 };
 
-export const deleteProduct = async ({ name, brand, gender, type }) => {
+export const deleteProduct = async (id) => {
   try {
-    const response = await axios.post('http://localhost:3000/api/products/:id');
+    const response = await axios.delete(
+      `http://localhost:3000/api/products/${id}`
+    );
 
     return response.data;
   } catch (err) {

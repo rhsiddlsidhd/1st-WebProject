@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getProducts, getBrands } from '../api/productsAPI';
+import { getProducts, getBrands, deleteProduct } from '../api/productsAPI';
 import ManageProduct from '../components/ManageProduct';
-import CartegoryBar from '../components/CategoryBar';
+import CategoryBar from '../components/CategoryBar';
 import Pagination from '../components/Pagination';
 
 const ManageProducts = () => {
@@ -11,20 +11,14 @@ const ManageProducts = () => {
   const [brands, setBrands] = useState([]);
   const [selected, setSelected] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
-  console.log('selectedCategories');
-  console.log(selectedCategories);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(16);
-  const offset = (page - 1) * limit;
-
-  const currentProducts = [];
-  // const currentProducts = products.products.slice(offset, offset + limit);
-  const [count, setCount] = useState(0);
+  const [limit, setLimit] = useState(30);
+  const [total, setTotal] = useState(1);
+  let queryString;
 
   const paginate = (pageNumber) => {
     setPage(pageNumber);
   };
-  let queryString;
 
   const { state } = useLocation();
   useEffect(() => {
@@ -38,13 +32,16 @@ const ManageProducts = () => {
   };
 
   const getProductList = useCallback(async () => {
-    const productsData = await getProducts(selectedCategories);
-    const brandList = await getBrands();
-    setProducts(productsData);
+    const data = await getProducts(selectedCategories, page);
+    const products = data.products;
+    const total = data.total;
 
+    const brandList = await getBrands();
+    setProducts(products);
     setBrands(brandList);
-    setCount(productsData.length);
-  }, [queryString]);
+    setTotal(total);
+    updateQueryString();
+  }, [selectedCategories, page]);
 
   useEffect(() => {
     getProductList();
@@ -75,16 +72,17 @@ const ManageProducts = () => {
     window.history.pushState({}, '', window.location.pathname + queryString);
   };
 
-  useEffect(() => {
-    updateQueryString();
-  }, [selectedCategories, page]);
+  // useEffect(() => {
+  //   updateQueryString();
+  // }, [selectedCategories, page]);
 
-  const handleRemove = (item) => {
+  const handleRemove = async (item) => {
     if (
       window.confirm(
         `${item.title}(${item.model_number})제품을 삭제하시겠습니까?`
       )
     ) {
+      await deleteProduct(item._id);
       getProductList();
     }
   };
@@ -98,15 +96,22 @@ const ManageProducts = () => {
     <div className='ManageProducts'>
       <h2>List</h2>
       <p>관리자 제품관리 리스트입니다</p>
-      <h4>{count}개의 상품이 있습니다</h4>
+      <h4>{total}개의 상품이 있습니다</h4>
       <div>
         <button
-          onClick={() => navigate('/productnew', { state: selectedCategories })}
+          onClick={() =>
+            navigate('/productnew', {
+              state: {
+                categories: selectedCategories,
+                brands: brands,
+              },
+            })
+          }
         >
           상품추가
         </button>
       </div>
-      <CartegoryBar
+      <CategoryBar
         selectedCategories={selectedCategories}
         handleSelect={handleSelect}
         handleCheckboxChange={handleCheckboxChange}
@@ -122,12 +127,7 @@ const ManageProducts = () => {
           brands={brands}
         />
       </div>
-      <Pagination
-        setPage={paginate}
-        limit={limit}
-        total={products.length}
-        page={page}
-      />
+      <Pagination setPage={paginate} limit={limit} total={total} page={page} />
     </div>
   );
 };

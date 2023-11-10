@@ -4,6 +4,7 @@ import Checkbox from './CheckBox';
 
 const CategoryBar = ({
   selectedCategories,
+  setSelectedCategories,
   handleSelect,
   handleCheckboxChange,
   listType,
@@ -18,25 +19,18 @@ const CategoryBar = ({
   useEffect(() => {
     async function getParentCategories() {
       const responseArr = await getBigCategory();
-      console.log('대분류확인');
-      console.log(responseArr);
       const patentCategoryArr = responseArr.map((cate) => ({
-        id: cate._id, //12345
-        name: cate.name, //타입, 브랜드, 여성, 남성
+        id: cate._id,
+        name: cate.name,
       }));
+
       setParentCategory(patentCategoryArr);
-      console.log('parentCategory');
-      console.log(parentCategory);
     }
     getParentCategories();
   }, []);
 
   const getChildCategories = useCallback(
     async (parentCategory) => {
-      // const test = await getChildCategory('654c6dec0a1b315fa221d0a6');
-      // console.log('소분류 테스트');
-      // console.log(test);
-
       const subCategoryWithParent = await parentCategory.map(
         (eachParentCategory) =>
           getChildCategory(eachParentCategory.id).then((data) => ({
@@ -46,6 +40,17 @@ const CategoryBar = ({
       );
       const res = await Promise.all(subCategoryWithParent);
       setSubCategory(...subCategory, res);
+
+      const womanId = parentCategory
+        .filter((parentCategory) => parentCategory.name === '여성')
+        .map((parentCategory) => parentCategory.id);
+      const manId = parentCategory
+        .filter((parentCategory) => parentCategory.name === '남성')
+        .map((parentCategory) => parentCategory.id);
+      if (listType === 'woman')
+        setSelectedCategories(...selectedCategories, womanId);
+      if (listType === 'man')
+        setSelectedCategories(...selectedCategories, manId);
     },
     [parentCategory]
   );
@@ -75,15 +80,6 @@ const CategoryBar = ({
 
   return (
     <div className='CategoryBar'>
-      {/* <select onChange={handleSelect}>
-        <option value=''>타입을 선택하세요</option>
-        {typeSubCategory.map((item, idx) => (
-          <option value={item.id} key={item.id}>
-            {item.name}
-          </option>
-        ))}
-      </select> */}
-
       {getSpecificCateory(subCategory).map((item) => (
         <Checkbox
           type={item.type}
@@ -92,14 +88,6 @@ const CategoryBar = ({
           selectedCategories={selectedCategories}
         />
       ))}
-      {/* {subCategory.map((item) => (
-        <Checkbox
-          type={item.type}
-          category={item.data}
-          handleCheckboxChange={handleCheckboxChange}
-          selectedCategories={selectedCategories}
-        />
-      ))} */}
     </div>
   );
 };
