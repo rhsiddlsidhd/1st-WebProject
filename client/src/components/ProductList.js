@@ -1,21 +1,25 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { getBrands, getProducts } from '../api/productsAPI';
+import { useLocation } from 'react-router-dom';
+import { getProducts } from '../api/productsAPI';
 import CategoryBar from './CategoryBar';
 import Pagination from './Pagination';
 import Products from './Products';
 import '../css/btn.css';
 
 const ProductList = () => {
+
   const { listType } = useParams();
 
   const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [page, setPage] = useState(1);
+
   const [limit, setLimit] = useState(30);
   const [total, setTotal] = useState(1);
+
   let queryString;
 
   const { state } = useLocation();
@@ -24,6 +28,7 @@ const ProductList = () => {
   }, [state]);
 
   const getProductList = useCallback(async () => {
+
     const data = await getProducts(selectedCategories, page);
     const products = data.products;
     const total = data.total;
@@ -41,6 +46,8 @@ const ProductList = () => {
 
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
+    console.log('이벤트의밸류확ㅇ;ㄴ');
+    console.log(event.target.value);
     if (event.target.checked) {
       setSelectedCategories([...selectedCategories, value]);
     } else {
@@ -67,27 +74,29 @@ const ProductList = () => {
   const paginate = (pageNumber) => setPage(pageNumber);
 
   return (
-    <div className='ManageProducts'>
-      <h2>List</h2>
-      <h4>{total}개의 상품이 있습니다</h4>
-
-      <CategoryBar
-        selectedCategories={selectedCategories}
-        setSelectedCategories={setSelectedCategories}
-        listType={listType}
-        handleCheckboxChange={handleCheckboxChange}
-      />
-
-      <div>
-        <Products products={products} loading={loading} brands={brands} />
-        <Pagination
-          setPage={paginate}
-          limit={limit}
-          total={total}
-          page={page}
-        />
+    <div className='body__div--product-list-content'>
+      <div className='div__div--product-list-content-wrap'>
+        <div className='body__div--side-filter-menu'>
+          <CategoryBar
+            selectedCategories={selectedCategories}
+            handleSelect={handleSelect}
+            handleCheckboxChange={handleCheckboxChange}
+          />
+        </div>
+        <div className='div__div--product-list'>
+          <h2 className='div__div--shoes-title'>Shoes</h2>
+          <p>총 {count}개의 상품이 있습니다.</p>
+        </div>
+        <div className='div__div--products'>
+          <Products products={currentProducts} loading={loading} />
+          <Pagination
+            setPage={paginate}
+            limit={limit}
+            total={products.length}
+            page={page}
+          />
+        </div>
       </div>
-      <div>{listType}페이지 입니다</div>
     </div>
   );
 };

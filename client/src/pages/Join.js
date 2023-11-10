@@ -35,6 +35,8 @@ function Join() {
     const result = await postUser(newUser);
     if (!result) {
       alert('회원가입에 실패했습니다.');
+    } else if (result === 'EXIST') {
+      alert('이미 존재하는 아이디 입니다. 다른 아이디를 사용해주세요.');
     } else {
       alert('회원가입 성공^ㅁ^');
       navigate('/auth/login');

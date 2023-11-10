@@ -98,7 +98,7 @@ const ManageProducts = () => {
 
   return (
     <div className='ManageProducts'>
-      <h2>List</h2>
+      <h2 className='Manageddddd'>List</h2>
       <p>관리자 제품관리 리스트입니다</p>
 
       <div>
