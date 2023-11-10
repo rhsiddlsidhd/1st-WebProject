@@ -6,7 +6,7 @@ import ManageImage from '../components/ManageImage';
 
 const ManageProductNew = () => {
   let { state } = useLocation();
-  // const { categories } = state;
+  const { categories } = state;
   const { brands } = state;
   const { typeSubCategories } = state;
 
@@ -29,15 +29,28 @@ const ManageProductNew = () => {
       title: product.title,
       model_number: product.model_number,
       type: product.type,
+      type: product.type,
       brand: product.brand,
       price: product.price,
       gender: product.gender,
       size: product.size,
     };
 
-    await addProduct(jsonData);
+    const response = await addProduct(jsonData);
+    // console.log('상품추가값!!!!!!!!!!!!!!!!!!!!!');
+    // console.log(response);
     alert('상품이 추가되었습니다.');
-    navigate(-1);
+    const { _id } = response;
+    navigate(`/productedit/${_id}`, {
+      state: {
+        categories: categories,
+        item: response,
+        // categories: selectedCategories,
+        brands: brands,
+        typeSubCategories,
+      },
+    });
+    // navigate(-1);
   };
 
   return (
@@ -133,7 +146,7 @@ const ManageProductNew = () => {
             onChange={handleInputChange}
           />
         </div>
-        <ManageImage></ManageImage>
+        {/* <ManageImage></ManageImage> */}
         <div className='control_box'>
           <button type='button' onClick={() => navigate(-1)}>
             추가 취소

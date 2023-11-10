@@ -39,7 +39,7 @@ const ManageProducts = () => {
     const bigCategory = await getBigCategory();
     const [typeCategory] = bigCategory.filter(
       // (category) => category.name === 'TYPE'
-      (category) => category.name === 'MAN'
+      (category) => category.name === 'WOMAN'
     );
     const typeCategories = await getChildCategory(typeCategory._id);
     setTypeSubCategories(typeCategories);

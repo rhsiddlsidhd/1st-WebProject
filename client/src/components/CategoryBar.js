@@ -36,8 +36,6 @@ const CategoryBar = ({
           }))
       );
       const res = await Promise.all(subCategoryWithParent);
-      console.log('res!!!!!!!!!!!!!!!!!!!!!!!');
-      console.log(res);
       setSubCategory(...subCategory, res);
 
       const womanId = parentCategory

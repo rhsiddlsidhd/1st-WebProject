@@ -29,8 +29,8 @@ const ManageProductEdit = () => {
     const jsonData = {
       title: product.title,
       model_number: product.model_number,
-      // type: product.type,
-      type: '스니커즈',
+      type: product.type,
+      // type: '스니커즈',
       brand: product.brand,
       price: product.price,
       gender: product.gender,
@@ -45,6 +45,8 @@ const ManageProductEdit = () => {
 
   let imgSrc = '';
   const baseImgSrc = process.env.PUBLIC_URL + `/image/기본제품이미지.jpg`;
+  console.log('product-->', product);
+  console.log('product.main_images-->', product.main_images);
   if (product.main_images.length) {
     if (product.main_images[0]) {
       imgSrc = product.main_images[0].url;
