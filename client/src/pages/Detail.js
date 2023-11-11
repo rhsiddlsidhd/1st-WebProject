@@ -10,7 +10,6 @@ const Detail = () => {
 
   // 데이터 상태
   const [data, setData] = useState([]);
-  console.log(data);
 
   // 데이터 get해오는 useEffect
   useEffect(() => {
@@ -26,18 +25,31 @@ const Detail = () => {
   }, []);
 
   const addToCart = () => {
-    const previousStorage =
-      JSON.parse(localStorage.getItem("cartProduct")) || [];
-    //중복방지 some 특정 조건을 만족하는지 배열 내부의 원소를 순회하면서 검사
-    const isDuplication = previousStorage.some((item) => {
-      return item.id === data.id;
-    });
+    const getAllCartProducts = () => {
+      const allProducts = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith("cartProduct_")) {
+          const product = JSON.parse(localStorage.getItem(key));
+          allProducts.push(product);
+        }
+      }
+      return allProducts;
+    };
+
+    const previousStorage = getAllCartProducts();
+    // 각 상품별로 중복 여부 확인
+    const isDuplication = previousStorage.some((item) => item._id === data._id);
+
     if (!isDuplication) {
-      const updateStorage = [...previousStorage, data];
-      console.log(updateStorage);
-      localStorage.setItem("cartProduct", JSON.stringify(updateStorage));
+      // 중복이 없는 경우
+
+      // 각 상품을 개별 키로 로컬 스토리지에 저장
+      const key = `cartProduct_${data._id}`;
+      localStorage.setItem(key, JSON.stringify(data));
+
       alert("장바구니에 상품이 추가되었습니다.");
-    } else if (isDuplication) {
+    } else {
       alert("이미 장바구니에 상품이 있습니다.");
     }
   };
@@ -49,7 +61,7 @@ const Detail = () => {
 
         <div className="div__div--info-flex">
           <div className="div__div--product-img">
-            <img src={data.main_images[0].url} />
+            {/* <img src={data.main_images[0].url} /> */}
             {/* {data?.main_images?.map((image, index) => {
               return <img src={data.main_images[0].url} key={index} />;
             })} */}

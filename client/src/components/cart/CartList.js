@@ -9,62 +9,52 @@ const CartList = ({
 }) => {
   // 수량 추가하기
   const handleIncreaseItem = (item) => {
-    const updatedItems = savedItem.map((shoes) => {
-      if (shoes.id === item.id) {
-        const localStoragedData =
-          JSON.parse(localStorage.getItem("cartProduct")) || [];
+    let cartProductKey = `cartProduct_${item?._id}`;
+    let localStoragedData =
+      JSON.parse(localStorage.getItem(cartProductKey)) || item;
 
-        const totalCount = localStoragedData.reduce(
-          (accumulator, currentItem) => accumulator + currentItem.quantity,
-          0
-        );
+    // count 키가 없을 경우 초기값 1 설정
+    if (!localStoragedData.count) {
+      localStoragedData = { ...localStoragedData, count: 1 };
+    }
 
-        const updatedQuantity = shoes.quantity + 1;
-        return { ...shoes, quantity: updatedQuantity, totalCount };
-      }
-      return shoes;
-    });
+    // count 값 증가
+    localStoragedData.count += 1;
 
-    localStorage.setItem("cartProduct", JSON.stringify(updatedItems));
+    localStorage.setItem(cartProductKey, JSON.stringify(localStoragedData));
+
+    // 상태 업데이트
+    const updatedItems = savedItem.map((shoes) =>
+      shoes._id === item._id ? localStoragedData : shoes
+    );
     setSavedItem(updatedItems);
   };
 
   // 수량 줄이기
+
   const handleDecreaseItem = (item) => {
-    const updatedItems = savedItem.map((shoes) => {
-      if (shoes.id === item.id) {
-        const localStoragedData =
-          JSON.parse(localStorage.getItem("cartProduct")) || [];
-        const totalCount = localStoragedData.reduce(
-          (accumulator, currentItem) => {
-            const itemQuantity = currentItem.quantityCount - 1;
-            return accumulator - itemQuantity;
-          },
-          0
-        );
+    let cartProductKey = `cartProduct_${item?._id}`;
+    let localStoragedData =
+      JSON.parse(localStorage.getItem(cartProductKey)) || item;
 
-        const updatedQuantity = shoes.quantity - 1;
-        // 수량이 0 이하로 내려가지 않도록 조건문 추가
-        if (updatedQuantity < 1) {
-          return { ...shoes, quantity: 1, totalCount };
-        }
-        return {
-          ...shoes,
-          quantity: updatedQuantity,
-          totalCount,
-        };
-      }
-      return shoes;
-    });
+    // count 값이 1보다 클 때만 감소
+    if (localStoragedData.count > 1) {
+      localStoragedData.count -= 1;
+    }
 
-    localStorage.setItem("cartProduct", JSON.stringify(updatedItems));
+    localStorage.setItem(cartProductKey, JSON.stringify(localStoragedData));
+
+    // 상태 업데이트
+    const updatedItems = savedItem.map((shoes) =>
+      shoes._id === item._id ? localStoragedData : shoes
+    );
     setSavedItem(updatedItems);
   };
 
   return (
     <>
       <div className="div__div--cart-list-style">
-        {savedItem.map((item) => (
+        {savedItem?.map((item) => (
           <div className="div__div-cart-list-all-add" key={item.id}>
             <label className="checkbox-container">
               <input
@@ -81,18 +71,21 @@ const CartList = ({
               <div key={item.id} className="div__div-cart-list-add-item">
                 <img
                   src={
-                    item[0]?.main_images[0]?.url ||
+                    (item?.main_images &&
+                      item.main_images.length > 0 &&
+                      item.main_images[0].url) ||
                     "http://kdt-sw-7-team09.elicecoding.com:5000/images/e6XEhVx1pkjlD83sYaxqr.png"
                   }
-                  alt={item.main_images[0]}
+                  alt={`Error`}
                 />
+
                 <div className="div__div-cart-list-add-item-brand">
-                  {item.brand}
+                  {item?.brand}
                   <br />
-                  {item.title}
+                  {item?.title}
                 </div>
                 <div className="div__div-cart-list-add-item-size">
-                  {item.size}
+                  {item?.size}
                 </div>
                 <div className="number">
                   <button
@@ -102,11 +95,11 @@ const CartList = ({
                   >
                     -
                   </button>
-                  <div>{item.quantity}</div>
+                  <div>{item?.count}</div>
                   <button onClick={() => handleIncreaseItem(item)}>+</button>
                 </div>
                 <div className="div__div-cart-list-add-item-price">
-                  {item.price}
+                  {item?.price}
                 </div>
                 <button
                   className="div__div-cart-list-add-item-delete"

@@ -6,15 +6,16 @@ const Cart = () => {
   const navigate = useNavigate();
   // 장바구니에 넣은 신발
   const [savedItem, setSavedItem] = useState([]);
-  // console.log(savedItem);
+
   // 전체 선택 상태
   const [isAllChecked, setIsAllChecked] = useState(false);
   // 체크 id 배열
   const [selectedItems, setSelectedItems] = useState([]);
   // console.log(selectedItems);
+
   // 체크 data저장소
   const [selectedItemsData, setSelectedItemsData] = useState([]);
-  console.log(selectedItemsData);
+
   // 상품 금액
   const [totalPrice, setTotalPrice] = useState(0);
   // 총 결제 금액
@@ -29,8 +30,18 @@ const Cart = () => {
   const deliveryFee = 3000;
 
   // local 에서 겟해오기
+
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("cartProduct")) || [];
+    const items = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith("cartProduct")) {
+        const item = JSON.parse(localStorage.getItem(key)) || [];
+        items.push(item);
+      }
+    }
+
     setSavedItem(items);
   }, []);
 
@@ -84,18 +95,53 @@ const Cart = () => {
   };
 
   // (쓰레기통) 삭제 하기
+  // const handleDeleteItem = (item) => {
+  //   if (window.confirm(`${item?.title} 장바구니 상품을 삭제하시겠습니까?`)) {
+  //     const localStoragedData =
+  //       JSON.parse(localStorage.getItem("cartProduct")) || [];
+  //     const updatedCartItems = localStoragedData.filter(
+  //       (shoes) => shoes?._id !== item?._id
+  //     );
+  //     localStorage.setItem("cartProduct", JSON.stringify(updatedCartItems));
+  //     setSavedItem(updatedCartItems);
+  //     alert("삭제되었습니다.");
+  //   }
+  // };
+
   const handleDeleteItem = (item) => {
-    if (window.confirm(`${item?._id}현재 장바구니 상품을 삭제하시겠습니까?`)) {
-      const localStoragedData =
-        JSON.parse(localStorage.getItem("cartProduct")) || [];
-      const updatedCartItems = localStoragedData.filter(
-        (shoes) => shoes?._id !== item?._id
-      );
-      localStorage.setItem("cartProduct", JSON.stringify(updatedCartItems));
-      setSavedItem(updatedCartItems);
+    if (window.confirm(`${item?.title} 장바구니 상품을 삭제하시겠습니까?`)) {
+      let cartProductKey = `cartProduct_${item?._id}`;
+      let localStoragedData =
+        JSON.parse(localStorage.getItem(cartProductKey)) || {};
+
+      // 객체에서 해당 상품 삭제
+      delete localStoragedData[item?._id];
+
+      localStorage.removeItem(cartProductKey);
+      setSavedItem(localStoragedData);
       alert("삭제되었습니다.");
     }
   };
+
+  //선택 삭제
+  // const selectDelete = () => {
+  //   if (selectedItems.length === 0) {
+  //     alert("선택된 상품이 없습니다.");
+  //     return;
+  //   }
+
+  //   if (window.confirm(`선택한 상품을 장바구니에서 삭제하시겠습니까?`)) {
+  //     const localStoragedData =
+  //       JSON.parse(localStorage.getItem("cartProduct")) || [];
+  //     const updatedCartItems = localStoragedData.filter(
+  //       (shoes) => !selectedItems.includes(shoes?._id)
+  //     );
+  //     localStorage.setItem("cartProduct", JSON.stringify(updatedCartItems));
+  //     setSavedItem(updatedCartItems);
+  //     setSelectedItems([]);
+  //     alert("선택한 상품이 삭제되었습니다.");
+  //   }
+  // };
 
   //선택 삭제
   const selectDelete = () => {
@@ -105,12 +151,14 @@ const Cart = () => {
     }
 
     if (window.confirm(`선택한 상품을 장바구니에서 삭제하시겠습니까?`)) {
-      const localStoragedData =
-        JSON.parse(localStorage.getItem("cartProduct")) || [];
-      const updatedCartItems = localStoragedData.filter(
-        (shoes) => !selectedItems.includes(shoes?._id)
-      );
-      localStorage.setItem("cartProduct", JSON.stringify(updatedCartItems));
+      const updatedCartItems = { ...savedItem };
+
+      selectedItems.forEach((itemId) => {
+        const cartProductKey = `cartProduct_${itemId}`;
+        delete updatedCartItems[itemId];
+        localStorage.removeItem(cartProductKey);
+      });
+
       setSavedItem(updatedCartItems);
       setSelectedItems([]);
       alert("선택한 상품이 삭제되었습니다.");
@@ -122,7 +170,7 @@ const Cart = () => {
     const totalPrice = selectedItems.reduce((accumulator, currentItem) => {
       const item = savedItem.find((shoes) => shoes?._id === currentItem);
       if (!item) return accumulator;
-      const itemToTalPrice = item.price * item.quantity;
+      const itemToTalPrice = item.price * item.count;
       return accumulator + itemToTalPrice;
     }, 0);
 
@@ -135,7 +183,7 @@ const Cart = () => {
       (accumulator, currentItem) => {
         const item = savedItem.find((shoes) => shoes?._id === currentItem);
         if (item && item.price !== undefined) {
-          const itemTotalPrice = item.price * item.quantity;
+          const itemTotalPrice = item.price * item.count;
           return accumulator + itemTotalPrice;
         }
         return accumulator;
@@ -151,7 +199,6 @@ const Cart = () => {
 
   // 구매하기
   const handlePurchase = () => {
-    console.log("클릭 성공");
     if (window.confirm(`선택한 상품을 구매 하시겠습니까?`)) {
       // 주소와 상세주소가 모두 입력되었는지 확인
       if (!address || !addressDetail) {
