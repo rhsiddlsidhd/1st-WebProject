@@ -4,6 +4,7 @@ import { getProducts, getBrands, deleteProduct } from '../api/productsAPI';
 import ManageProduct from '../components/ManageProduct';
 import CategoryBar from '../components/CategoryBar';
 import Pagination from '../components/Pagination';
+
 import {
   getBigCategory,
   // getCategory,
@@ -21,6 +22,10 @@ const ManageProducts = () => {
   const [total, setTotal] = useState(1);
 
   let queryString;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
 
   const paginate = (pageNumber) => {
     setPage(pageNumber);

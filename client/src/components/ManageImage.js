@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import '../css/manage_image.css';
 import Modal from 'react-modal';
 import axios from 'axios';
@@ -30,23 +31,38 @@ const customModalStyles = {
     overflow: 'auto',
   },
 };
-const ManageImage = ({ prd }) => {
-  const [product, setProduct] = useState(prd);
-  const [mainImages, setMainImages] = useState(prd.main_images);
-  const [detailImages, setDetailImages] = useState(prd.detail_images);
+const ManageImage = ({ handler }) => {
+  const { product_id } = useParams();
+  console.log(Date.now(), product_id);
+  const [mainImages, setMainImages] = useState([]);
+  const [detailImages, setDetailImages] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalText, setModalText] = useState('');
+
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: `/api/products/${product_id}`,
+    })
+      .then((res) => {
+        const iprd = res.data;
+        console.log('!@!@!');
+        setMainImages(iprd.main_images);
+        setDetailImages(iprd.detail_images);
+      })
+      .finally(() => {
+        setModalIsOpen(false);
+      });
+  }, []);
 
   const mainInputRef = useRef(null);
   const detailInputRef = useRef(null);
 
-  console.log('ManageImage :', product);
   const handleMove = (target, direction, index) => (e) => {
     e.preventDefault();
-    console.log(target, direction, index);
+
     const startIndex = index;
     let endIndex = -1;
-    console.log('>>>', mainImages.length);
 
     const imageArray = target === 'main' ? mainImages : detailImages;
 
@@ -59,7 +75,7 @@ const ManageImage = ({ prd }) => {
         endIndex = startIndex - 1;
       }
     }
-    console.log(startIndex, endIndex);
+
     if (endIndex !== -1) {
       const startImg = imageArray[startIndex];
       const endImg = imageArray[endIndex];
@@ -67,18 +83,16 @@ const ManageImage = ({ prd }) => {
       const arranged = [...imageArray];
       arranged[endIndex] = startImg;
       arranged[startIndex] = endImg;
-      setMainImages(arranged);
+      if (target === 'main') {
+        setMainImages(arranged);
+      } else {
+        setDetailImages(arranged);
+      }
     }
   };
 
-  useEffect(() => {
-    setMainImages(product.main_images);
-    setDetailImages(product.detail_images);
-  }, [product]);
-
   const handleDeleteImage = (target, img_id) => (e) => {
     e.preventDefault();
-    const product_id = product._id;
     setModalText(`이미지를 삭제 중입니다...\n${img_id}`);
     setModalIsOpen(true);
     axios({
@@ -90,9 +104,9 @@ const ManageImage = ({ prd }) => {
       },
     })
       .then((res) => {
-        const prd = res.data;
-        console.log('after delete product :', prd);
-        setProduct(prd);
+        const iprd = res.data;
+        setMainImages(iprd.main_images);
+        setDetailImages(iprd.detail_images);
       })
       .catch((e) => {
         console.log(e);
@@ -106,10 +120,29 @@ const ManageImage = ({ prd }) => {
     e.preventDefault();
     setModalText('이미지를 업로드 중입니다...');
     setModalIsOpen(true);
-    setTimeout(() => {
-      //해당 부분은 업로드 로직으로 대체될 코드
-      setModalIsOpen(false);
-    }, 1200);
+    axios({
+      method: 'PATCH',
+      url: `/api/products/${product_id}`,
+      data: JSON.stringify({
+        main_images: mainImages,
+        detail_images: detailImages,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        const iprd = res.data;
+        setMainImages(iprd.main_images);
+        setDetailImages(iprd.detail_images);
+        handler(iprd);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setModalIsOpen(false);
+      });
   };
 
   const handleAddImages = (target) => (e) => {
@@ -124,13 +157,12 @@ const ManageImage = ({ prd }) => {
 
   const handleFilesChange = (target) => (e) => {
     const files = e.target.files;
-    const product_id = product._id;
     if (files.length === 0) {
       return;
     }
     setModalText('이미지를 업로드 중입니다...');
     setModalIsOpen(true);
-    console.log(target, 'files are', files);
+
     const formData = new FormData();
     for (let file of files) {
       formData.append('files', file);
@@ -144,11 +176,9 @@ const ManageImage = ({ prd }) => {
       },
     })
       .then((res) => {
-        const prd = res.data;
-        console.log('result product :', prd);
-        setProduct(prd);
-        setMainImages(prd.main_images);
-        setDetailImages(prd.detail_images);
+        const iprd = res.data;
+        setMainImages(iprd.main_images);
+        setDetailImages(iprd.detail_images);
       })
       .finally(() => {
         setModalIsOpen(false);
@@ -161,51 +191,68 @@ const ManageImage = ({ prd }) => {
       <Modal isOpen={modalIsOpen} style={customModalStyles} ariaHideApp={true}>
         {modalText}
       </Modal>
-      <div>
-        메인이미지
+      <div className='filebox'>
+        <input className='upload-name' placeholder='메인이미지' readOnly />
+        <label htmlFor='file' onClick={handleAddImages('main')}>
+          파일찾기
+        </label>
         <input
+          id='file'
           type='file'
           ref={mainInputRef}
           onChange={handleFilesChange('main')}
           accept='image/jpg,image/png,image/jpeg,image/gif'
           multiple
-          hidden
         />
         <button onClick={handleAddImages('main')}>추가</button>
-        <table>
-          <tbody>
+        <div>
+          <div>
             {mainImages?.map((img, index) => {
               return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{img.url}</td>
+                <div>
+                  <div className='img-number'>{index + 1}</div>
+                  <span className='uploaded-name'>{img.url}</span>
                   {/* <img
                     src={img.url}
                     alt=''
                     srcset=''
                     class='image-manager__main_image'
                   /> */}
-                  <td>
-                    <button onClick={handleMove('main', '-', index)}>up</button>
-                  </td>
-                  <td>
-                    <button onClick={handleMove('main', '+', index)}>
+                  <spna>
+                    <button
+                      className='btn-up'
+                      onClick={handleMove('main', '-', index)}
+                    >
+                      up
+                    </button>
+                  </spna>
+                  <span>
+                    <button
+                      className='btn-down'
+                      onClick={handleMove('main', '+', index)}
+                    >
                       down
                     </button>
-                  </td>
-                  <td>
-                    <button onClick={handleDeleteImage('main', img.image_id)}>
+                  </span>
+                  <span>
+                    <button
+                      className='btn-delete'
+                      onClick={handleDeleteImage('main', img.image_id)}
+                    >
                       delete
                     </button>
-                  </td>
-                </tr>
+                  </span>
+                </div>
               );
             })}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
-      <div>
-        상세이미지
+      <div className='filebox'>
+        <input className='upload-name' placeholder='상세이미지' readOnly />
+        <label htmlFor='file' onClick={handleAddImages('main')}>
+          파일찾기
+        </label>
         <input
           type='file'
           ref={detailInputRef}
@@ -215,37 +262,49 @@ const ManageImage = ({ prd }) => {
           hidden
         />
         <button onClick={handleAddImages('detail')}>추가</button>
-        <table>
-          <tbody>
+        <div>
+          <div>
             {detailImages?.map((img, index) => {
               return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{img.url}</td>
+                <div>
+                  <div className='img-number'>{index + 1}</div>
+                  <span className='uploaded-name'>{img.url}</span>
+
                   {/* <img
                     src={img.url}
                     alt=''
                     srcset=''
                     class='image-manager__main_image'
                   /> */}
-                  <td>
-                    <button onClick={handleMove('main', '-', index)}>up</button>
-                  </td>
-                  <td>
-                    <button onClick={handleMove('main', '+', index)}>
+                  <span>
+                    <button
+                      className='btn-up'
+                      onClick={handleMove('main', '-', index)}
+                    >
+                      up
+                    </button>
+                  </span>
+                  <span>
+                    <button
+                      className='btn-down'
+                      onClick={handleMove('main', '+', index)}
+                    >
                       down
                     </button>
-                  </td>
-                  <td>
-                    <button onClick={handleDeleteImage('detail', img.image_id)}>
+                  </span>
+                  <span>
+                    <button
+                      className='btn-delete'
+                      onClick={handleDeleteImage('detail', img.image_id)}
+                    >
                       delete
                     </button>
-                  </td>
-                </tr>
+                  </span>
+                </div>
               );
             })}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
       <button onClick={handleUpdateImages}>이미지 저장</button>
     </div>
