@@ -1,6 +1,6 @@
-import { useState, useEffect, memo, useCallback } from 'react';
-import { getChildCategory, getBigCategory } from '../api/categoryAPI';
-import Checkbox from './CheckBox';
+import { useState, useEffect, memo, useCallback } from "react";
+import { getChildCategory, getBigCategory } from "../api/categoryAPI";
+import Checkbox from "./CheckBox";
 
 const CategoryBar = ({
   selectedCategories,
@@ -24,8 +24,6 @@ const CategoryBar = ({
     getParentCategories();
   }, []);
 
-  console.log('소분류불러오기전 대분류확인');
-  console.log(parentCategory);
   const getChildCategories = useCallback(
     async (parentCategory) => {
       const subCategoryWithParent = await parentCategory.map(
@@ -39,14 +37,14 @@ const CategoryBar = ({
       setSubCategory(...subCategory, res);
 
       const womanId = parentCategory
-        .filter((parentCategory) => parentCategory.name === 'WOMAN')
+        .filter((parentCategory) => parentCategory.name === "WOMAN")
         .map((parentCategory) => parentCategory.id);
       const manId = parentCategory
-        .filter((parentCategory) => parentCategory.name === 'MAN')
+        .filter((parentCategory) => parentCategory.name === "MAN")
         .map((parentCategory) => parentCategory.id);
-      if (listType === 'woman')
+      if (listType === "woman")
         setSelectedCategories(...selectedCategories, womanId);
-      if (listType === 'man')
+      if (listType === "man")
         setSelectedCategories(...selectedCategories, manId);
     },
     [parentCategory]
@@ -59,23 +57,23 @@ const CategoryBar = ({
   subCategory.map((item) => console.log(item.data));
 
   const getSpecificCateory = (allSubCategory) => {
-    if (listType === 'woman')
+    if (listType === "woman")
       return allSubCategory.filter(
-        (cate) => cate.type === 'WOMAN' || cate.type === 'BRAND'
+        (cate) => cate.type === "WOMAN" || cate.type === "BRAND"
       );
-    if (listType === 'man')
+    if (listType === "man")
       return allSubCategory.filter(
-        (cate) => cate.type === 'MAN' || cate.type === 'BRAND'
+        (cate) => cate.type === "MAN" || cate.type === "BRAND"
       );
-    if (listType === 'all')
+    if (listType === "all")
       return allSubCategory.filter(
-        (cate) => cate.type === 'TYPE' || cate.type === 'BRAND'
+        (cate) => cate.type === "TYPE" || cate.type === "BRAND"
       );
     else return allSubCategory;
   };
 
   return (
-    <div className='CategoryBar'>
+    <div className="CategoryBar">
       {getSpecificCateory(subCategory).map((item) => (
         <Checkbox
           type={item.type}

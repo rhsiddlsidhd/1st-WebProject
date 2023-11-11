@@ -13,8 +13,6 @@ export const getProducts = async (categories, page) => {
     }
 
     const response = await axios.get(`${API_BASE_URL}/api/products`, query);
-    console.log("response");
-    console.log(response);
 
     return response.data;
   } catch (err) {
@@ -28,8 +26,7 @@ export const getProduct = async (id) => {
     // const response = await axios.get(
     //   `/api/products?category_id=654e20070581586f9aaac2f6`
     // );
-    console.log("응답확인------------------------>");
-    console.log(response.data);
+
     return response.data;
   } catch (err) {
     throw new Error(err);

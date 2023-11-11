@@ -13,11 +13,6 @@ const CartList = ({
     let localStoragedData =
       JSON.parse(localStorage.getItem(cartProductKey)) || item;
 
-    // count 키가 없을 경우 초기값 1 설정
-    if (!localStoragedData.count) {
-      localStoragedData = { ...localStoragedData, count: 1 };
-    }
-
     // count 값 증가
     localStoragedData.count += 1;
 

@@ -1,6 +1,6 @@
-import { useState, useEffect, memo, useCallback } from 'react';
-import { getChildCategory, getBigCategory } from '../api/categoryAPI';
-import Checkbox from './CheckBox';
+import { useState, useEffect, memo, useCallback } from "react";
+import { getChildCategory, getBigCategory } from "../api/categoryAPI";
+import Checkbox from "./CheckBox";
 
 const CategoryBar = ({
   selectedCategories,
@@ -25,9 +25,6 @@ const CategoryBar = ({
     }
     getParentCategories();
   }, []);
-
-  console.log('parent');
-  console.log(parentCategory);
 
   // useEffect(() => {
   //   for (let cate of parentCategory) {
@@ -74,16 +71,12 @@ const CategoryBar = ({
     getChildCategories(parentCategory);
   }, [getChildCategories]);
 
-  console.log('서브카테고리 확인');
-  console.log(subCategory);
-
-  console.log('아이템 데이터 확인');
   subCategory.map((item) => console.log(item.data));
 
   return (
-    <div className='CategoryBar'>
+    <div className="CategoryBar">
       <select onChange={handleSelect}>
-        <option value=''>타입을 선택하세요</option>
+        <option value="">타입을 선택하세요</option>
         {typeSubCategory.map((item, idx) => (
           <option value={item.id} key={item.id}>
             {item.name}
