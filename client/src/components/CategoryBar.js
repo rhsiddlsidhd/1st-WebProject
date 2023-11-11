@@ -55,7 +55,7 @@ const CategoryBar = ({
     getChildCategories(parentCategory);
   }, [getChildCategories]);
 
-  subCategory.map((item) => console.log(item.data));
+  // subCategory.map((item) => console.log(item.data));
 
   const getSpecificCateory = (allSubCategory) => {
     if (listType === 'woman')
