@@ -128,9 +128,6 @@ const ManageProducts = () => {
           >
             상품추가
           </button>
-          <button className='div__button--manege-products-button'>
-            상품삭제
-          </button>
           <Link to='/category'>
             <button
               Link
