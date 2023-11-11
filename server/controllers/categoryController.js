@@ -18,8 +18,8 @@ exports.getCategory = async (req, res, next) => {
 
     res.json(data);
   } catch (e) {
-    next(e);
     res.status(404).json('[ERROR] Get Category is Failed');
+    next(e);
   }
 };
 
