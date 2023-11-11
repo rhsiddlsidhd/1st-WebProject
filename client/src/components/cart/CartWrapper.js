@@ -2,9 +2,11 @@ import CartList from "./CartList";
 import Purchase from "./Purchase";
 
 const CartWrapper = ({
+  handleSingleChecked,
+  isPurchase,
+  handlePurchase,
   totalPrice,
   handleDeleteItem,
-  setIsAllChecked,
   savedItem,
   setSavedItem,
   selectedItems,
@@ -15,11 +17,10 @@ const CartWrapper = ({
   return (
     <div className="body__div--cart-div-content-flex">
       <CartList
+        handleSingleChecked={handleSingleChecked}
         savedItem={savedItem}
         selectedItems={selectedItems}
-        setSelectedItems={setSelectedItems}
         setSavedItem={setSavedItem}
-        setIsAllChecked={setIsAllChecked}
         handleDeleteItem={handleDeleteItem}
       />
       <Purchase
@@ -30,6 +31,8 @@ const CartWrapper = ({
         selectedItems={selectedItems}
         setSavedItem={setSavedItem}
         setSelectedItems={setSelectedItems}
+        handlePurchase={handlePurchase}
+        isPurchase={isPurchase}
       />
     </div>
   );

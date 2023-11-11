@@ -1,12 +1,11 @@
 import React from "react";
 
 const CartList = ({
+  handleSingleChecked,
   handleDeleteItem,
   savedItem,
   setSavedItem,
   selectedItems,
-  setSelectedItems,
-  setIsAllChecked,
 }) => {
   // 수량 추가하기
   const handleIncreaseItem = (item) => {
@@ -14,16 +13,14 @@ const CartList = ({
       if (shoes.id === item.id) {
         const localStoragedData =
           JSON.parse(localStorage.getItem("cartProduct")) || [];
-        const quantityCount = localStoragedData.reduce(
-          (accumulator, currentItem) => {
-            const itemQuantity = currentItem.quantity + 1;
-            return accumulator + itemQuantity;
-          },
+
+        const totalCount = localStoragedData.reduce(
+          (accumulator, currentItem) => accumulator + currentItem.quantity,
           0
         );
 
         const updatedQuantity = shoes.quantity + 1;
-        return { ...shoes, quantity: updatedQuantity, quantityCount };
+        return { ...shoes, quantity: updatedQuantity, totalCount };
       }
       return shoes;
     });
@@ -38,9 +35,9 @@ const CartList = ({
       if (shoes.id === item.id) {
         const localStoragedData =
           JSON.parse(localStorage.getItem("cartProduct")) || [];
-        const quantityCount = localStoragedData.reduce(
+        const totalCount = localStoragedData.reduce(
           (accumulator, currentItem) => {
-            const itemQuantity = currentItem.quantity - 1;
+            const itemQuantity = currentItem.quantityCount - 1;
             return accumulator - itemQuantity;
           },
           0
@@ -49,25 +46,19 @@ const CartList = ({
         const updatedQuantity = shoes.quantity - 1;
         // 수량이 0 이하로 내려가지 않도록 조건문 추가
         if (updatedQuantity < 1) {
-          return { ...shoes, quantity: 1, quantityCount };
+          return { ...shoes, quantity: 1, totalCount };
         }
-        return { ...shoes, quantity: updatedQuantity, quantityCount };
+        return {
+          ...shoes,
+          quantity: updatedQuantity,
+          totalCount,
+        };
       }
       return shoes;
     });
 
     localStorage.setItem("cartProduct", JSON.stringify(updatedItems));
     setSavedItem(updatedItems);
-  };
-
-  // 부분 선택
-  const hendleChecked = (itemId) => {
-    const updatedSelectedItems = selectedItems.includes(itemId)
-      ? selectedItems.filter((id) => id !== itemId)
-      : [...selectedItems, itemId];
-
-    setSelectedItems(updatedSelectedItems);
-    setIsAllChecked(updatedSelectedItems.length === savedItem.length);
   };
 
   return (
@@ -79,8 +70,8 @@ const CartList = ({
               <input
                 type="checkbox"
                 className="cart-checkbox"
-                checked={selectedItems.includes(item.id)}
-                onChange={() => hendleChecked(item.id)}
+                checked={selectedItems.includes(item?._id)}
+                onChange={() => handleSingleChecked(item?._id)}
               />
               <span className="checkmark">
                 <i className="fa-solid fa-check"></i>
@@ -88,14 +79,20 @@ const CartList = ({
             </label>
             <div className="div__div-cart-list-add">
               <div key={item.id} className="div__div-cart-list-add-item">
-                <img src="#" alt={item.img} />
+                <img
+                  src={
+                    item[0]?.main_images[0]?.url ||
+                    "http://kdt-sw-7-team09.elicecoding.com:5000/images/e6XEhVx1pkjlD83sYaxqr.png"
+                  }
+                  alt={item.main_images[0]}
+                />
                 <div className="div__div-cart-list-add-item-brand">
-                  {item.brandname}
+                  {item.brand}
                   <br />
-                  {item.productname}
+                  {item.title}
                 </div>
                 <div className="div__div-cart-list-add-item-size">
-                  {item.optionvalue}
+                  {item.size}
                 </div>
                 <div className="number">
                   <button

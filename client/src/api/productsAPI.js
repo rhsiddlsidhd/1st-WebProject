@@ -1,22 +1,22 @@
 // 업데이트 메시지, 제품정보
 // FIXME api요청주소 BASE_URL/api로 변경
-import axios from 'axios';
+import axios from "axios";
 
 // // get response:
-const API_BASE_URL = '';
+const API_BASE_URL = "";
 export const getProducts = async (categories, page) => {
   try {
-    console.log('카테고리확인', page);
+    console.log("카테고리확인", page);
     console.log(categories);
 
     let query = { params: { page: page || 1 } };
 
     if (categories.length) {
-      query['params']['category_id'] = categories;
+      query["params"]["category_id"] = categories;
     }
 
     const response = await axios.get(`${API_BASE_URL}/api/products`, query);
-    console.log('response');
+    console.log("response");
     console.log(response);
 
     return response.data;
@@ -107,9 +107,9 @@ export const getProducts = async (categories, page) => {
 //   }
 // };
 
-export const getProduct = async () => {
+export const getProduct = async (id) => {
   try {
-    const response = await axios.get('/api/products?id=4548');
+    const response = await axios.get(`/api/products?id=${id}`);
     return response.data;
   } catch (err) {
     throw new Error(err);
@@ -132,9 +132,9 @@ export const getProduct = async () => {
 export const addProduct = async (newProduct) => {
   try {
     const response = await axios.post(
-      '/api/products',
+      "/api/products",
       JSON.stringify(newProduct),
-      { headers: { 'Content-Type': 'application/json' } }
+      { headers: { "Content-Type": "application/json" } }
     );
 
     return response.data;
@@ -155,7 +155,7 @@ export const addProduct = async (newProduct) => {
 //
 export const updateProduct = async (updatedProduct) => {
   try {
-    const response = await axios.post('/api/products/:id', updatedProduct);
+    const response = await axios.post("/api/products/:id", updatedProduct);
 
     return response.data;
   } catch (err) {
@@ -175,7 +175,7 @@ export const deleteProduct = async (id) => {
 
 export const getBrands = async () => {
   try {
-    const response = await axios.get('/api/brand');
+    const response = await axios.get("/api/brand");
 
     return response.data;
   } catch (err) {
