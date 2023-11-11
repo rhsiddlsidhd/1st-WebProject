@@ -98,6 +98,11 @@
   padding: 25px 5px;
 }
 
+.img__orderList-titleImg {
+  height: 165px;
+  width: 165px;
+}
+
 .div__orderList--order-column:first-child {
   /* height: 165px;
   width: 165px; */

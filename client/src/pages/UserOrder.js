@@ -41,7 +41,7 @@ function UserOrder() {
 
       <div className='div__orderList--container'>
         <div className='div__orderList--header'>
-          {/* <div>상품 이미지</div> */}
+          <div>상품 이미지</div>
           <div>주문 일자</div>
           <div>가격</div>
           <div>상태</div>
@@ -60,10 +60,10 @@ function UserOrder() {
               return (
                 <div key={order['_id']} className='div__orderList--order'>
                   <div className='div__orderList--order-column'>
-                    {console.log(`전체 ${userOrderList}`)}
-                    {console.log('sss', typeof order)}
-                    <img src={order.imgUrl} />
-                    zz{`order['imgUrl']`}zz
+                    <img
+                      className='img__orderList-titleImg'
+                      src={order.imgUrl}
+                    />
                   </div>
                   <div className='div__orderList--order-column'>
                     {order['date']}
