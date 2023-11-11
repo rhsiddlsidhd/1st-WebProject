@@ -18,8 +18,8 @@ exports.getCategory = async (req, res, next) => {
 
     res.json(data);
   } catch (e) {
-    next(e);
     res.status(404).json('[ERROR] Get Category is Failed');
+    next(e);
   }
 };
 
@@ -52,8 +52,8 @@ exports.updateCategory = async (req, res, next) => {
     const data = await categoryService.updateCategory(req.body);
     res.json(data);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Category updated is FAILED');
+    next(e);
   }
 };
 

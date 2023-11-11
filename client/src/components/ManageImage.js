@@ -3,6 +3,10 @@ import { useParams } from 'react-router-dom';
 import '../css/manage_image.css';
 import Modal from 'react-modal';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleUp } from '@fortawesome/free-solid-svg-icons';
+import { faCircleDown } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const customModalStyles = {
   overlay: {
@@ -191,11 +195,13 @@ const ManageImage = ({ handler }) => {
       <Modal isOpen={modalIsOpen} style={customModalStyles} ariaHideApp={true}>
         {modalText}
       </Modal>
-      <div className='filebox'>
+      <div className='fdiv__div--file-search'>
         <input className='upload-name' placeholder='메인이미지' readOnly />
-        <label htmlFor='file' onClick={handleAddImages('main')}>
-          파일찾기
-        </label>
+        <label
+          htmlFor='file'
+          onClick={handleAddImages('main')}
+          className='div__div--file-search'
+        ></label>
         <input
           id='file'
           type='file'
@@ -203,14 +209,23 @@ const ManageImage = ({ handler }) => {
           onChange={handleFilesChange('main')}
           accept='image/jpg,image/png,image/jpeg,image/gif'
           multiple
+          className='div__input--file-search'
+          hidden
         />
-        <button onClick={handleAddImages('main')}>추가</button>
+        <button
+          onClick={handleAddImages('main')}
+          className='div__button---file-add'
+        >
+          파일추가
+        </button>
         <div>
           <div>
             {mainImages?.map((img, index) => {
               return (
                 <div>
-                  <div className='img-number'>{index + 1}</div>
+                  <div className='div__div--img-number'>
+                    {index + 1}개의 이미지
+                  </div>
                   <span className='uploaded-name'>{img.url}</span>
                   {/* <img
                     src={img.url}
@@ -218,20 +233,26 @@ const ManageImage = ({ handler }) => {
                     srcset=''
                     class='image-manager__main_image'
                   /> */}
-                  <spna>
+                  <span>
                     <button
                       className='btn-up'
                       onClick={handleMove('main', '-', index)}
                     >
-                      up
+                      <FontAwesomeIcon
+                        icon={faCircleUp}
+                        className='div__button--cart-button div__button--cart-button-up'
+                      />
                     </button>
-                  </spna>
+                  </span>
                   <span>
                     <button
                       className='btn-down'
                       onClick={handleMove('main', '+', index)}
                     >
-                      down
+                      <FontAwesomeIcon
+                        icon={faCircleDown}
+                        className='div__button--cart-button div__button--cart-button-down'
+                      />
                     </button>
                   </span>
                   <span>
@@ -239,7 +260,10 @@ const ManageImage = ({ handler }) => {
                       className='btn-delete'
                       onClick={handleDeleteImage('main', img.image_id)}
                     >
-                      delete
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className='div__button--cart-button div__button--cart-button-delete'
+                      />
                     </button>
                   </span>
                 </div>
@@ -250,9 +274,7 @@ const ManageImage = ({ handler }) => {
       </div>
       <div className='filebox'>
         <input className='upload-name' placeholder='상세이미지' readOnly />
-        <label htmlFor='file' onClick={handleAddImages('main')}>
-          파일찾기
-        </label>
+        <label htmlFor='file' onClick={handleAddImages('main')}></label>
         <input
           type='file'
           ref={detailInputRef}
@@ -261,13 +283,20 @@ const ManageImage = ({ handler }) => {
           multiple
           hidden
         />
-        <button onClick={handleAddImages('detail')}>추가</button>
+        <button
+          onClick={handleAddImages('detail')}
+          className='div__button---file-add'
+        >
+          파일추가
+        </button>
         <div>
           <div>
             {detailImages?.map((img, index) => {
               return (
                 <div>
-                  <div className='img-number'>{index + 1}</div>
+                  <div className='div__div--img-number'>
+                    {index + 1}개의 이미지
+                  </div>
                   <span className='uploaded-name'>{img.url}</span>
 
                   {/* <img
@@ -281,7 +310,10 @@ const ManageImage = ({ handler }) => {
                       className='btn-up'
                       onClick={handleMove('main', '-', index)}
                     >
-                      up
+                      <FontAwesomeIcon
+                        icon={faCircleUp}
+                        className='div__button--cart-button div__button--cart-button-up'
+                      />
                     </button>
                   </span>
                   <span>
@@ -289,7 +321,10 @@ const ManageImage = ({ handler }) => {
                       className='btn-down'
                       onClick={handleMove('main', '+', index)}
                     >
-                      down
+                      <FontAwesomeIcon
+                        icon={faCircleDown}
+                        className='div__button--cart-button div__button--cart-button-down'
+                      />
                     </button>
                   </span>
                   <span>
@@ -297,7 +332,10 @@ const ManageImage = ({ handler }) => {
                       className='btn-delete'
                       onClick={handleDeleteImage('detail', img.image_id)}
                     >
-                      delete
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className='div__button--cart-button div__button--cart-button-delete'
+                      />
                     </button>
                   </span>
                 </div>
@@ -306,7 +344,9 @@ const ManageImage = ({ handler }) => {
           </div>
         </div>
       </div>
-      <button onClick={handleUpdateImages}>이미지 저장</button>
+      <button onClick={handleUpdateImages} className='div__button--image-save'>
+        이미지 저장
+      </button>
     </div>
   );
 };

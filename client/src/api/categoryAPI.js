@@ -10,6 +10,16 @@ export const getCategory = async () => {
   }
 };
 
+//카테고리 1개 불러오기
+export const getCategoryById = async (id) => {
+  try {
+    const response = await axios.get(`/api/category/1/${id}`);
+    return response.data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 // 카테고리 보내기
 export const postCategory = async ({ name, parentCategory, categoryType }) => {
   try {
@@ -42,9 +52,7 @@ export const updateCategory = async ({
 }) => {
   try {
     const updateData = { name, parentCategory, categoryType };
-    const response = await axios.patch(`/api/category/${id}`, updateData, {
-      withCredentials: true,
-    });
+    const response = await axios.patch(`/api/category/${id}`, updateData);
     return response.data;
   } catch (err) {
     throw new Error(err);

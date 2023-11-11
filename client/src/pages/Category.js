@@ -7,6 +7,7 @@ import {
   postCategory,
   deleteCategory,
   updateCategory,
+  getCategoryById,
 } from '../api/categoryAPI';
 
 function Category() {
@@ -41,38 +42,47 @@ function Category() {
   };
 
   const [editMode, setEditMode] = useState(false);
-  const params = useParams();
-  const [categoryId, setCategoryId] = useState();
-  // 수정할 데이터 가져오기
-  const [editName, setEditName] = useState(''); // 카테고리 이름
-  const [editParentCategory, setEditParentCategory] = useState(''); // 부모카테고리
-  const [editCategoryType, setEditCategoryType] = useState(''); // 카테고리타입
-  // if (editMode) {
-  //   // 카테고리 수정 update
-  //   const updateData = (e) => {
-  //     e.preventDefault();
-  //     updateCategory({ name: categoryName, parentCategory, categoryType });
-  //     alert(' 카테고리 수정 완료!');
-  //     setEditMode(false);
-  //     useEffect(() => {
-  //       setEditName(params.categoryName);
-  //       setEditCategoryType(params.categoryType);
-  //       setEditParentCategory(params.parentCategory);
-  //       setCategoryId(params.id);
-  //     }, []);
-  //   };
-  // } else {
-  //   // 카테고리 추가 post
-  //   const createNewData = async (e) => {
-  //     const newCategory = {
-  //       name: categoryName,
-  //       parentCategory: parentCategory,
-  //       categoryType: categoryType,
-  //     };
+  const [categoryId, setCategoryId] = useState('');
 
-  //     await postCategory(newCategory);
-  //   };
-  // }
+  // 카테고리 수정 update
+
+  const setInputValue = (e) => {
+    setEditMode(true);
+    const data = getCategoryById(e.target.id).then((res) => {
+      setCategoryId(e.target.id);
+      setCategoryName(res.name);
+      setCategoryType(res.categoryType);
+      setParentCategory(res.parentCategory);
+    });
+  };
+  const updateData = async () => {
+    if (categoryType === 'default') {
+      alert('카테고리 타입을 선택해주세요.');
+      return;
+    }
+    const updateItem = {
+      id: categoryId,
+      name: categoryName,
+      parentCategory,
+      categoryType,
+    };
+    await updateCategory(updateItem);
+    alert('업데이트 성공!');
+    setCategoryName('');
+    setCategoryType('');
+    setParentCategory('');
+    setEditMode(false);
+  };
+
+  // 카테고리 추가 post
+  const createNewData = async (e) => {
+    const newCategory = {
+      name: categoryName,
+      parentCategory: parentCategory,
+      categoryType: categoryType,
+    };
+    await postCategory(newCategory);
+  };
 
   return (
     <div className='body__div--category'>
@@ -92,10 +102,13 @@ function Category() {
                     id={item['_id']}
                     key={item['_id']}
                     className='div__div--category-list-data'
-                    // onClick={updateData}
+                    onClick={setInputValue}
                   >
                     <div className='div__div--blank'></div>
-                    <p className='div__p--category-big-name-data'>
+                    <p
+                      id={item['_id']}
+                      className='div__p--category-big-name-data'
+                    >
                       {item['name']}
                     </p>
                     <button
@@ -181,9 +194,9 @@ function Category() {
             <button
               type='submit'
               className='form__button--category-button'
-              // onClick={editMode ? updateData : createNewData}
+              onClick={editMode ? updateData : createNewData}
             >
-              {/* {editMode ? '수정' : '등록'} */}
+              {editMode ? '수정' : '등록'}
             </button>
           </form>
         </div>

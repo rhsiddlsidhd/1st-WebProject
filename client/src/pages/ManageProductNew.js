@@ -61,7 +61,6 @@ const ManageProductNew = () => {
           onSubmit={handleSubmit}
           className='div__form--manage-product-edit'
         >
-          <button className='form__button--image-upload'>사진 업로드</button>
           <div className='div__div--input-list-wrap'>
             <div>
               <label
