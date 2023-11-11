@@ -1,19 +1,3 @@
-// function Checkbox({ children, disabled, checked, onChange }) {
-//   return (
-//     <label>
-//       <input
-//         type='checkbox'
-//         disabled={disabled}
-//         checked={checked}
-//         onChange={({ target: { checked } }) => onChange(checked)}
-//       />
-//       {children}
-//     </label>
-//   );
-// }
-
-// export default Checkbox;
-
 const CheckBox = ({
   category,
   handleCheckboxChange,
@@ -22,15 +6,17 @@ const CheckBox = ({
 }) => {
   return (
     <div>
-      <span>{type}</span>
+      <span className='div__span--big-category'>{type}</span>
       {category.map((item) => (
-        <div key={item._id}>
-          <label>
+        <div key={item._id} className='span__div--item-box'>
+          <label className='div__label--small-category'>
+            {' '}
             <input
               type='checkbox'
               value={item._id}
               onChange={handleCheckboxChange}
               checked={selectedCategories.includes(item._id)}
+              className='div__label--small-category-check'
             />
             {item.name}
           </label>
