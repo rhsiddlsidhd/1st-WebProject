@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 import ProductList from "./components/ProductList";
 import Detail from "./pages/Detail";
 import Cart from "./pages/Cart";
-import DeliveryAddress from "./pages/DeliveryAddress";
+
 import Address from "./pages/Adress";
 import PurchaseCompleted from "./pages/PurchaseCompleted";
 
@@ -36,7 +36,7 @@ function App() {
         <Route path="/plist/all" element={<ProductList />}></Route>
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/deliveryaddress" element={<DeliveryAddress />} />
+
         <Route path="/address/:id" element={<Address />} />
         <Route path="/PurchaseCompleted" element={<PurchaseCompleted />} />
         <Route path="/auth/login" element={<Login />}></Route>

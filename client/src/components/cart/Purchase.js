@@ -7,8 +7,6 @@ const Purchase = ({
   deliveryFee,
   selectedItems,
 }) => {
-  // console.log(`deliveryFee: ${deliveryFee}`);
-  // console.log(`totalPaymentAmount: ${totalPaymentAmount}`);
   //Order API
   // 구매하기
   // const handlePurchase = async () => {

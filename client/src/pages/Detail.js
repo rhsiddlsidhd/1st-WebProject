@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 // import React, { useState } from "react";
+import baseProductImgage from "../image/base_product_image.png";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -38,21 +39,22 @@ const Detail = () => {
     };
 
     const previousStorage = getAllCartProducts();
-    // 각 상품별로 중복 여부 확인
     const isDuplication = previousStorage.some((item) => item._id === data._id);
 
     if (!isDuplication) {
-      // 중복이 없는 경우
-
-      // 각 상품을 개별 키로 로컬 스토리지에 저장
       const key = `cartProduct_${data._id}`;
-      localStorage.setItem(key, JSON.stringify(data));
-
+      const cartData = { ...data, count: 1 }; // 상품 데이터에 count 값을 추가
+      localStorage.setItem(key, JSON.stringify(cartData));
       alert("장바구니에 상품이 추가되었습니다.");
     } else {
       alert("이미 장바구니에 상품이 있습니다.");
     }
   };
+
+  const imgSrc =
+    data.main_images?.length && data.main_images?.[0]
+      ? data.main_images?.[0].url
+      : baseProductImgage;
 
   return (
     <div>
@@ -61,7 +63,7 @@ const Detail = () => {
 
         <div className="div__div--info-flex">
           <div className="div__div--product-img">
-            {/* <img src={data.main_images[0].url} /> */}
+            <img src={imgSrc} />
             {/* {data?.main_images?.map((image, index) => {
               return <img src={data.main_images[0].url} key={index} />;
             })} */}
@@ -103,9 +105,15 @@ const Detail = () => {
         {/* 상세페이지 이미지 나열 부분 */}
         <div className="div__div--detail-img">
           {/* 이미지 내용 */}
-          {data?.detail_images?.map((image, index) => {
-            return <img src={image.url} key={index} />;
-          })}
+
+          <div className="div__div--detail-img-text-wrap">
+            <h2 className="div__div--detail-img-text">상세 이미지</h2>
+          </div>
+          <div className="detail-img">
+            {data?.detail_images?.map((image, index) => {
+              return <img src={image.url} key={index} />;
+            })}
+          </div>
         </div>
       </div>
     </div>

@@ -4,18 +4,15 @@ import SelectWrapper from "../components/cart/SelectWrapper";
 import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const navigate = useNavigate();
+
   // 장바구니에 넣은 신발
   const [savedItem, setSavedItem] = useState([]);
-
   // 전체 선택 상태
   const [isAllChecked, setIsAllChecked] = useState(false);
   // 체크 id 배열
   const [selectedItems, setSelectedItems] = useState([]);
-  // console.log(selectedItems);
-
   // 체크 data저장소
   const [selectedItemsData, setSelectedItemsData] = useState([]);
-
   // 상품 금액
   const [totalPrice, setTotalPrice] = useState(0);
   // 총 결제 금액
@@ -94,36 +91,48 @@ const Cart = () => {
     setSelectedItemsData(updatedSelectedItemsData);
   };
 
-  // (쓰레기통) 삭제 하기
+  // 쓰레기통 삭제하기 (에러 발생)
   // const handleDeleteItem = (item) => {
   //   if (window.confirm(`${item?.title} 장바구니 상품을 삭제하시겠습니까?`)) {
-  //     const localStoragedData =
-  //       JSON.parse(localStorage.getItem("cartProduct")) || [];
-  //     const updatedCartItems = localStoragedData.filter(
-  //       (shoes) => shoes?._id !== item?._id
+  //     let cartProductKey = `cartProduct_${item?._id}`;
+
+  //     // localStorage에서 해당 키의 데이터를 가져오기
+  //     let localStoragedData =
+  //       JSON.parse(localStorage.getItem(cartProductKey)) || [];
+
+  //     // 해당 상품을 배열에서 삭제
+  //     const updatedData = localStoragedData.filter(
+  //       (product) => product._id !== item?._id
   //     );
-  //     localStorage.setItem("cartProduct", JSON.stringify(updatedCartItems));
-  //     setSavedItem(updatedCartItems);
+
+  //     // localStorage에서 해당 키의 데이터 업데이트
+  //     localStorage.setItem(cartProductKey, JSON.stringify(updatedData));
+
+  //     // 상태 업데이트
+  //     setSavedItem(updatedData);
+
   //     alert("삭제되었습니다.");
   //   }
   // };
 
+  // 쓰레기통 삭제하기 (정상 동작)
   const handleDeleteItem = (item) => {
     if (window.confirm(`${item?.title} 장바구니 상품을 삭제하시겠습니까?`)) {
+      // localStorage에서 해당 아이템을 삭제
       let cartProductKey = `cartProduct_${item?._id}`;
-      let localStoragedData =
-        JSON.parse(localStorage.getItem(cartProductKey)) || {};
-
-      // 객체에서 해당 상품 삭제
-      delete localStoragedData[item?._id];
-
       localStorage.removeItem(cartProductKey);
-      setSavedItem(localStoragedData);
+
+      // 상태 업데이트
+      const updatedItems = savedItem.filter(
+        (product) => product._id !== item?._id
+      );
+      setSavedItem(updatedItems);
+
       alert("삭제되었습니다.");
     }
   };
 
-  //선택 삭제
+  //선택 삭제 (에러 발생)
   // const selectDelete = () => {
   //   if (selectedItems.length === 0) {
   //     alert("선택된 상품이 없습니다.");
@@ -131,19 +140,21 @@ const Cart = () => {
   //   }
 
   //   if (window.confirm(`선택한 상품을 장바구니에서 삭제하시겠습니까?`)) {
-  //     const localStoragedData =
-  //       JSON.parse(localStorage.getItem("cartProduct")) || [];
-  //     const updatedCartItems = localStoragedData.filter(
-  //       (shoes) => !selectedItems.includes(shoes?._id)
-  //     );
-  //     localStorage.setItem("cartProduct", JSON.stringify(updatedCartItems));
+  //     const updatedCartItems = { ...savedItem };
+
+  //     selectedItems.forEach((itemId) => {
+  //       const cartProductKey = `cartProduct_${itemId}`;
+  //       delete updatedCartItems[itemId];
+  //       localStorage.removeItem(cartProductKey);
+  //     });
+
   //     setSavedItem(updatedCartItems);
   //     setSelectedItems([]);
   //     alert("선택한 상품이 삭제되었습니다.");
   //   }
   // };
 
-  //선택 삭제
+  // 선택 삭제 (정상 동작)
   const selectDelete = () => {
     if (selectedItems.length === 0) {
       alert("선택된 상품이 없습니다.");
@@ -151,16 +162,19 @@ const Cart = () => {
     }
 
     if (window.confirm(`선택한 상품을 장바구니에서 삭제하시겠습니까?`)) {
-      const updatedCartItems = { ...savedItem };
-
+      // 선택한 상품을 localStorage에서 삭제
       selectedItems.forEach((itemId) => {
         const cartProductKey = `cartProduct_${itemId}`;
-        delete updatedCartItems[itemId];
         localStorage.removeItem(cartProductKey);
       });
 
-      setSavedItem(updatedCartItems);
+      // 상태 업데이트
+      const updatedItems = savedItem.filter(
+        (item) => !selectedItems.includes(item._id)
+      );
+      setSavedItem(updatedItems);
       setSelectedItems([]);
+
       alert("선택한 상품이 삭제되었습니다.");
     }
   };

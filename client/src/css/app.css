@@ -1451,3 +1451,30 @@ table {
   margin: 20px 0 40px;
   color: #9d9d9d;
 }
+
+/* 상세이미지*/
+.div__div--detail-img {
+  width: 80%;
+  height: 5395px;
+  margin: 0 auto;
+
+  display: block;
+}
+
+.div__div--detail-img-text-wrap {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 250px;
+  border-top: #bfbfbf;
+}
+
+.detail-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
