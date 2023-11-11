@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getUser } from '../api/authAPI';
@@ -34,7 +34,13 @@ function Login() {
         if (data === 'no user') {
           alert('존재하지 않는 아이디입니다. 회원가입을 해주세요.');
           return;
+        } else if (data === 'INCORRECT') {
+          alert('비밀번호를 확인해주세요');
+          return;
         }
+
+        console.log(data);
+
         alert('로그인에 성공하였습니다.');
         navigate('/');
       });
@@ -55,7 +61,6 @@ function Login() {
           required
           onChange={(e) => setUserId(e.target.value)}
         />
-        {console.log(userId)}
         <br />
         <label htmlFor='password' className='form__label--text-hidden'>
           비밀번호

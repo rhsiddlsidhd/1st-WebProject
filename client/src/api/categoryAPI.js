@@ -51,8 +51,11 @@ export const updateCategory = async ({
   categoryType,
 }) => {
   try {
-    const updateData = { name, parentCategory, categoryType };
-    const response = await axios.patch(`/api/category/${id}`, updateData);
+    const updateData = { id, name, parentCategory, categoryType };
+
+    console.log(updateData);
+
+    const response = await axios.patch(`/api/category`, updateData);
     return response.data;
   } catch (err) {
     throw new Error(err);

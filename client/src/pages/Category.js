@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ChildCategory from '../components/ChildCategory';
 import {
   getCategory,
@@ -11,12 +11,13 @@ import {
 } from '../api/categoryAPI';
 
 function Category() {
+  const navigate = useNavigate();
   // 데이터 가져오기 변수
   const [bigCategory, setBigCategory] = useState([]);
 
   // 데이터 보내기 변수
   const [categoryName, setCategoryName] = useState('');
-  const [categoryType, setCategoryType] = useState('');
+  const [categoryType, setCategoryType] = useState('default');
   const [parentCategory, setParentCategory] = useState('-1');
 
   // 대분류 목록 get
@@ -56,10 +57,6 @@ function Category() {
     });
   };
   const updateData = async () => {
-    if (categoryType === 'default') {
-      alert('카테고리 타입을 선택해주세요.');
-      return;
-    }
     const updateItem = {
       id: categoryId,
       name: categoryName,
@@ -68,10 +65,14 @@ function Category() {
     };
     await updateCategory(updateItem);
     alert('업데이트 성공!');
+    resetData();
+    setEditMode(false);
+  };
+
+  const resetData = () => {
     setCategoryName('');
     setCategoryType('');
     setParentCategory('');
-    setEditMode(false);
   };
 
   // 카테고리 추가 post
@@ -82,6 +83,16 @@ function Category() {
       categoryType: categoryType,
     };
     await postCategory(newCategory);
+  };
+
+  const cancleBtn = () => {
+    if (window.confirm('작업을 취소하시겠습니까?')) {
+      resetData();
+      alert('상품 페이지로 이동합니다.');
+      navigate('/manageproducts');
+    } else {
+      alert('취소되었습니다.');
+    }
   };
 
   return (
@@ -147,6 +158,7 @@ function Category() {
               </label>
               <select
                 required
+                value={categoryType}
                 className='form__div--category-select'
                 onChange={(e) => {
                   setCategoryType(e.target.value);
@@ -199,6 +211,12 @@ function Category() {
               {editMode ? '수정' : '등록'}
             </button>
           </form>
+          <button
+            className='button__category-button-cancle'
+            onClick={cancleBtn}
+          >
+            등록 취소
+          </button>
         </div>
       </div>
     </div>

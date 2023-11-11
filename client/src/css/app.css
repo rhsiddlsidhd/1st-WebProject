@@ -170,6 +170,15 @@ table {
   transform: scale(1.1);
 }
 
+.div__button--logout-button {
+  font-size: 1.3em;
+  transition: transform 0.3s ease;
+}
+
+.div__button--logout-button:hover {
+  transform: scale(1.1);
+}
+
 /* 유저 버튼 클릭시 나타나는 메뉴 */
 
 .div__p--login-user-title {
@@ -752,6 +761,7 @@ table {
 .form__input--user-id,
 .form__input--user-password,
 .form__input--user-email {
+  padding: 0 10px;
   width: 400px;
   height: 48px;
   border: 1px solid;
@@ -909,7 +919,8 @@ table {
 
 .div__div--category-info {
   width: 45%;
-  padding-top: 50px;
+  height: 310px;
+  padding-top: 5px;
 }
 
 .form__div--category-info-gap {
@@ -952,7 +963,21 @@ table {
   color: var(--white-color);
 }
 
-.form__button--category-button:hover {
+.button__category-button-cancle {
+  width: 100%;
+  height: 48px;
+  border-radius: 10px;
+  margin-top: 40px;
+  cursor: pointer;
+  background: var(--black-color);
+  color: var(--white-color);
+  border-radius: 10px;
+  display: block;
+  margin: 5px 0;
+}
+
+.form__button--category-button:hover,
+.button__category-button-cancle:hover {
   opacity: 0.7;
 }
 
@@ -976,101 +1001,6 @@ table {
   color: #9d9d9d;
   width: 20%;
   text-align: end;
-}
-
-/* user order list */
-.body__div--orderList-content {
-  width: 100%;
-  height: 480px;
-  text-align: center;
-  margin-top: 90px;
-}
-
-.body__h3--orderList-logo {
-  font-size: 30px;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 45px;
-}
-
-.div__orderList--container {
-  font-family: 'Noto Sans KR', sans-serif;
-  height: 390px;
-  width: 100%;
-  display: block;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  overflow: auto;
-}
-
-.div__orderList--header,
-.div__orderList--order {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.div__orderList--header {
-  margin-bottom: 30px;
-  padding: 0 5px;
-  height: 30px;
-}
-
-.div__orderList--header div {
-  font-size: 20px;
-  justify-content: center;
-}
-
-.div__orderList--header div,
-.div__orderList--order-column {
-  font-weight: 400;
-  width: 12%;
-  text-align: center;
-}
-
-.div__orderList--header div:first-child {
-  width: 16%;
-}
-
-.div__orderList--header div:nth-child(2) {
-  width: 20%;
-}
-
-.div__orderList--order-column:nth-child(2) {
-  width: 24%;
-}
-
-.div__orderList--header div:nth-child(4),
-.div__orderList--order-column:nth-child(4) {
-  width: 5%;
-}
-
-.div__orderList--header div:nth-child(5),
-.div__orderList--order-column:nth-child(5) {
-  width: 10%;
-}
-
-.div__orderList--contents {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.div__orderList--order {
-  border-top: 1px solid black;
-  width: 96%;
-  padding: 25px 5px;
-}
-
-.div__orderList--order-column:first-child {
-  height: 165px;
-  width: 165px;
-  background-color: black;
 }
 
 /* ProductList */

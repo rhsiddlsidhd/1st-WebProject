@@ -8,6 +8,7 @@ import ProductList from './components/ProductList';
 import Detail from './pages/Detail';
 import Cart from './pages/Cart';
 import DeliveryAddress from './pages/DeliveryAddress';
+import Address from './pages/Adress';
 import PurchaseCompleted from './pages/PurchaseCompleted';
 
 // 로그인, 회원가입
@@ -36,16 +37,16 @@ function App() {
         <Route path='/detail' element={<Detail />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/deliveryaddress' element={<DeliveryAddress />} />
+        <Route path='/address/:id' element={<Address />} />
         <Route path='/PurchaseCompleted' element={<PurchaseCompleted />} />
         <Route path='/auth/login' element={<Login />}></Route>
         <Route path='/auth/join' element={<Join />}></Route>
-
+        <Route path='/userinfo' element={<Userinfo />}></Route>
         {/* 관리자페이지 */}
         <Route path='/category' element={<Category />}></Route>
         <Route path='/manageproducts' element={<ManageProducts />}></Route>
         <Route path='/productnew' element={<ManageProductNew />}></Route>
         <Route path='/plist' element={<ProductList />}></Route>
-        <Route path='/user/order' element={<UserOrder />}></Route>
         <Route
           path='/productedit/:product_id'
           element={<ManageProductEdit />}

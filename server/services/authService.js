@@ -18,11 +18,11 @@ const login = async (userBody) => {
   const hashedPassword = hash(password);
 
   if (!user) {
-    throw new APIError(httpStatus.NOT_FOUND, 'User Data is not Exist.');
+    return 'User is not Exist.';
   }
 
   if (user.password !== hashedPassword) {
-    throw new APIError(httpStatus[400], 'User Password is incorrect.');
+    return 'INCORRECT';
   }
 
   return user;

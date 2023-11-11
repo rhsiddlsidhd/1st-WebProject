@@ -8,6 +8,7 @@ const newOrder = {
       items: Joi.array().min(1).required(),
       total_price: Joi.string().min(1).required(),
       address: Joi.string().min(1).required(),
+      addressDetail: Joi.string().min(1).required(),
     })
     .unknown(false),
 };
@@ -23,8 +24,8 @@ const getOrder = {
 const updateOrder = {
   body: Joi.object()
     .keys({
-      items: Joi.array().min(1).required(),
       address: Joi.string().min(1).required(),
+      addressDetail: Joi.string().min(1).required(),
     })
     .unknown(false),
   params: Joi.object()

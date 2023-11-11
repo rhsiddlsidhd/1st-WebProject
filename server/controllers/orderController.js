@@ -16,8 +16,8 @@ exports.getOrder = async (req, res, next) => {
 
     res.status(200).json(result);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Get Order List is FAILED');
+    next(e);
   }
 };
 
@@ -32,8 +32,8 @@ exports.postOrder = async (req, res, next) => {
     const result = await orderService.createOrder(req.body);
     res.status(200).json(result);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Create new Order is FAILED');
+    next(e);
   }
 };
 
@@ -51,8 +51,8 @@ exports.updateOrder = async (req, res, next) => {
     const result = await orderService.updateOrder(id, orderBody);
     res.status(200).json(result);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Updated Order is FAILED');
+    next(e);
   }
 };
 
@@ -69,7 +69,7 @@ exports.deleteOrder = async (req, res, next) => {
     const result = await orderService.deleteOrder(id);
     res.status(200).json(result);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Delete Order is FAILED');
+    next(e);
   }
 };

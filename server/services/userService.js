@@ -43,7 +43,6 @@ const updateUser = async (request) => {
       $set: {
         name: data.name,
         password: hash(data.password),
-        address: data.address,
       },
     }
   ).exec();

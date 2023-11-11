@@ -14,8 +14,8 @@ exports.getUsers = async (req, res, next) => {
 
     res.json(data);
   } catch (e) {
-    next(e);
     res.status(404).json('[ERROR] User list is not exist');
+    next(e);
   }
 };
 
@@ -35,8 +35,8 @@ exports.getUserOrder = async (req, res, next) => {
 
     res.json(data);
   } catch (e) {
-    next(e);
     res.status(404).json('[ERROR] Order list is not exist');
+    next(e);
   }
 };
 
@@ -57,8 +57,8 @@ exports.updateDeliveryState = async (req, res, next) => {
 
     res.json(data);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Update Delivery state is failed');
+    next(e);
   }
 };
 
@@ -78,7 +78,7 @@ exports.deleteUserOrder = async (req, res, next) => {
 
     res.json(data);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Delete user order is failed');
+    next(e);
   }
 };
