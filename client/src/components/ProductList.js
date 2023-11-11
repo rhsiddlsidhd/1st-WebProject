@@ -65,28 +65,32 @@ const ProductList = () => {
 
   const paginate = (pageNumber) => setPage(pageNumber);
   return (
-    <div className='ManageProducts'>
-      <h2>List</h2>
-      <h4>{total}개의 상품이 있습니다</h4>
-
-      <CategoryBar
-        selectedCategories={selectedCategories}
-        setSelectedCategories={setSelectedCategories}
-        listType={listType}
-        handleCheckboxChange={handleCheckboxChange}
-      />
-
-      <div>
-        <Products products={products} loading={loading} brands={brands} />
-
-        <Pagination
-          setPage={paginate}
-          limit={limit}
-          total={total}
-          page={page}
-        />
+    <div className='div__manage-products-content'>
+      <div className='div__manage-products-content-wrap'>
+        <h2>상품 목록</h2>
+        <div>{listType}페이지 입니다</div>
+        <h4 className='div__h4--page-name'>{total}개의 상품이 있습니다</h4>
       </div>
-      <div>{listType}페이지 입니다</div>
+
+      <div className='div__manage-products-content-flex'>
+        <CategoryBar
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
+          listType={listType}
+          handleCheckboxChange={handleCheckboxChange}
+        />
+
+        <div className='div__div--product-list-width'>
+          <Products
+            products={products}
+            loading={loading}
+            brands={brands}
+            productStyle='list-product'
+            productStyle2='list-product2'
+          />
+        </div>
+      </div>
+      <Pagination setPage={paginate} limit={limit} total={total} page={page} />
     </div>
   );
 };

@@ -1,7 +1,13 @@
 // import React, { memo, useEffect } from "react";
 import { useNavigate, state } from 'react-router-dom';
 // import { deleteProduct } from "../api/productsAPI";
-const Products = ({ products, loading, brands }) => {
+const Products = ({
+  products,
+  loading,
+  brands,
+  productStyle,
+  productStyle2,
+}) => {
   if (loading) {
     return <h2>제품을 불러오는 중</h2>;
   }
@@ -16,9 +22,9 @@ const Products = ({ products, loading, brands }) => {
   };
 
   return (
-    <ul className='list-group'>
+    <ul className={`list-group ${productStyle}`}>
       {products.map((product) => (
-        <li key={product.id} className='ul__li--group-item'>
+        <li key={product.id} className={`list-group ${productStyle2}`}>
           <img
             src={product.main_images[0]?.url ?? ''}
             className='li__img--product-image'

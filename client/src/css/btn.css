@@ -18,19 +18,16 @@
 }
 
 .Pagination button:hover {
-  background: lemonchiffon;
   cursor: pointer;
   transform: translateY(-2px);
 }
 
 .Pagination button:disabled {
-  background: grey;
   cursor: not-allowed;
   transform: none;
 }
 
 .Pagination .page {
-  background: rgb(50, 242, 72);
   font-weight: bold;
   cursor: not-allowed;
   transform: none;
