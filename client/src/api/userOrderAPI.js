@@ -4,20 +4,25 @@ import axios from 'axios';
 export const getUserOrderList = async (email) => {
   try {
     const response = await axios.get(`/api/order/${email}`);
-    const orderList = response.data;
-
+    let orderList = response.data;
     if (orderList.length >= 1) {
-      orderList.map(async (order) => {
+      for (let order of orderList) {
         const productId = order.items[0];
-        const imageSrc = await axios.get(`/api/products/${productId}`);
-
-        order['imgUrl'] = imageSrc.data.main_images[0].url;
-        return order;
-      });
-
-      return orderList;
+        const imgSrc = await axios
+          .get(`/api/products/${productId}`)
+          .then((res) => {
+            const imgSrc = res.data.main_images[0].url;
+            return imgSrc;
+          })
+          .catch((err) => {
+            console.log(err);
+            const imgSrc = '없음';
+            return imgSrc;
+          });
+        order['imgUrl'] = imgSrc;
+      }
     }
-
+    console.log('-->', orderList);
     return response.data;
   } catch (err) {
     throw new Error(err);
