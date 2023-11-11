@@ -34,9 +34,17 @@ export const deleteCategory = async ({ _id }) => {
 
 // 카테고리 업데이트
 
-export const updateCategory = async ({ _id }) => {
+export const updateCategory = async ({
+  id,
+  name,
+  parentCategory,
+  categoryType,
+}) => {
   try {
-    const response = await axios.delete(`/api/category/${_id}`);
+    const updateData = { name, parentCategory, categoryType };
+    const response = await axios.patch(`/api/category/${id}`, updateData, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (err) {
     throw new Error(err);

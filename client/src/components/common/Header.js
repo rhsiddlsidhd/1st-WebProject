@@ -5,22 +5,8 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import logoImgage from '../../image/logo.png';
-import { getBigCategory } from '../../api/categoryAPI';
 
 const Header = () => {
-  // 대분류 목록 불러오기
-  const [bigCategoryList, setBigCategoryList] = useState([]);
-
-  useEffect(() => {
-    refresh();
-  }, []);
-
-  const refresh = () => {
-    getBigCategory().then((response) => {
-      setBigCategoryList(response);
-    });
-  };
-
   return (
     <header className='body__header'>
       <div className='header__div--header-wrap'>
@@ -31,11 +17,15 @@ const Header = () => {
         </h1>
         <nav className='header__nav'>
           <ul className='nav__ul--gnb'>
-            {bigCategoryList.map((category, _id) => (
-              <li key={_id}>
-                <Link to={`/${category.name}`}>{category.name}</Link>
-              </li>
-            ))}
+            <li className='nav__ul--gnb-list'>
+              <Link to='/plist/all'>SHOES</Link>
+            </li>
+            <li className='nav__ul--gnb-list'>
+              <Link to='/plist/man'>MAN</Link>
+            </li>
+            <li className='nav__ul--gnb-list'>
+              <Link to='/plist/woman'>WOMAN</Link>
+            </li>
           </ul>
         </nav>
         <div className='header__div--icon'>

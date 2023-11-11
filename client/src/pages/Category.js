@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import ChildCategory from '../components/ChildCategory';
 import {
   getCategory,
   getBigCategory,
   postCategory,
   deleteCategory,
-  getChildCategory,
+  updateCategory,
 } from '../api/categoryAPI';
 
 function Category() {
-  //데이터 가져오기 변수
+  // 데이터 가져오기 변수
   const [bigCategory, setBigCategory] = useState([]);
 
-  //데이터 보내기 변수
+  // 데이터 보내기 변수
   const [categoryName, setCategoryName] = useState('');
   const [categoryType, setCategoryType] = useState('');
   const [parentCategory, setParentCategory] = useState('-1');
@@ -28,17 +29,6 @@ function Category() {
     });
   };
 
-  // 카테고리 추가 post
-  const createNewData = async (e) => {
-    const newCategory = {
-      name: categoryName,
-      parentCategory: parentCategory,
-      categoryType: categoryType,
-    };
-
-    await postCategory(newCategory);
-  };
-
   // 카테고리 삭제 delete
   const deleteData = async (e) => {
     const deleteId = {
@@ -49,6 +39,40 @@ function Category() {
     await deleteCategory(deleteId);
     refresh();
   };
+
+  const [editMode, setEditMode] = useState(false);
+  const params = useParams();
+  const [categoryId, setCategoryId] = useState();
+  // 수정할 데이터 가져오기
+  const [editName, setEditName] = useState(''); // 카테고리 이름
+  const [editParentCategory, setEditParentCategory] = useState(''); // 부모카테고리
+  const [editCategoryType, setEditCategoryType] = useState(''); // 카테고리타입
+  // if (editMode) {
+  //   // 카테고리 수정 update
+  //   const updateData = (e) => {
+  //     e.preventDefault();
+  //     updateCategory({ name: categoryName, parentCategory, categoryType });
+  //     alert(' 카테고리 수정 완료!');
+  //     setEditMode(false);
+  //     useEffect(() => {
+  //       setEditName(params.categoryName);
+  //       setEditCategoryType(params.categoryType);
+  //       setEditParentCategory(params.parentCategory);
+  //       setCategoryId(params.id);
+  //     }, []);
+  //   };
+  // } else {
+  //   // 카테고리 추가 post
+  //   const createNewData = async (e) => {
+  //     const newCategory = {
+  //       name: categoryName,
+  //       parentCategory: parentCategory,
+  //       categoryType: categoryType,
+  //     };
+
+  //     await postCategory(newCategory);
+  //   };
+  // }
 
   return (
     <div className='body__div--category'>
@@ -68,6 +92,7 @@ function Category() {
                     id={item['_id']}
                     key={item['_id']}
                     className='div__div--category-list-data'
+                    // onClick={updateData}
                   >
                     <div className='div__div--blank'></div>
                     <p className='div__p--category-big-name-data'>
@@ -156,9 +181,9 @@ function Category() {
             <button
               type='submit'
               className='form__button--category-button'
-              onClick={createNewData}
+              // onClick={editMode ? updateData : createNewData}
             >
-              등록
+              {/* {editMode ? '수정' : '등록'} */}
             </button>
           </form>
         </div>
