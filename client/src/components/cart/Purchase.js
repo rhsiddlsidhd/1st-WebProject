@@ -1,36 +1,39 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
 const Purchase = ({
+  isPurchase,
+  handlePurchase,
   savedItem,
   totalPrice,
   totalPaymentAmount,
   deliveryFee,
   selectedItems,
 }) => {
-  const navigate = useNavigate();
-  // 구매하기 boolean으로 관리
-  const [isPurchase, setIsPurchase] = useState(false);
-
+  // console.log(`deliveryFee: ${deliveryFee}`);
+  // console.log(`totalPaymentAmount: ${totalPaymentAmount}`);
+  //Order API
   // 구매하기
-  const handlePurchase = () => {
-    if (isPurchase) {
-      if (window.confirm(`선택한 상품을 구매 하시겠습니까?`)) {
-        localStorage.removeItem("savedItem");
-        navigate("/deliveryaddress");
-      }
-    }
-  };
+  // const handlePurchase = async () => {
+  //   if (isPurchase) {
+  //     if (window.confirm(`선택한 상품을 구매 하시겠습니까?`)) {
+  //       try {
+  //         const response = await axios.post("http://localhost:3000/api/order", {
+  //           savedItem: savedItem,
+  //           totalPrice: totalPrice,
+  //           totalPaymentAmount: totalPaymentAmount,
+  //           deliveryFee: deliveryFee,
+  //           selectedItems: selectedItems,
+  //         });
 
-  // 구매하기 활성화시 이동
-  useEffect(() => {
-    if (savedItem.length < 1 || selectedItems.length === 0) {
-      setIsPurchase(false);
-    } else {
-      setIsPurchase(true);
-    }
-  }, [savedItem, selectedItems]);
-
+  //         if (response.status === 200) {
+  //           navigate("/deliveryaddress");
+  //         } else {
+  //           console.error("API 호출 실패");
+  //         }
+  //       } catch (error) {
+  //         console.error("API 호출 중 오류:", error);
+  //       }
+  //     }
+  //   }
+  // };
   return (
     <div>
       <form className="div__form--order-sheet-style">
@@ -56,7 +59,7 @@ const Purchase = ({
       <button
         className="div__button--purchase-button-style"
         onClick={handlePurchase}
-        disabled={!isPurchase}
+        disabled={!isPurchase || selectedItems.length === 0}
         style={{
           opacity: isPurchase ? 1 : 0.5,
         }}

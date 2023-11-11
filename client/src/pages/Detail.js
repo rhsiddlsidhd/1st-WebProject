@@ -1,25 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { useParams } from "react-router-dom";
 // import React, { useState } from "react";
 
 const Detail = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   // 데이터 상태
   const [data, setData] = useState([]);
 
-  // axios 기본 구조
-  // axios.get('url').then((res)=>console.log(res)).catch((error)=>console.log(error))
-  // get('주소')
-  // then(콜백으로 response를 받음)
-  // catch(에러가 있다면 캐치함)
-
   // 데이터 get해오는 useEffect
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/products")
+      .get(`/api/products/${id}`)
+
       .then((response) => {
         setData(response.data);
       })
@@ -28,34 +24,32 @@ const Detail = () => {
       });
   }, []);
 
-  // console.log(`데이터가 잘 들어왔나요? ${data}`);
-
-  //많은 데이터들이 배열안에 객체로 {key:data} 값으로 콘솔에 찍힘
-
-  const product = {
-    img: data[0]?.main_images,
-    brandname: data[0]?.brand,
-    productname: data[0]?.title,
-    price: data[0]?.price,
-    optionvalue: data[0]?.size,
-    number: data[0]?.__v,
-    id: data[0]?._id,
-    quantity: 1,
-  };
-
   const addToCart = () => {
-    const previousStorage =
-      JSON.parse(localStorage.getItem("cartProduct")) || [];
-    //중복방지 some 특정 조건을 만족하는지 배열 내부의 원소를 순회하면서 검사
-    const isDuplication = previousStorage.some((item) => {
-      return item.id === product.id;
-    });
+    const getAllCartProducts = () => {
+      const allProducts = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith("cartProduct_")) {
+          const product = JSON.parse(localStorage.getItem(key));
+          allProducts.push(product);
+        }
+      }
+      return allProducts;
+    };
+
+    const previousStorage = getAllCartProducts();
+    // 각 상품별로 중복 여부 확인
+    const isDuplication = previousStorage.some((item) => item._id === data._id);
+
     if (!isDuplication) {
-      const updateStorage = [...previousStorage, product];
-      console.log(updateStorage);
-      localStorage.setItem("cartProduct", JSON.stringify(updateStorage));
+      // 중복이 없는 경우
+
+      // 각 상품을 개별 키로 로컬 스토리지에 저장
+      const key = `cartProduct_${data._id}`;
+      localStorage.setItem(key, JSON.stringify(data));
+
       alert("장바구니에 상품이 추가되었습니다.");
-    } else if (isDuplication) {
+    } else {
       alert("이미 장바구니에 상품이 있습니다.");
     }
   };
@@ -66,24 +60,31 @@ const Detail = () => {
         {/* 상품 정보 */}
 
         <div className="div__div--info-flex">
-          <div className="div__div--product-img">{product.img}</div>
+          <div className="div__div--product-img">
+            {/* <img src={data.main_images[0].url} /> */}
+            {/* {data?.main_images?.map((image, index) => {
+              return <img src={data.main_images[0].url} key={index} />;
+            })} */}
+          </div>
           <div className="div__div--info-text">
-            <p className="div__p--brand-name">{product.brandname}</p>
-            <p className="div__p--product-name">{product.productname}</p>
-            <p className="div__p--price">{`${product.price} 원`}</p>
+            <p className="div__p--brand-name">{data.brand}</p>
+            <p className="div__p--product-name">{data.title}</p>
+            <p className="div__p--price">{`${data.price} 원`}</p>
+
             <select className="div__select--select-style">
               <option value="" disabled hidden>
                 {/* 사이즈 선택 */}
               </option>
               {/* 해당 데이터의 사이즈를 전부 펼쳐야함 */}
-              {data.map((item, index) => (
+              {/* {data?.map((item, index) => (
                 <option key={index}>{item.size}</option>
-              ))}
+              ))} */}
+              <option>{data.size}</option>
             </select>
             <form>
               <input
                 onClick={() => {
-                  navigate("/deliveryaddress");
+                  navigate("/PurchaseCompleted");
                 }}
                 type="button"
                 value="구매하기"
@@ -100,7 +101,12 @@ const Detail = () => {
           </div>
         </div>
         {/* 상세페이지 이미지 나열 부분 */}
-        <div className="div__div--detail-img">{/* 이미지 내용 */}</div>
+        <div className="div__div--detail-img">
+          {/* 이미지 내용 */}
+          {data?.detail_images?.map((image, index) => {
+            return <img src={image.url} key={index} />;
+          })}
+        </div>
       </div>
     </div>
   );
