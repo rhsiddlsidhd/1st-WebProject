@@ -257,18 +257,12 @@ const ManageImage = ({ handler }) => {
                       />
                     </button>
                   </span>
-                  <div className="div__div--img-number">
-                    총 {index + 1}개의 메인이미지
-                  </div>
-                  {/* <img
-                    src={img.url}
-                    alt=''
-                    srcset=''
-                    class='image-manager__main_image'
-                  /> */}
                 </div>
               );
             })}
+          </div>
+          <div className="div__div--img-number">
+            총 {mainImages?.length}개의 메인이미지
           </div>
         </div>
       </div>
@@ -309,7 +303,7 @@ const ManageImage = ({ handler }) => {
                   <span>
                     <button
                       className="btn-up"
-                      onClick={handleMove("main", "-", index)}
+                      onClick={handleMove("detail", "-", index)}
                     >
                       <FontAwesomeIcon
                         icon={faCircleUp}
@@ -320,7 +314,7 @@ const ManageImage = ({ handler }) => {
                   <span>
                     <button
                       className="btn-down"
-                      onClick={handleMove("main", "+", index)}
+                      onClick={handleMove("detail", "+", index)}
                     >
                       <FontAwesomeIcon
                         icon={faCircleDown}
@@ -339,15 +333,16 @@ const ManageImage = ({ handler }) => {
                       />
                     </button>
                   </span>
-                  <div className="div__div--img-number">
-                    총 {index + 1}개의 상세이미지
-                  </div>
                 </div>
               );
             })}
           </div>
         </div>
+        <div className="div__div--img-number">
+          총 {detailImages?.length}개의 상세이미지
+        </div>
       </div>
+
       <button onClick={handleUpdateImages} className="div__button--image-save">
         이미지 저장
       </button>
