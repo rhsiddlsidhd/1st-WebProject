@@ -22,9 +22,6 @@ export const getProducts = async (categories, page) => {
 export const getProduct = async (id) => {
   try {
     const response = await axios.get(`/api/products/${id}`);
-    // const response = await axios.get(
-    //   `/api/products?category_id=654e20070581586f9aaac2f6`
-    // );
 
     return response.data;
   } catch (err) {
@@ -34,7 +31,6 @@ export const getProduct = async (id) => {
 
 export const addProduct = async (newProduct) => {
   try {
-    console.log('?????', newProduct);
     const response = await axios.post(
       '/api/products',
       JSON.stringify(newProduct),
