@@ -60,17 +60,13 @@ const Header = () => {
         <nav className='header__nav'>
           <ul className='nav__ul--gnb'>
             <li className='nav__ul--gnb-list'>
-              <Link to='/plist/all'>SHOES</Link>
+              <Link to='/'>SHOES</Link>
             </li>
             <li className='nav__ul--gnb-list'>
-              <Link to='/plist/man?category_id=654d9b796935839734182b33&page=1'>
-                MAN
-              </Link>
+              <Link to='/'>MAN</Link>
             </li>
             <li className='nav__ul--gnb-list'>
-              <Link to='/plist/woman?category_id=654d9b7e6935839734182b3c&page=1'>
-                WOMAN
-              </Link>
+              <Link to='/'>WOMAN</Link>
             </li>
           </ul>
         </nav>

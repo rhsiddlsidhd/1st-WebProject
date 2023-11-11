@@ -27,6 +27,7 @@ const ManageProducts = () => {
   };
 
   const { state } = useLocation();
+  console.log('???', state);
   useEffect(() => {
     if (state) setSelectedCategories(state);
   }, [state]);
