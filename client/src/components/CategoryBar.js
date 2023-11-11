@@ -11,16 +11,17 @@ const CategoryBar = ({
   const [parentCategory, setParentCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
 
-  useEffect(() => {
-    async function getParentCategories() {
-      const responseArr = await getBigCategory();
-      const patentCategoryArr = responseArr.map((cate) => ({
-        id: cate._id,
-        name: cate.name,
-      }));
+  async function getParentCategories() {
+    const responseArr = await getBigCategory();
+    const patentCategoryArr = responseArr.map((cate) => ({
+      id: cate._id,
+      name: cate.name,
+    }));
 
-      setParentCategory(patentCategoryArr);
-    }
+    setParentCategory(patentCategoryArr);
+  }
+
+  useEffect(() => {
     getParentCategories();
   }, []);
 

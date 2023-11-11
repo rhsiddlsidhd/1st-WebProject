@@ -1,6 +1,6 @@
-const { Product, Image } = require("../models");
+const { Product, Image } = require('../models');
 
-const catchAsync = require("../utils/catchAsync");
+const catchAsync = require('../utils/catchAsync');
 
 const getProductById = async (product_id) => {
   const product = await Product.findOne({ _id: product_id });
@@ -30,6 +30,11 @@ const createProduct = async (body) => {
 
   const result = await product.save();
 
+  return result;
+};
+
+const patchProduct = async (product, body) => {
+  const result = await product.updateOne({ $set: body });
   return result;
 };
 
@@ -103,6 +108,7 @@ const deleteAllDetailImagesToProduct = async (product) => {
 module.exports = {
   getProductById,
   createProduct,
+  patchProduct,
   getProducts,
   deleteProduct,
   addMainImagesToProduct,

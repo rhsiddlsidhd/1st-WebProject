@@ -34,6 +34,11 @@ router
     validate(productsValidation.addImage),
     productsController.addImagesToProduct
   )
+  .patch(
+    '/:id',
+    validate(productsValidation.patchProduct),
+    productsController.patchProduct
+  )
   .delete(
     '/:id/images/:image_type',
     validate(productsValidation.deleteImage),
