@@ -48,6 +48,21 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
   res.status(httpStatus.OK).json(result);
 });
 
+exports.patchProduct = catchAsync(async (req, res, next) => {
+  logger.info('상품수정');
+  const product_id = req.params.id;
+  let product = await productsService.getProductById(product_id);
+
+  if (!product) {
+    throw new ApiError(httpStatus.NOT_FOUND, '상품을 찾지 못하였습니다.');
+  }
+
+  const result = await productsService.patchProduct(product, req.body);
+  product = await productsService.getProductById(product_id);
+  logger.info(product);
+  res.status(httpStatus.OK).json(product);
+});
+
 exports.addImagesToProduct = catchAsync(async (req, res, next) => {
   logger.info('상품 이미지 추가');
   const product_id = req.params.id;

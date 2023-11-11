@@ -23,11 +23,11 @@ const ProductSchema = new Schema(
     brand: {
       type: Schema.Types.ObjectId,
       ref: 'Brand',
-      required: true,
+      // required: true,
     },
     type: {
       type: String,
-      required: true,
+      // required: true,
     },
     model_number: {
       type: String,

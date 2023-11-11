@@ -25,8 +25,8 @@ const createProduct = {
   body: Joi.object()
     .keys({
       title: Joi.string().min(5).required(),
-      brand: Joi.string().required(),
-      type: Joi.string().required(),
+      // brand: Joi.string().required(),
+      // type: Joi.string().required(),
       model_number: Joi.string().required(),
       gender: Joi.string().required(),
       size: Joi.string().required(),

@@ -3,14 +3,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getProducts, getBrands, deleteProduct } from '../api/productsAPI';
 import ManageProduct from '../components/ManageProduct';
-import CategoryBar from '../components/CategoryBar';
 import Pagination from '../components/Pagination';
-
-import {
-  getBigCategory,
-  // getCategory,
-  getChildCategory,
-} from '../api/categoryAPI';
 
 const ManageProducts = () => {
   const navigate = useNavigate();
@@ -24,8 +17,9 @@ const ManageProducts = () => {
 
   let queryString;
 
-  useEffect(() => {
+  useEffect(async () => {
     window.scrollTo(0, 0);
+    dataSetting(selectedCategories, page);
   }, [page]);
 
   const paginate = (pageNumber) => {
@@ -37,21 +31,23 @@ const ManageProducts = () => {
     if (state) setSelectedCategories(state);
   }, [state]);
 
+  const dataSetting = async () => {
+    const data = await getProducts(selectedCategories, page);
+    const brandList = await getBrands();
+
+    setProducts(data.products);
+    setTotal(data.total);
+    setBrands(brandList);
+  };
+
   const getProductList = useCallback(async () => {
     const data = await getProducts(selectedCategories, page);
-    const products = data.products;
+    // const products = data.products;
     const total = data.total;
 
-    const bigCategory = await getBigCategory();
-    const [typeCategory] = bigCategory.filter(
-      // (category) => category.name === 'TYPE'
-      (category) => category.name === 'WOMAN'
-    );
-    const typeCategories = await getChildCategory(typeCategory._id);
-    setTypeSubCategories(typeCategories);
-
     const brandList = await getBrands();
-    setProducts(products);
+
+    setProducts(data.products);
     setBrands(brandList);
     setTotal(total);
     updateQueryString();
@@ -60,17 +56,6 @@ const ManageProducts = () => {
   useEffect(() => {
     getProductList();
   }, [getProductList]);
-
-  const handleCheckboxChange = (event) => {
-    const value = event.target.value;
-    if (event.target.checked) {
-      setSelectedCategories([...selectedCategories, value]);
-    } else {
-      setSelectedCategories(
-        selectedCategories.filter((category) => category !== value)
-      );
-    }
-  };
 
   const updateQueryString = () => {
     let queryString =
@@ -96,12 +81,11 @@ const ManageProducts = () => {
       getProductList();
     }
   };
-  const handleEdit = (product, categories) => {
+
+  const handleEdit = (product) => {
     navigate(`/productedit/${product._id}`, {
       state: {
-        categories: categories,
         item: product,
-        categories: selectedCategories,
         brands: brands,
         typeSubCategories,
       },
@@ -138,11 +122,6 @@ const ManageProducts = () => {
             </button>
           </Link>
         </div>
-        {/* <CategoryBar
-          selectedCategories={selectedCategories}
-          handleCheckboxChange={handleCheckboxChange}
-        /> */}
-
         <div>
           <ManageProduct
             products={products}

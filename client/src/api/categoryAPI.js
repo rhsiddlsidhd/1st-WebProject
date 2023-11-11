@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios from 'axios';
 
 // 카테고리 목록 불러오기
 export const getCategory = async () => {
   try {
-    const response = await axios.get("/api/category");
+    const response = await axios.get('/api/category');
     return response.data;
   } catch (err) {
     throw new Error(err);
@@ -24,7 +24,7 @@ export const getCategoryById = async (id) => {
 export const postCategory = async ({ name, parentCategory, categoryType }) => {
   try {
     const newItem = { name, parentCategory, categoryType };
-    const response = await axios.post("/api/category", newItem);
+    const response = await axios.post('/api/category', newItem);
 
     return response;
   } catch (err) {
@@ -63,7 +63,7 @@ export const updateCategory = async ({
 // 대분류 카테고리 불러오기
 export const getBigCategory = async () => {
   try {
-    const response = await axios.get("/api/category/-1");
+    const response = await axios.get('/api/category/-1');
     return response.data;
   } catch (err) {
     throw new Error(err);
@@ -74,6 +74,7 @@ export const getBigCategory = async () => {
 export const getChildCategory = async (parentCategoryId) => {
   try {
     const response = await axios.get(`/api/category/${parentCategoryId}`);
+    console.log(response.data);
 
     return response.data;
   } catch (err) {
