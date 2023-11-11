@@ -1,5 +1,5 @@
-import CartList from "./CartList";
-import Purchase from "./Purchase";
+import CartList from './CartList';
+import Purchase from './Purchase';
 
 const CartWrapper = ({
   handleSingleChecked,
@@ -15,7 +15,7 @@ const CartWrapper = ({
   deliveryFee,
 }) => {
   return (
-    <div className="body__div--cart-div-content-flex">
+    <div className='body__div--cart-div-content-flex'>
       <CartList
         handleSingleChecked={handleSingleChecked}
         savedItem={savedItem}
