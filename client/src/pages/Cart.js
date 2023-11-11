@@ -1,7 +1,11 @@
-import CartWrapper from "../components/cart/CartWrapper";
-import React, { useState, useEffect } from "react";
-import SelectWrapper from "../components/cart/SelectWrapper";
-import { useNavigate } from "react-router-dom";
+import CartWrapper from '../components/cart/CartWrapper';
+import React, { useState, useEffect } from 'react';
+import SelectWrapper from '../components/cart/SelectWrapper';
+import { useNavigate } from 'react-router-dom';
+
+import { getCookie } from '../utils/cookieUtils';
+import { newOrder } from '../api/cartAPI';
+
 const Cart = () => {
   const navigate = useNavigate();
 
@@ -18,9 +22,9 @@ const Cart = () => {
   // 총 결제 금액
   const [totalPaymentAmount, setTotalPaymentAmount] = useState(0);
   // 주소
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState('');
   // 상세 주소
-  const [addressDetail, setaddressDetail] = useState("");
+  const [addressDetail, setaddressDetail] = useState('');
   // 선택되어있는지 boolean
   const [isPurchase, setIsPurchase] = useState(false);
   //배송비
@@ -33,7 +37,7 @@ const Cart = () => {
 
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.startsWith("cartProduct")) {
+      if (key && key.startsWith('cartProduct')) {
         const item = JSON.parse(localStorage.getItem(key)) || [];
         items.push(item);
       }
@@ -91,30 +95,6 @@ const Cart = () => {
     setSelectedItemsData(updatedSelectedItemsData);
   };
 
-  // 쓰레기통 삭제하기 (에러 발생)
-  // const handleDeleteItem = (item) => {
-  //   if (window.confirm(`${item?.title} 장바구니 상품을 삭제하시겠습니까?`)) {
-  //     let cartProductKey = `cartProduct_${item?._id}`;
-
-  //     // localStorage에서 해당 키의 데이터를 가져오기
-  //     let localStoragedData =
-  //       JSON.parse(localStorage.getItem(cartProductKey)) || [];
-
-  //     // 해당 상품을 배열에서 삭제
-  //     const updatedData = localStoragedData.filter(
-  //       (product) => product._id !== item?._id
-  //     );
-
-  //     // localStorage에서 해당 키의 데이터 업데이트
-  //     localStorage.setItem(cartProductKey, JSON.stringify(updatedData));
-
-  //     // 상태 업데이트
-  //     setSavedItem(updatedData);
-
-  //     alert("삭제되었습니다.");
-  //   }
-  // };
-
   // 쓰레기통 삭제하기 (정상 동작)
   const handleDeleteItem = (item) => {
     if (window.confirm(`${item?.title} 장바구니 상품을 삭제하시겠습니까?`)) {
@@ -128,7 +108,7 @@ const Cart = () => {
       );
       setSavedItem(updatedItems);
 
-      alert("삭제되었습니다.");
+      alert('삭제되었습니다.');
     }
   };
 
@@ -157,7 +137,7 @@ const Cart = () => {
   // 선택 삭제 (정상 동작)
   const selectDelete = () => {
     if (selectedItems.length === 0) {
-      alert("선택된 상품이 없습니다.");
+      alert('선택된 상품이 없습니다.');
       return;
     }
 
@@ -175,7 +155,7 @@ const Cart = () => {
       setSavedItem(updatedItems);
       setSelectedItems([]);
 
-      alert("선택한 상품이 삭제되었습니다.");
+      alert('선택한 상품이 삭제되었습니다.');
     }
   };
 
@@ -212,33 +192,39 @@ const Cart = () => {
   }, [selectedItems, savedItem]);
 
   // 구매하기
-  const handlePurchase = () => {
+  const handlePurchase = async () => {
     if (window.confirm(`선택한 상품을 구매 하시겠습니까?`)) {
-      // 주소와 상세주소가 모두 입력되었는지 확인
       if (!address || !addressDetail) {
-        alert("주소와 상세 주소를 모두 입력하세요");
+        alert('주소와 상세 주소를 모두 입력하세요');
       } else {
-        // 주소와 상세주소가 입력되었고 선택한 상품이 하나 이상일 때만 구매 완료 페이지로 이동
-        navigate("/PurchaseCompleted");
+        const user_id = getCookie('user_id');
+        const data = {
+          id: user_id,
+          items: selectedItems,
+          address,
+          addressDetail,
+          total_price: totalPaymentAmount,
+        };
+        await newOrder(data);
+        navigate('/PurchaseCompleted');
       }
     }
   };
 
   // 구매하기 활성화시 조건
   useEffect(() => {
-    if (selectedItems.length === 0) {
+    if (selectedItems.length < 1) {
       setIsPurchase(false);
     }
     if (selectedItems.length > 0) {
       setIsPurchase(true);
     }
   }, [selectedItems]);
-
   return (
     <>
-      <div className="body__div--cart-div-size">
-        <h3 className="div__h3--cart-title">장바구니</h3>
-        <div className="div__div--cart-content-align">
+      <div className='body__div--cart-div-size'>
+        <h3 className='div__h3--cart-title'>장바구니</h3>
+        <div className='div__div--cart-content-align'>
           <SelectWrapper
             isAllChecked={isAllChecked}
             selectDelete={selectDelete}
@@ -257,21 +243,23 @@ const Cart = () => {
             isPurchase={isPurchase}
           />
         </div>
-        <div className="deliveryadress">
-          <form className="deliveryadress__container">
+        <div className='deliveryadress'>
+          <form className='deliveryadress__container'>
             <input
-              type="text"
-              className="form__label--delivery-address"
-              placeholder="주소를 입력해주세요."
+              type='text'
+              className='form__label--delivery-address'
+              placeholder='주소를 입력해주세요.'
+              required
               value={address}
               onChange={(e) => {
                 setAddress(e.target.value);
               }}
             />
             <input
-              type="text"
-              className="form__label--delivery-address-detail"
-              placeholder="상세 주소를 입력해주세요."
+              type='text'
+              className='form__label--delivery-address-detail'
+              placeholder='상세 주소를 입력해주세요.'
+              required
               value={addressDetail}
               onChange={(e) => {
                 setaddressDetail(e.target.value);

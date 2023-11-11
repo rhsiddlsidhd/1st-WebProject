@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;600;800&family=Open+Sans:wght@400;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;600;800&family=Open+Sans:wght@400;600&display=swap');
 
 /* 공통코드 */
 * {
@@ -7,9 +7,6 @@
   padding: 0;
   margin: 0;
 }
-/* body {
-  height: 1000vh;
-} */
 
 input {
   border: none;
@@ -380,6 +377,12 @@ table {
   border: 1px solid;
 }
 
+.div__div--product-img img {
+  width: 600px;
+  height: 600px;
+  object-fit: cover;
+}
+
 .div__div--info-text {
   margin: 30px 0 0 20px;
 }
@@ -615,6 +618,15 @@ table {
   background: var(--black-color);
   color: var(--white-color);
   margin-top: 203px;
+}
+
+.button__purchaseBtn {
+  width: 350px;
+  height: 60px;
+  border-radius: 10px;
+  background: var(--black-color);
+  color: var(--white-color);
+  margin-top: 10px;
 }
 
 .div__button--purchase-button-style:hover {
@@ -1220,6 +1232,7 @@ table {
 /* ManageProductNew */
 .div__manage-product-add-content {
   margin-top: 150px;
+  margin-bottom: 80px;
   width: 100%;
 }
 
@@ -1449,6 +1462,44 @@ table {
 .div__div--img-number {
   margin: 20px 0 40px;
   color: #9d9d9d;
+}
+
+.div__completeStyle {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.div__completeStyle h2 {
+  display: inline-block;
+}
+
+.div__linkBtn--purchaseCompelete {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.div__linkBtn--purchaseCompelete button {
+  font-family: 'Noto Sans KR', sans-serif;
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 25px;
+  border: 1px solid black;
+  text-align: center;
+  margin: 0 5px;
+}
+
+.div__linkBtn--purchaseCompelete button:hover {
+  border: 1px solid rgb(239, 98, 83);
+  color: rgb(239, 98, 83);
 }
 
 /* 상세이미지*/

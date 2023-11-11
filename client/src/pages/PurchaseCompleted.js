@@ -1,18 +1,23 @@
-import React from "react";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const PurchaseCompleted = () => {
-  const CompleteStyle = {
-    width: "100%",
-    height: "1044px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  };
+  const navigate = useNavigate();
+  const CompleteStyle = {};
 
   return (
     <>
-      <div style={CompleteStyle}>
+      <div className='div__completeStyle'>
         <h2>주문이 완료되었습니다</h2>
+        <br />
+        <div className='div__linkBtn--purchaseCompelete'>
+          <button>
+            <Link to='/'>메인페이지</Link>
+          </button>
+          <button>
+            <Link to='/user/order'>주문 내역</Link>
+          </button>
+        </div>
       </div>
     </>
   );
