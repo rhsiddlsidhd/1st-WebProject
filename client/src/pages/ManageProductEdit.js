@@ -1,65 +1,112 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, state } from 'react-router-dom';
-import { useLocation } from 'react-router';
-import { updateProduct } from '../api/productsAPI';
+import { useLocation, useParams } from 'react-router';
+import { updateProduct, getBrands } from '../api/productsAPI';
+import { getChildCategory, getBigCategory } from '../api/categoryAPI';
+import ManageImage from '../components/ManageImage';
+import baseShoeImage from '../image/base_product_image.png';
+import axios from 'axios';
 
 const ManageProductEdit = () => {
   let { state } = useLocation();
-  const categories = state.categories;
-  const productItem = state.item;
-  const [product, setProduct] = useState(productItem);
+  const { product_id } = useParams();
+  console.log('useLoocation :', state);
+  // const { _id, categories, brands, typeSubCategories, item } = state; //선택된 카테고리
+  // const { _id, item } = state; //선택된 카테고리
+  const [product, setProduct] = useState({});
+  const [brands, setBrands] = useState([]);
+  const [typeSubCategories, setTypeSubCategories] = useState([]);
+
+  useEffect(() => {
+    async function getBrandAndProduct() {
+      const brandList = await getBrands();
+      console.log('brandList-->', brandList);
+      setBrands(brandList);
+      const bigCategory = await getBigCategory();
+      const [typeCategory] = bigCategory.filter(
+        // (category) => category.name === 'TYPE'
+        (category) => category.name === 'WOMAN'
+      );
+      const typeCategories = await getChildCategory(typeCategory._id);
+      setTypeSubCategories(typeCategories);
+      console.log('typeCategories-->', typeCategories);
+    }
+    getBrandAndProduct();
+  }, []);
+
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: `/api/products/${product_id}`,
+    })
+      .then((res) => {
+        const prd = res.data;
+        console.log('---------->', prd);
+        setProduct(prd);
+        console.log('product--------------', product);
+      })
+      .catch((e) => {
+        console.log('~~~~~~~~~', e);
+      });
+  }, []);
 
   const navigate = useNavigate();
   const handleInputChange = (e) => {
     let { name, value } = e.target;
-    if (name === 'sizes') {
-      value = value.trim(' ').split(',');
-      console.log(value);
-    }
     setProduct({ ...product, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('title', product.title);
-    formData.append('model_number', product.model_number);
-    formData.append('type', product.type);
-    formData.append('brand', product.brand);
-    formData.append('price', product.price);
-    formData.append('gender', product.gender);
-    formData.append('sizes', product.sizes);
-
-    for (const pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
+    if (product.title.length < 5) {
+      alert('상품 이름은 5글자 이상 입력하세요');
+      return;
     }
-    // const response = await updateProduct(formData);
+
+    const jsonData = {
+      title: product.title,
+      model_number: product.model_number,
+      type: product.type,
+      // type: '스니커즈',
+      brand: product.brand,
+      price: product.price,
+      gender: product.gender,
+      size: product.size,
+    };
+
+    const response = await updateProduct(product._id, jsonData);
+    alert('상품이 수정되었습니다.');
+    navigate(-1);
     // console.log(response);
   };
 
-  const brandList = ['adclassNameas', 'Boutique', '닥터마틴'];
-  const typeList = ['sneakers', 'Derby'];
+  let imgSrc = '';
+  const baseImgSrc = baseShoeImage;
+  if (product.main_images?.length) {
+    if (product.main_images[0]) {
+      imgSrc = product.main_images[0].url;
+    } else {
+      imgSrc = baseImgSrc;
+    }
+  } else {
+    imgSrc = baseImgSrc;
+  }
+
+  // const brandList = ['adclassNameas', 'Boutique', '닥터마틴'];
+  // const typeList = ['sneakers', 'Derby'];
   return (
     <div className='ManageProductEdit'>
-      <h2>Update Product</h2>
+      <h2>상품 정보 수정</h2>
       <form onSubmit={handleSubmit}>
-        <img
-          className='image'
-          src={
-            product.image
-              ? product.image
-              : process.env.PUBLIC_URL + `/assets/미소.jpg`
-          }
-          alt='상품 이미지'
-        />
+        <img src={imgSrc} alt='상품 이미지' />
         <div>
           <label htmlFor='title'>제품명</label>
           <input
             type='text'
             className='title'
             name='title'
-            value={product.title}
+            value={product?.title}
             onChange={handleInputChange}
           />
         </div>
@@ -69,7 +116,7 @@ const ManageProductEdit = () => {
             type='text'
             className='model_number'
             name='model_number'
-            value={product.model_number}
+            value={product?.model_number}
             onChange={handleInputChange}
           />
         </div>
@@ -78,12 +125,13 @@ const ManageProductEdit = () => {
           <select
             className='type'
             name='type'
-            value={product.type}
+            value={product?.type}
             onChange={handleInputChange}
           >
-            {typeList.map((type, classNamex) => (
-              <option value={type} key={classNamex}>
-                {type}
+            <option>타입 선택</option>
+            {typeSubCategories.map((type, idx) => (
+              <option value={type.name} key={idx}>
+                {type.name}
               </option>
             ))}
           </select>
@@ -92,14 +140,16 @@ const ManageProductEdit = () => {
         <div>
           <label htmlFor='brand'>브랜드:</label>
           <select
-            className='brand'
+            id='brand'
             name='brand'
-            value={product.brand}
+            value={product?.brand}
             onChange={handleInputChange}
           >
-            {brandList.map((brand, classNamex) => (
-              <option value={brand} key={classNamex}>
-                {brand}
+            <option>브랜드를 선택</option>
+
+            {brands.map((brand, idx) => (
+              <option value={brand._id} key={idx}>
+                {brand.name}
               </option>
             ))}
           </select>
@@ -110,7 +160,7 @@ const ManageProductEdit = () => {
             type='text'
             className='price'
             name='price'
-            value={product.price}
+            value={product?.price}
             onChange={handleInputChange}
           />
         </div>
@@ -119,32 +169,36 @@ const ManageProductEdit = () => {
           <select
             className='type'
             name='gender'
-            value={product.gender}
+            value={product?.gender}
             onChange={handleInputChange}
           >
-            <option value={'man'}>남성</option>
-            <option value={'woman'}>여성</option>
+            <option>성별을 선택하세요</option>
+            <option value={'BOTH'}>모두</option>
+            <option value={'MALE'}>남성</option>
+            <option value={'FEMALE'}>여성</option>
           </select>
         </div>
         <div>
-          <label htmlFor='sizes'>사이즈</label>
+          <label htmlFor='size'>사이즈</label>
           <input
             type='text'
-            className='sizes'
-            name='sizes'
-            value={product.sizes}
+            className='size'
+            name='size'
+            value={product?.size}
             onChange={handleInputChange}
           />
         </div>
         <div className='control_box'>
           <button
-            onClick={() => navigate(`/manageproducts`, { state: categories })}
+            onClick={() => navigate(`/manageproducts`)}
+            // onClick={() => navigate(`/manageproducts`, { state: categories })}
           >
             수정 취소
           </button>
           <button type='submit'>상품 수정</button>
         </div>
       </form>
+      <ManageImage prd={product}></ManageImage>
     </div>
   );
 };

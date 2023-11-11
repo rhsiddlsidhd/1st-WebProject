@@ -17,6 +17,10 @@ const ProductList = () => {
   const [total, setTotal] = useState(1);
   let queryString;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
+
   const { state } = useLocation();
   useEffect(() => {
     if (state) setSelectedCategories(state);

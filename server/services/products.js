@@ -46,7 +46,7 @@ const addMainImagesToProduct = async (product, images) => {
 };
 
 const addDetailImagesToProduct = async (product, images) => {
-  product.detail_images = images;
+  product.detail_images = [...product.detail_images, ...images];
   const result = await product.save();
   return result;
 };
@@ -56,28 +56,28 @@ const deleteMainImagesToProduct = async (product, images) => {
   product.main_images = product.main_images.filter((item) => {
     return !images.includes(item.image_id);
   });
-  await product.save();
+  let result_product = await product.save();
 
   for (let img of images) {
     let iresult = await Image.deleteOne({ image_id: img });
     result.push(iresult);
   }
 
-  return result;
+  return result_product;
 };
 const deleteDetailImagesToProduct = async (product, images) => {
   let result = [];
   product.detail_images = product.detail_images.filter((item) => {
     return !images.includes(item.image_id);
   });
-  await product.save();
+  let result_product = await product.save();
 
   for (let img of images) {
     let iresult = await Image.deleteOne({ image_id: img });
     result.push(iresult);
   }
 
-  return result;
+  return result_product;
 };
 
 const deleteAllMainImagesToProduct = async (product) => {

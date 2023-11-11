@@ -5,6 +5,7 @@ import { getProducts, getBrands, deleteProduct } from '../api/productsAPI';
 import ManageProduct from '../components/ManageProduct';
 import CategoryBar from '../components/CategoryBar';
 import Pagination from '../components/Pagination';
+
 import {
   getBigCategory,
   // getCategory,
@@ -23,6 +24,10 @@ const ManageProducts = () => {
 
   let queryString;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
+
   const paginate = (pageNumber) => {
     setPage(pageNumber);
   };
@@ -40,7 +45,7 @@ const ManageProducts = () => {
     const bigCategory = await getBigCategory();
     const [typeCategory] = bigCategory.filter(
       // (category) => category.name === 'TYPE'
-      (category) => category.name === 'MAN'
+      (category) => category.name === 'WOMAN'
     );
     const typeCategories = await getChildCategory(typeCategory._id);
     setTypeSubCategories(typeCategories);
@@ -91,9 +96,15 @@ const ManageProducts = () => {
       getProductList();
     }
   };
-  const handleEdit = (item, categories) => {
-    navigate(`/productedit/${item.id}`, {
-      state: { categories: categories, item: item },
+  const handleEdit = (product, categories) => {
+    navigate(`/productedit/${product._id}`, {
+      state: {
+        categories: categories,
+        item: product,
+        categories: selectedCategories,
+        brands: brands,
+        typeSubCategories,
+      },
     });
   };
 
@@ -130,10 +141,10 @@ const ManageProducts = () => {
             </button>
           </Link>
         </div>
-        <CategoryBar
+        {/* <CategoryBar
           selectedCategories={selectedCategories}
           handleCheckboxChange={handleCheckboxChange}
-        />
+        /> */}
 
         <div>
           <ManageProduct

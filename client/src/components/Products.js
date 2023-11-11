@@ -26,7 +26,10 @@ const Products = ({
       {products.map((product) => (
         <li key={product.id} className={`list-group ${productStyle2}`}>
           <img
-            src={product.main_images[0]?.url ?? ''}
+            src={
+              product.main_images[0]?.url ??
+              process.env.PUBLIC_URL + `/images/기본제품이미지.jpg`
+            }
             className='li__img--product-image'
           />
           <div className='li__img--product-brand'>
