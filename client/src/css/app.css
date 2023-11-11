@@ -1406,3 +1406,41 @@ table {
 .ManageProductEdit {
   margin-top: 80px;
 }
+
+/* ManageProductEdit */
+.div__form--product-edit-form {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* ManageImage */
+.div__input--file-search {
+  width: 200px;
+}
+
+.div__modal--file-search {
+  width: 100px;
+  border: 1px solid;
+}
+
+.div__button--cart-button-up,
+.div__button--cart-button-down {
+  margin: 0 5px;
+  font-size: 20px;
+}
+
+.div__button--cart-button-delete {
+  margin-left: 5px;
+}
+
+.div__button--main-file-add {
+  border: 1px solid;
+  padding: 7px 15px;
+}
+
+.div__button--image-save {
+  width: 200px;
+  height: 200px;
+  border: 1px solid;
+}

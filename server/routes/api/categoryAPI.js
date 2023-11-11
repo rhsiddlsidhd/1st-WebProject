@@ -20,7 +20,7 @@ router.get(
 
 //특정 카테고리 정보 불러오기
 router.get(
-  '/:id',
+  '/1/:id',
   validate(categoryValidation.getCategory),
   categoryController.getCategory
 );
