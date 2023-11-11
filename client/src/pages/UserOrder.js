@@ -59,12 +59,12 @@ function UserOrder() {
             userOrderList.map((order) => {
               return (
                 <div key={order['_id']} className='div__orderList--order'>
-                  {/* <div className='div__orderList--order-column'>
+                  <div className='div__orderList--order-column'>
                     {console.log(`전체 ${userOrderList}`)}
                     {console.log('sss', typeof order)}
                     <img src={order.imgUrl} />
                     zz{`order['imgUrl']`}zz
-                  </div> */}
+                  </div>
                   <div className='div__orderList--order-column'>
                     {order['date']}
                   </div>
