@@ -1191,6 +1191,7 @@ table {
 .div__button--manege-products-button {
   border: 1px solid;
   padding: 10px 20px;
+  margin-bottom: 60px;
 }
 
 .button__link--category-button {
@@ -1269,6 +1270,7 @@ table {
 
 .table__tbody--table-content td {
   height: 100px;
+  padding: 10px 0;
 }
 
 .table__tbody--table-content tr {
@@ -1279,13 +1281,17 @@ table {
 .div__manage-product-add-content {
   margin-top: 150px;
   width: 100%;
-  height: 600px;
+  height: 1200px;
 }
 
 .div__manage-product-add-content-wrap {
   width: 90%;
   margin: 0 auto;
   text-align: center;
+}
+
+.div__h2--product-edit-title {
+  margin-bottom: 60px;
 }
 
 .form__label--input-title-hidden {
@@ -1427,11 +1433,12 @@ table {
 .div__button--cart-button-up,
 .div__button--cart-button-down {
   margin: 0 5px;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .div__button--cart-button-delete {
   margin-left: 5px;
+  font-size: 16px;
 }
 
 .div__button--main-file-add {
@@ -1440,7 +1447,67 @@ table {
 }
 
 .div__button--image-save {
-  width: 200px;
-  height: 200px;
+  width: 40%;
+  height: 50px;
   border: 1px solid;
+  border-radius: 10px;
+  margin-top: 30px;
+  color: var(--white-color);
+  background: var(--black-color);
+}
+
+.div__button--image-save:hover {
+  color: var(--black-color);
+  background: var(--white-color);
+  margin-bottom: 100px;
+}
+
+.form__img--image-size {
+  width: 370px;
+  height: 370px;
+  border-radius: 5px;
+}
+
+.div__div--file-upload-wrap {
+  margin-top: 40px;
+}
+
+.div__div--file-upload-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.div__input--upload-name {
+  width: 550px;
+  height: 38px;
+  line-height: 38px;
+  border: 1px solid;
+  padding-left: 10px;
+  margin-right: 10px;
+}
+
+.div__button---file-add {
+  border: 1px solid;
+  padding: 10px 25px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.div__button---file-add:hover {
+  color: var(--white-color);
+  background: var(--black-color);
+}
+
+.div__span--uploaded-url {
+  border: 1px solid;
+  width: 500px;
+  height: 38px;
+  padding: 8px 0 8px 10px;
+  line-height: 38px;
+  margin-right: 8px;
+}
+
+.div__div--img-number {
+  margin: 20px 0 40px;
+  color: #9d9d9d;
 }

@@ -195,8 +195,13 @@ const ManageImage = ({ handler }) => {
       <Modal isOpen={modalIsOpen} style={customModalStyles} ariaHideApp={true}>
         {modalText}
       </Modal>
-      <div className='fdiv__div--file-search'>
-        <input className='upload-name' placeholder='메인이미지' readOnly />
+      <div className='div__div--file-upload-wrap'>
+        <h4 className='div__div--file-upload-title'>이미지 업로드</h4>
+        <input
+          className='div__input--upload-name'
+          placeholder='메인이미지'
+          readOnly
+        />
         <label
           htmlFor='file'
           onClick={handleAddImages('main')}
@@ -223,16 +228,7 @@ const ManageImage = ({ handler }) => {
             {mainImages?.map((img, index) => {
               return (
                 <div>
-                  <div className='div__div--img-number'>
-                    {index + 1}개의 이미지
-                  </div>
-                  <span className='uploaded-name'>{img.url}</span>
-                  {/* <img
-                    src={img.url}
-                    alt=''
-                    srcset=''
-                    class='image-manager__main_image'
-                  /> */}
+                  <span className='div__span--uploaded-url'>{img.url}</span>
                   <span>
                     <button
                       className='btn-up'
@@ -266,6 +262,15 @@ const ManageImage = ({ handler }) => {
                       />
                     </button>
                   </span>
+                  <div className='div__div--img-number'>
+                    총 {index + 1}개의 메인이미지
+                  </div>
+                  {/* <img
+                    src={img.url}
+                    alt=''
+                    srcset=''
+                    class='image-manager__main_image'
+                  /> */}
                 </div>
               );
             })}
@@ -273,7 +278,11 @@ const ManageImage = ({ handler }) => {
         </div>
       </div>
       <div className='filebox'>
-        <input className='upload-name' placeholder='상세이미지' readOnly />
+        <input
+          className='upload-name div__input--upload-name'
+          placeholder='상세이미지'
+          readOnly
+        />
         <label htmlFor='file' onClick={handleAddImages('main')}></label>
         <input
           type='file'
@@ -294,10 +303,7 @@ const ManageImage = ({ handler }) => {
             {detailImages?.map((img, index) => {
               return (
                 <div>
-                  <div className='div__div--img-number'>
-                    {index + 1}개의 이미지
-                  </div>
-                  <span className='uploaded-name'>{img.url}</span>
+                  <span className='div__span--uploaded-url'>{img.url}</span>
 
                   {/* <img
                     src={img.url}
@@ -338,6 +344,9 @@ const ManageImage = ({ handler }) => {
                       />
                     </button>
                   </span>
+                  <div className='div__div--img-number'>
+                    총 {index + 1}개의 상세이미지
+                  </div>
                 </div>
               );
             })}

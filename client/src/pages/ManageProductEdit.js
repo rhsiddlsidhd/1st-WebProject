@@ -98,9 +98,13 @@ const ManageProductEdit = () => {
   return (
     <div className='div__manage-product-add-content'>
       <div className='div__manage-product-add-content-wrap'>
-        <h2>상품 정보 수정</h2>
+        <h2 className='div__h2--product-edit-title'>상품 정보 수정</h2>
         <form onSubmit={handleSubmit} className='div__form--product-edit-form'>
-          <img src={imgSrc} alt='상품 이미지' />
+          <img
+            src={imgSrc}
+            alt='상품 이미지'
+            className='form__img--image-size'
+          />
           <div className='div__div--input-list-wrap'>
             <div>
               <label
