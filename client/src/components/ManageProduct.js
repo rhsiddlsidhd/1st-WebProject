@@ -1,4 +1,6 @@
 import React, { memo } from 'react';
+import baseProductImgage from '../image/base_product_image.png';
+// import logoImgage from '../../image/logo.png';
 const ManageProduct = ({
   categories,
   products,
@@ -11,6 +13,9 @@ const ManageProduct = ({
       .filter((brand) => brand._id === brandId)
       .map((brand) => brand.name);
   };
+
+  // console.log(products[0].main_images[0].url);
+  console.log('products -->', products);
   return (
     <table className='div__product-info-list'>
       <thead className='table__thead--table-content'>
@@ -24,30 +29,38 @@ const ManageProduct = ({
         </tr>
       </thead>
       <tbody className='table__tbody--table-content'>
-        {products.map((item) => (
-          <tr key={item.id}>
-            <td>
-              <img
-                className='image'
-                src={process.env.PUBLIC_URL + `/assets/미소.jpg`}
-                width='100px'
-              />
-            </td>
-            <td className='div__span--item-title'>{item.title}</td>
-            <td className='div__span--item-price'>{item.price}</td>
-            <td className='div__span--item-brand'>
-              {getBrandName(item.brand)}
-            </td>
-            <td>
-              <button onClick={() => handleEdit(item, categories)}>
-                수정하기
-              </button>
-            </td>
-            <td>
-              <button onClick={() => handleRemove(item)}>삭제하기</button>
-            </td>
-          </tr>
-        ))}
+        {products.map((item) => {
+          const imgSrc =
+            item.main_images.length && item.main_images[0]
+              ? item.main_images[0].url
+              : baseProductImgage;
+          return (
+            <tr key={item.id}>
+              <td>
+                <img className='image' src={imgSrc} width='100px' />
+              </td>
+              <td className='div__span--item-title'>{item.title}</td>
+              <td className='div__span--item-price'>{item.price}</td>
+              <td className='div__span--item-brand'>
+                {getBrandName(item.brand)}
+              </td>
+              <td>
+                <button
+                  onClick={() => {
+                    const product = item;
+                    console.log('product :', product);
+                    handleEdit(product, categories);
+                  }}
+                >
+                  수정하기
+                </button>
+              </td>
+              <td>
+                <button onClick={() => handleRemove(item)}>삭제하기</button>
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

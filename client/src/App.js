@@ -46,12 +46,16 @@ function App() {
         <Route path='/category' element={<Category />}></Route>
         <Route path='/manageproducts' element={<ManageProducts />}></Route>
         <Route path='/productnew' element={<ManageProductNew />}></Route>
-        <Route path='/productedit' element={<ManageProductEdit />}></Route>
-        <Route path='/manageorder' element={<ManageOrder />}></Route>
-
-        {/* 사용자페이지 */}
+        <Route path='/plist' element={<ProductList />}></Route>
+        <Route
+          path='/productedit/:product_id'
+          element={<ManageProductEdit />}
+        ></Route>
+        <Route path='/plist/:listType' element={<ProductList />}></Route>
         <Route path='/user/order' element={<UserOrder />}></Route>
         <Route path='/user/:id' element={<Userinfo />}></Route>
+        {/* <Route path='/plist/woman' element={<ProductList />}></Route>
+        <Route path='/plist/man' element={<ProductList />}></Route> */}
       </Routes>
       <Footer />
     </Router>

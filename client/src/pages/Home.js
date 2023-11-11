@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import visualImage1 from '../image/visualImage1.jpg';
+import visualImage1 from '../image/visualImage1.png';
 import { getBrands, getProducts } from '../api/productsAPI';
 import Products from '../components/Products';
 import trendingimage from '../image/trendingimage.png';
@@ -44,10 +44,19 @@ function Home() {
         {/* 베스트 상품 영역 */}
         <div className='div__div--best'>
           <h2 className='div__h2--title'>BEST</h2>
-          <Products products={products.slice(0, 5)} brands={brands} />
+          <Products
+            products={products.slice(0, 5)}
+            brands={brands}
+            productStyle='home-product'
+          />
           <br />
           <br />
-          <Products products={products.slice(0, 5)} brands={brands} />
+          <Products
+            products={products.slice(0, 5)}
+            brands={brands}
+            itemClass='home-product-item'
+            productStyle='home-product'
+          />
         </div>
         {/* Trending */}
         <div className='div__div--trending'>
@@ -65,10 +74,18 @@ function Home() {
         <div className='div__div--new'>
           {/* 신제품 영역 */}
           <h2 className='div__h2--new-title'>NEW</h2>
-          <Products products={products.slice(0, 5)} brands={brands} />
+          <Products
+            products={products.slice(0, 5)}
+            brands={brands}
+            productStyle='home-product'
+          />
           <br />
           <br />
-          <Products products={products.slice(0, 5)} brands={brands} />
+          <Products
+            products={products.slice(0, 5)}
+            brands={brands}
+            productStyle='home-product'
+          />
         </div>
       </div>
     </div>
