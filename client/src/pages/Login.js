@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getUser } from '../api/authAPI';
@@ -11,56 +11,41 @@ function Login() {
   const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
-  // 저장된 유저 아이디, 비밀번호 배열
-  const [userIdList, setUserIdList] = useState([]);
-  const [userPasswordList, setUserPasswordList] = useState([]);
+  // 이메일 형식 체크
+  const emailRegEx =
+    /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 
-  // 로그인 버튼 클릭시 실행되는 함수
-  const loginButtonClick = () => {
-    if (
-      doubleCheckId(userId)
-      // && doubleCheckPassword(userPassword)
-    ) {
-      alert('로그인에 성공하였습니다.');
-      navigate('/');
+  const emailCheck = (userId) => {
+    if (userId === 'admin') {
+      return true;
+    }
+    if (emailRegEx.test(userId)) {
+      return true;
+    } else {
+      alert('이메일 형식이 아닙니다. 다시 입력해주세요.');
+      return false;
     }
   };
 
   // 유저 정보 Id(email) get
-  useEffect(() => {
-    getUser()
-      .then((data) => {
-        setUserIdList(data.id); // 사용자들의 아이디를 불러옴
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  const signIn = async () => {
+    if (emailCheck(userId)) {
+      getUser({ email: userId, password: userPassword }).then((data) => {
+        if (data === 'no user') {
+          alert('존재하지 않는 아이디입니다. 회원가입을 해주세요.');
+          return;
+        } else if (data === 'INCORRECT') {
+          alert('비밀번호를 확인해주세요');
+          return;
+        }
 
-  // 유저 정보 Id 존재 여부 확인
-  const doubleCheckId = (userIdList, userId) => {
-    if (userIdList.includes(userId)) {
-      console.log({ userId });
-    } else {
-      alert('존재하지 않는 아이디입니다.');
+        console.log(data);
+
+        alert('로그인에 성공하였습니다.');
+        navigate('/');
+      });
     }
   };
-  console.log();
-
-  // // 유저 정보 password get
-  useEffect(() => {
-    getUser()
-      .then((data) => {
-        setUserPasswordList(data.password);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
-  // const doubleCheckPassword = (userPassword) => {
-
-  // };
 
   return (
     <div className='body__div--login-content'>
@@ -89,10 +74,10 @@ function Login() {
         />
         <br />
         <input
-          type='submit'
+          type='button'
           className='form__input--login-button'
           value='로그인'
-          onClick={loginButtonClick}
+          onClick={signIn}
         />
         <Link to='/auth/join'>
           <button type='button' className='form__input--sign-up-button'>

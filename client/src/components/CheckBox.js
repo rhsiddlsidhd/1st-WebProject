@@ -22,7 +22,7 @@ const CheckBox = ({
 }) => {
   return (
     <div>
-      <span>대분류: {type}</span>
+      <span>{type}</span>
       {category.map((item) => (
         <div key={item._id}>
           <label>

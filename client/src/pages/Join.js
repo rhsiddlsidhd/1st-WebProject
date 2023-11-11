@@ -6,7 +6,7 @@ function Join() {
   // 데이터 변수
   const [userName, setUserName] = useState('');
   const [userFirstPassword, setUserFirstPassword] = useState('');
-  const [userLastPassword, setUserLastPassword] = useState(false);
+  const [userLastPassword, setUserLastPassword] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const navigate = useNavigate();
 
@@ -35,6 +35,8 @@ function Join() {
     const result = await postUser(newUser);
     if (!result) {
       alert('회원가입에 실패했습니다.');
+    } else if (result === 'EXIST') {
+      alert('이미 존재하는 아이디 입니다. 다른 아이디를 사용해주세요.');
     } else {
       alert('회원가입 성공^ㅁ^');
       navigate('/auth/login');
@@ -95,7 +97,6 @@ function Join() {
           onChange={(e) => setUserEmail(e.target.value)}
           required
         />
-        {console.log(userEmail)}
         <br />
         {/* 비밀번호 작성 */}
         <label htmlFor='password' className='form__label--text-hidden'>
@@ -109,7 +110,6 @@ function Join() {
           onChange={(e) => setUserFirstPassword(e.target.value)}
           required
         />
-        {console.log(userFirstPassword)}
         <br />
         {/* 비밀번호 재입력 */}
         <label htmlFor='confirm-password' className='form__label--text-hidden'>
@@ -122,7 +122,6 @@ function Join() {
           onChange={(e) => setUserLastPassword(e.target.value)}
           required
         />
-        {console.log(userLastPassword)}
         <br />
         {/* 이름 작성 */}
         <label htmlFor='name' className='form__label--text-hidden'>
@@ -136,8 +135,6 @@ function Join() {
           onChange={(e) => setUserName(e.target.value)}
           required
         />
-        {console.log(userName)}
-
         <br />
         <input
           type='button'

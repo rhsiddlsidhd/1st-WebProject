@@ -9,19 +9,28 @@ exports.login = async (req, res, next) => {
   try {
     const user = await authService.login(req.body);
 
+    if (user === 'INCORRECT') {
+      res.json('INCORRECT');
+      return;
+    }
+
+    if (user === 'User is not Exist.') {
+      res.status(404).json(user);
+      return;
+    }
     logger.info(`Login Success : ${user.email}`);
 
     //UserToken 생성 후 response 헤더 cookie에 토큰 값 저장
     setUserToken(res, user.email);
+    res.cookie('user_id', user.email);
 
     res.status(200).json({
       message: 'Login Success',
-      info: '성공 후 메인 페이지 화면으로 리다이렉트 할 예정',
+      id: user.email,
     });
-    // res.redirect('/');
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Login is FAILED');
+    next(e);
   }
 };
 
@@ -33,6 +42,7 @@ exports.logout = async (req, res) => {
 
   try {
     res.clearCookie('token');
+    res.clearCookie('user_id');
     // res.clearCookie('token').redirect('/login');
 
     res.status(200).json({
@@ -40,8 +50,8 @@ exports.logout = async (req, res) => {
       info: '성공 후 메인 로그인 화면으로 리다이렉트 할 예정',
     });
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Logout is FAILED');
+    next(e);
   }
 };
 
@@ -52,6 +62,7 @@ exports.join = async (req, res, next) => {
 
     if (user === 'EXIST') {
       res.json('EXIST');
+      return;
     }
 
     //UserToken 생성 후 response 헤더 cookie에 토큰 값 저장
@@ -64,7 +75,7 @@ exports.join = async (req, res, next) => {
       message: '성공 후 메인 페이지 또는 로그인 화면으로 리다이렉트 할 예정',
     });
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Join is FAILED');
+    next(e);
   }
 };

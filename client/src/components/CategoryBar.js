@@ -24,6 +24,8 @@ const CategoryBar = ({
     getParentCategories();
   }, []);
 
+  console.log('소분류불러오기전 대분류확인');
+  console.log(parentCategory);
   const getChildCategories = useCallback(
     async (parentCategory) => {
       const subCategoryWithParent = await parentCategory.map(
@@ -37,10 +39,10 @@ const CategoryBar = ({
       setSubCategory(...subCategory, res);
 
       const womanId = parentCategory
-        .filter((parentCategory) => parentCategory.name === '여성')
+        .filter((parentCategory) => parentCategory.name === 'WOMAN')
         .map((parentCategory) => parentCategory.id);
       const manId = parentCategory
-        .filter((parentCategory) => parentCategory.name === '남성')
+        .filter((parentCategory) => parentCategory.name === 'MAN')
         .map((parentCategory) => parentCategory.id);
       if (listType === 'woman')
         setSelectedCategories(...selectedCategories, womanId);
@@ -57,18 +59,17 @@ const CategoryBar = ({
   subCategory.map((item) => console.log(item.data));
 
   const getSpecificCateory = (allSubCategory) => {
-    console.log(allSubCategory);
     if (listType === 'woman')
       return allSubCategory.filter(
-        (cate) => cate.type === '여성' || cate.type === '브랜드'
+        (cate) => cate.type === 'WOMAN' || cate.type === 'BRAND'
       );
     if (listType === 'man')
       return allSubCategory.filter(
-        (cate) => cate.type === '남성' || cate.type === '브랜드'
+        (cate) => cate.type === 'MAN' || cate.type === 'BRAND'
       );
     if (listType === 'all')
       return allSubCategory.filter(
-        (cate) => cate.type === '타입' || cate.type === '브랜드'
+        (cate) => cate.type === 'TYPE' || cate.type === 'BRAND'
       );
     else return allSubCategory;
   };

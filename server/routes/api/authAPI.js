@@ -9,7 +9,7 @@ const validate = require('../../middlewares/vaildate');
 const authValidation = require('../../validation/authValidation');
 
 // 로그인
-router.get('/login', validate(authValidation.login), authController.login);
+router.post('/login', validate(authValidation.login), authController.login);
 
 //로그아웃
 router.get('/logout', authController.logout);

@@ -64,7 +64,8 @@ const updateCategory = async (categoryBody) => {
     );
   }
 
-  const _id = data._id;
+  const _id = data.id;
+  const name = data.name;
   const parentCategory = data.parentCategory;
   const categoryType = data.categoryType;
 
@@ -74,7 +75,7 @@ const updateCategory = async (categoryBody) => {
 
   const updatedCategory = await Category.updateOne(
     { _id },
-    { parentCategory, categoryType }
+    { $set: { name, parentCategory, categoryType } }
   ).exec();
 
   return updatedCategory;

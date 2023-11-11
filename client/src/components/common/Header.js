@@ -1,184 +1,139 @@
-import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import logoImgage from '../../image/logo.png';
 
-const Header = () => {
-  const [expanded, setExpanded] = useState(false);
+import { logout } from '../../api/authAPI';
+import { getBigCategory } from '../../api/categoryAPI';
+import { isTokenEixst, removeCookie, getCookie } from '../../utils/cookieUtils';
 
-  const handleMouseEnter = () => {
-    setExpanded(true);
+const Header = () => {
+  const navigate = useNavigate();
+  // 대분류 목록 불러오기
+  const [bigCategoryList, setBigCategoryList] = useState([]);
+  const [isAdmin, checkAdmin] = useState(false);
+  const [isLogin, setLoginStatus] = useState(false);
+
+  useEffect(() => {
+    refresh();
+    if (getCookie('user_id') === 'admin') {
+      checkAdmin(true);
+    }
+  }, []);
+
+  const handlingLogin = () => {
+    setLoginStatus(isTokenEixst('token'));
   };
 
-  const handleMouseLeave = () => {
-    setExpanded(false);
+  const refresh = () => {
+    getBigCategory().then((response) => {
+      setBigCategoryList(response);
+    });
+    handlingLogin();
+  };
+
+  const clickLogoutBtn = () => {
+    if (window.confirm('로그아웃을 하시겠습니까?')) {
+      logout();
+      alert('로그아웃 되었습니다.');
+
+      setLoginStatus(false);
+      removeCookie('user_id');
+      navigate('/');
+    } else {
+      alert('취소되었습니다.');
+    }
   };
 
   return (
-    <header className={`body__header ${expanded ? 'expanded' : ''}`}>
+    <header className='body__header'>
       <div className='header__div--header-wrap'>
         <h1 className='header__h1--logo'>
           <Link to='/'>
             <img src={logoImgage} alt='logo' />
           </Link>
         </h1>
-        <nav
-          className={`header__nav ${expanded ? 'expanded' : ''}`}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
+        <nav className='header__nav'>
           <ul className='nav__ul--gnb'>
-            <li>
-              <Link to='/list' className='ul__li--main-menu'>
-                BRAND
-              </Link>
-              <ul>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    런닝화
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    스니커즈
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    샌들
-                  </Link>
-                </li>
-              </ul>
+            <li className='nav__ul--gnb-list'>
+              <Link to='/plist/all'>SHOES</Link>
             </li>
-            <li>
-              <Link to='/list' className='ul__li--main-menu'>
-                SHOES
-              </Link>
-              <ul>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    나이키
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    아디다스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    컨버스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    휠라
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    라코스테
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <Link to='/list' className='ul__li--main-menu'>
+            <li className='nav__ul--gnb-list'>
+              <Link to='/plist/man?category_id=654d9b796935839734182b33&page=1'>
                 MAN
               </Link>
-              <ul>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    나이키
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    아디다스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    컨버스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    휠라
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    라코스테
-                  </Link>
-                </li>
-              </ul>
             </li>
-            <li>
-              <Link to='/list' className='ul__li--main-menu'>
+            <li className='nav__ul--gnb-list'>
+              <Link to='/plist/woman?category_id=654d9b7e6935839734182b3c&page=1'>
                 WOMAN
               </Link>
-              <ul>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    나이키
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    아디다스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    컨버스
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    휠라
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/' className='ul__li--sub-menu'>
-                    라코스테
-                  </Link>
-                </li>
-              </ul>
             </li>
           </ul>
         </nav>
         <div className='header__div--icon'>
-          <form>
-            <input
-              type='text'
-              className='form__input--search-text'
-              placeholder='상품을 검색해주세요.'
-            />
-            <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              className='form__icon--search-button'
-            />
-          </form>
-          <button>
-            <Link to='/auth/login'>
-              <FontAwesomeIcon
-                icon={faUser}
-                className='div__button--user-button'
-              />
-            </Link>
-          </button>
-          <button>
-            <Link to='/cart'>
-              <FontAwesomeIcon
-                icon={faHeart}
-                className='div__button--cart-button'
-              />
-            </Link>
-          </button>
+          {isLogin ? (
+            <>
+              {isAdmin ? (
+                <button>
+                  <Link to='/manageproducts'>
+                    <FontAwesomeIcon
+                      icon={faUser}
+                      className='div__button--user-button'
+                    />
+                  </Link>
+                </button>
+              ) : (
+                <>
+                  <button>
+                    <Link to='/user/order'>
+                      <FontAwesomeIcon
+                        icon={faUser}
+                        className='div__button--user-button'
+                      />
+                    </Link>
+                  </button>
+                  <button>
+                    <Link to='/cart'>
+                      <FontAwesomeIcon
+                        icon={faHeart}
+                        className='div__button--cart-button'
+                      />
+                    </Link>
+                  </button>
+                </>
+              )}
+              <button onClick={clickLogoutBtn}>
+                <FontAwesomeIcon
+                  icon={faArrowRightFromBracket}
+                  className='div__button--logout-button'
+                />
+              </button>
+            </>
+          ) : (
+            <>
+              <button>
+                <Link to='/auth/login'>
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    className='div__button--user-button'
+                  />
+                </Link>
+              </button>
+              <button>
+                <Link to='/'>
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    className='div__button--cart-button'
+                  />
+                </Link>
+              </button>
+              <div></div>
+            </>
+          )}
         </div>
       </div>
     </header>

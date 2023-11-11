@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getProducts, getBrands, deleteProduct } from '../api/productsAPI';
 import ManageProduct from '../components/ManageProduct';
 import CategoryBar from '../components/CategoryBar';
 import Pagination from '../components/Pagination';
+
 import {
   getBigCategory,
   // getCategory,
@@ -22,6 +24,10 @@ const ManageProducts = () => {
 
   let queryString;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
+
   const paginate = (pageNumber) => {
     setPage(pageNumber);
   };
@@ -38,7 +44,8 @@ const ManageProducts = () => {
 
     const bigCategory = await getBigCategory();
     const [typeCategory] = bigCategory.filter(
-      (category) => category.name === '타입'
+      // (category) => category.name === 'TYPE'
+      (category) => category.name === 'WOMAN'
     );
     const typeCategories = await getChildCategory(typeCategory._id);
     setTypeSubCategories(typeCategories);
@@ -89,48 +96,70 @@ const ManageProducts = () => {
       getProductList();
     }
   };
-  const handleEdit = (item, categories) => {
-    navigate(`/productedit/${item.id}`, {
-      state: { categories: categories, item: item },
+  const handleEdit = (product, categories) => {
+    navigate(`/productedit/${product._id}`, {
+      state: {
+        categories: categories,
+        item: product,
+        categories: selectedCategories,
+        brands: brands,
+        typeSubCategories,
+      },
     });
   };
 
   return (
-    <div className='ManageProducts'>
-      <h2>List</h2>
-      <p>관리자 제품관리 리스트입니다</p>
-      <h4>{total}개의 상품이 있습니다</h4>
-      <div>
-        <button
-          onClick={() =>
-            navigate('/productnew', {
-              state: {
-                categories: selectedCategories,
-                brands: brands,
-                typeSubCategories,
-              },
-            })
-          }
-        >
-          상품추가
-        </button>
-      </div>
-      <CategoryBar
-        selectedCategories={selectedCategories}
-        handleCheckboxChange={handleCheckboxChange}
-      />
+    <div className='div__manage-products-content'>
+      <div className='div__manage-products-content-wrap'>
+        <h2 className='div__manage-products-content-title'>상품관리</h2>
+        <h4>{total}개의 상품이 있습니다</h4>
+        <div className='div__button--manege-products-button-wrap'>
+          <button
+            className='div__button--manege-products-button'
+            onClick={() =>
+              navigate('/productnew', {
+                state: {
+                  categories: selectedCategories,
+                  brands: brands,
+                  typeSubCategories,
+                },
+              })
+            }
+          >
+            상품추가
+          </button>
+          <Link to='/category'>
+            <button
+              Link
+              to='/category'
+              className='div__button--manege-products-button'
+            >
+              카테고리 관리
+            </button>
+          </Link>
+        </div>
+        {/* <CategoryBar
+          selectedCategories={selectedCategories}
+          handleCheckboxChange={handleCheckboxChange}
+        /> */}
 
-      <div>
-        <ManageProduct
-          products={products}
-          categories={selectedCategories}
-          getProductList={getProductList}
-          handleEdit={handleEdit}
-          handleRemove={handleRemove}
-          brands={brands}
+        <div>
+          <ManageProduct
+            products={products}
+            categories={selectedCategories}
+            getProductList={getProductList}
+            handleEdit={handleEdit}
+            handleRemove={handleRemove}
+            brands={brands}
+          />
+        </div>
+        <Pagination
+          setPage={paginate}
+          limit={limit}
+          total={total}
+          page={page}
         />
       </div>
-      <Pagination setPage={paginate} limit={limit} total={total} page={page} />
     </div>
   );
 };

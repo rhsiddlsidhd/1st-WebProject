@@ -18,8 +18,8 @@ exports.getCategory = async (req, res, next) => {
 
     res.json(data);
   } catch (e) {
-    next(e);
     res.status(404).json('[ERROR] Get Category is Failed');
+    next(e);
   }
 };
 
@@ -41,8 +41,8 @@ exports.createCategory = async (req, res, next) => {
     const data = await categoryService.createCategory(req.body);
     res.status(201).json(data);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Category create is FAILED');
+    next(e);
   }
 };
 
@@ -52,8 +52,8 @@ exports.updateCategory = async (req, res, next) => {
     const data = await categoryService.updateCategory(req.body);
     res.json(data);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Category updated is FAILED');
+    next(e);
   }
 };
 
@@ -63,7 +63,7 @@ exports.deleteCategory = async (req, res, next) => {
     const data = await categoryService.deleteCategory(req.params);
     res.json(data);
   } catch (e) {
-    next(e);
     res.status(500).json('[ERROR] Category delete is FAILED');
+    next(e);
   }
 };
