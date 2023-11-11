@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getUserOrderList, deleteOrder } from '../api/userOrderAPI';
+import { getUserOrderList, deleteOrder, getImage } from '../api/userOrderAPI';
 import { getCookie } from './../utils/cookieUtils';
 import { Link } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import '../css/userOrderCSS.css';
 function UserOrder() {
   const [userOrderList, setUserOrderList] = useState([]);
   const [user_id, setUserId] = useState(getCookie('user_id'));
+  const [imgSrc, setImgSrc] = useState('');
 
   const getOrderList = async () => {
     //TODO: 로그인 이후에 id 값 가져오기
@@ -40,7 +41,7 @@ function UserOrder() {
 
       <div className='div__orderList--container'>
         <div className='div__orderList--header'>
-          <div>상품 이미지</div>
+          {/* <div>상품 이미지</div> */}
           <div>주문 일자</div>
           <div>가격</div>
           <div>상태</div>
@@ -58,9 +59,12 @@ function UserOrder() {
             userOrderList.map((order) => {
               return (
                 <div key={order['_id']} className='div__orderList--order'>
-                  <div className='div__orderList--order-column'>
-                    <div>이미지 들어갈거임</div>
-                  </div>
+                  {/* <div className='div__orderList--order-column'>
+                    {console.log(`전체 ${userOrderList}`)}
+                    {console.log('sss', typeof order)}
+                    <img src={order.imgUrl} />
+                    zz{`order['imgUrl']`}zz
+                  </div> */}
                   <div className='div__orderList--order-column'>
                     {order['date']}
                   </div>

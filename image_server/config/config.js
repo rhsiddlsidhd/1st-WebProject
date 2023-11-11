@@ -8,7 +8,6 @@ dotenv.config();
 const yaml_config_filename = process.env.APP_CONFIG_FILE;
 let yaml_config = {};
 try {
-  console.log("-->", path.resolve(__dirname, `../${yaml_config_filename}`));
   const configs = yaml.load(
     readFileSync(path.resolve(__dirname, `../${yaml_config_filename}`), "utf8")
   );

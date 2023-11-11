@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function Pagination({ total, limit, page, setPage }) {
   const numPages = Math.ceil(total / limit);
-
-  console.log('jjjjjjjjjjjjjjjjjjjjjjjjjj', total, limit);
-  console.log(total / limit);
-  console.log(numPages);
 
   const [currPage, setCurrPage] = useState(page);
   let firstNum = currPage - (currPage % 5) + 1;
   let lastNum = currPage - (currPage % 5) + 5;
 
   return (
-    <div className='Pagination'>
+    <div className="Pagination">
       <nav>
         <button
           onClick={() => {
@@ -34,12 +30,12 @@ function Pagination({ total, limit, page, setPage }) {
           .map((_, i) => {
             return (
               <button
-                border='true'
+                border="true"
                 key={i + 1}
                 onClick={() => {
                   setPage(1 + i);
                 }}
-                className={page === 1 + i ? 'page' : null}
+                className={page === 1 + i ? "page" : null}
               >
                 {1 + i}
               </button>

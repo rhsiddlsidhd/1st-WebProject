@@ -87,9 +87,13 @@ function Category() {
 
   const cancleBtn = () => {
     if (window.confirm('작업을 취소하시겠습니까?')) {
-      resetData();
-      alert('상품 페이지로 이동합니다.');
-      navigate('/manageproducts');
+      if (!editMode) {
+        resetData();
+        alert('상품 페이지로 이동합니다.');
+        navigate('/manageproducts');
+      } else {
+        resetData();
+      }
     } else {
       alert('취소되었습니다.');
     }
@@ -172,7 +176,6 @@ function Category() {
                   소분류
                 </option>
               </select>
-              {/* {console.log(categoryType)}  */}
             </div>
             <div className='form__div--category-info-gap'>
               {/* 소분류 선택시 대분류 목록 불러오기 */}
@@ -215,7 +218,7 @@ function Category() {
             className='button__category-button-cancle'
             onClick={cancleBtn}
           >
-            등록 취소
+            {editMode ? '수정 취소' : '등록 취소'}
           </button>
         </div>
       </div>

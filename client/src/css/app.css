@@ -377,6 +377,12 @@ table {
   border: 1px solid;
 }
 
+.div__div--product-img img {
+  width: 600px;
+  height: 600px;
+  object-fit: cover;
+}
+
 .div__div--info-text {
   margin: 30px 0 0 20px;
 }
@@ -1226,8 +1232,8 @@ table {
 /* ManageProductNew */
 .div__manage-product-add-content {
   margin-top: 150px;
+  margin-bottom: 80px;
   width: 100%;
-  height: 1200px;
 }
 
 .div__manage-product-add-content-wrap {
@@ -1400,12 +1406,12 @@ table {
   margin-top: 30px;
   color: var(--white-color);
   background: var(--black-color);
+  margin-bottom: 100px;
 }
 
 .div__button--image-save:hover {
   color: var(--black-color);
   background: var(--white-color);
-  margin-bottom: 100px;
 }
 
 .form__img--image-size {
@@ -1494,4 +1500,45 @@ table {
 .div__linkBtn--purchaseCompelete button:hover {
   border: 1px solid rgb(239, 98, 83);
   color: rgb(239, 98, 83);
+}
+
+/* 상세이미지*/
+.div__div--detail-img {
+  width: 80%;
+  height: 5395px;
+  margin: 0 auto;
+
+  display: block;
+}
+
+.div__div--detail-img-text-wrap {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 250px;
+  border-top: #bfbfbf;
+}
+
+.detail-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+/* checkbox */
+.div__span--big-category {
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.span__div--item-box {
+  border-bottom: 1px solid #c2c2c2;
+  margin-bottom: 40px;
+}
+
+.div__label--small-category-check {
+  margin: 5px 0 40px;
 }

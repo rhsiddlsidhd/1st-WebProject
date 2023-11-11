@@ -99,9 +99,9 @@
 }
 
 .div__orderList--order-column:first-child {
-  height: 165px;
-  width: 165px;
-  background-color: black;
+  /* height: 165px;
+  width: 165px; */
+  /* background-color: black; */
 }
 
 .body__div--userBtn {
