@@ -46,14 +46,14 @@ function Home() {
         <div className='div__div--best'>
           <h2 className='div__h2--title'>BEST</h2>
           <Products
-            products={products.slice(0, 5)}
+            products={products.slice(0, 3)}
             brands={brands}
             productStyle='home-product'
           />
           <br />
           <br />
           <Products
-            products={products.slice(5, 10)}
+            products={products.slice(3, 6)}
             brands={brands}
             itemClass='home-product-item'
             productStyle='home-product'
@@ -76,14 +76,14 @@ function Home() {
           {/* 신제품 영역 */}
           <h2 className='div__h2--new-title'>NEW</h2>
           <Products
-            products={products.slice(0, 5)}
+            products={products.slice(6, 9)}
             brands={brands}
             productStyle='home-product'
           />
           <br />
           <br />
           <Products
-            products={products.slice(5, 10)}
+            products={products.slice(9, 12)}
             brands={brands}
             productStyle='home-product'
           />
