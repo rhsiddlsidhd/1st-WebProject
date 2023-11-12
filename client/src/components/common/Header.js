@@ -87,16 +87,25 @@ const Header = () => {
                   </Link>
                 </button>
               ) : (
-                <button>
-                  <Link to='/user/order'>
-                    <FontAwesomeIcon
-                      icon={faUser}
-                      className='div__button--user-button'
-                    />
-                  </Link>
-                </button>
+                <>
+                  <button>
+                    <Link to='/user/order'>
+                      <FontAwesomeIcon
+                        icon={faUser}
+                        className='div__button--user-button'
+                      />
+                    </Link>
+                  </button>
+                  <button>
+                    <Link to='/cart'>
+                      <FontAwesomeIcon
+                        icon={faHeart}
+                        className='div__button--cart-button'
+                      />
+                    </Link>
+                  </button>
+                </>
               )}
-
               <button onClick={clickLogoutBtn}>
                 <FontAwesomeIcon
                   icon={faArrowRightFromBracket}
