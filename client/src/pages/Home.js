@@ -7,6 +7,7 @@ import Products from '../components/Products';
 import trendingimage from '../image/trendingimage.png';
 
 function Home() {
+  let slice = 0;
   const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
 
@@ -52,7 +53,7 @@ function Home() {
           <br />
           <br />
           <Products
-            products={products.slice(0, 5)}
+            products={products.slice(5, 10)}
             brands={brands}
             itemClass='home-product-item'
             productStyle='home-product'
@@ -82,7 +83,7 @@ function Home() {
           <br />
           <br />
           <Products
-            products={products.slice(0, 5)}
+            products={products.slice(5, 10)}
             brands={brands}
             productStyle='home-product'
           />
