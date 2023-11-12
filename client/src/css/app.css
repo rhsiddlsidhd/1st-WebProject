@@ -1306,6 +1306,10 @@ table {
   width: 195px;
 }
 
+.form__input--input-value-style-modify-brand {
+  width: 400px;
+}
+
 .div__div--input-list-wrap {
   display: flex;
   flex-direction: column;

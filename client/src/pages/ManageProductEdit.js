@@ -119,7 +119,7 @@ const ManageProductEdit = () => {
                 </label>
                 <select
                   id='brand'
-                  className='form__input--input-value-style form__input--input-value-style-brand'
+                  className='form__input--input-value-style form__input--input-value-style-brand form__input--input-value-style-modify-brand'
                   name='brand'
                   value={product?.brand}
                   onChange={handleInputChange}
