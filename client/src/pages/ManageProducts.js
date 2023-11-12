@@ -17,9 +17,12 @@ const ManageProducts = () => {
 
   let queryString;
 
-  useEffect(async () => {
-    window.scrollTo(0, 0);
-    dataSetting(selectedCategories, page);
+  useEffect(() => {
+    async function getDatas() {
+      window.scrollTo(0, 0);
+      dataSetting(selectedCategories, page);
+    }
+    getDatas();
   }, [page]);
 
   const paginate = (pageNumber) => {
